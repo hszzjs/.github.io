@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="hexo相关,">
+  <meta name="keywords" content="通信协议,">
 
 
 
@@ -79,20 +79,29 @@
 
 
 
-<meta name="description" content="修改配置文件打开theme/next/_config.yml，找到如下配置，删除”categories”和“tags”前的注释符#。   123456789menu:  home: / || home  #about: /about/ || user  tags: /tags/ || tags  categories: /categories/ || th  archives: /archives">
-<meta name="keywords" content="hexo相关">
+<meta name="description" content="首先基于整个来看，TCP/IP协议是应用最为广泛的模型，TCP/IP与OSI分层之间是由区别的，最主要的就是它将OSI模型中的会话层、表示层以及应用层合并为应用层。前提：TCP/IP是在网络互连的设备之间能够通信的前提下才被提出的协议。   网络层即互连网层，是使用IP协议，IP协议基于IP地址转发分包数据。   TCP、IP分层中互联网层与传输层的功能通常由操作系统提供。   IP是跨越网络传送">
+<meta name="keywords" content="通信协议">
 <meta property="og:type" content="article">
-<meta property="og:title" content="hexo 添加标签分类">
-<meta property="og:url" content="http://yoursite.com/2019/06/15/hexo-添加标签分类/index.html">
+<meta property="og:title" content="TCP协议详解">
+<meta property="og:url" content="http://yoursite.com/2019/06/15/TCP协议详解/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="修改配置文件打开theme/next/_config.yml，找到如下配置，删除”categories”和“tags”前的注释符#。   123456789menu:  home: / || home  #about: /about/ || user  tags: /tags/ || tags  categories: /categories/ || th  archives: /archives">
+<meta property="og:description" content="首先基于整个来看，TCP/IP协议是应用最为广泛的模型，TCP/IP与OSI分层之间是由区别的，最主要的就是它将OSI模型中的会话层、表示层以及应用层合并为应用层。前提：TCP/IP是在网络互连的设备之间能够通信的前提下才被提出的协议。   网络层即互连网层，是使用IP协议，IP协议基于IP地址转发分包数据。   TCP、IP分层中互联网层与传输层的功能通常由操作系统提供。   IP是跨越网络传送">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://promoon.github.io/2018/12/01/hexo_categories_tags/hexo_categories.png">
-<meta property="og:updated_time" content="2019-06-15T03:54:34.330Z">
+<meta property="og:image" content="https://img-blog.csdn.net/20170925224039039?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGVsYV8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="https://img-blog.csdn.net/20180324192146298?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMyOTk4MTUz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3130736-e353bfd5cf0f8f4d?imageMogr2/auto-orient/strip%7CimageView2/2/w/730/format/webp">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/3146B6DF37F34C398001FA039666E11E?method=download&shareKey=e3a80394288572d16f3b0b8532622875">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/D3B5391BE8E442CCA8F6F91083139F8A?method=download&shareKey=ee115cc7aabd01ca01c72e7f37647568">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190118223919860.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1ODY1MTI1,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190118224804791.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1ODY1MTI1,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190118225936369.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1ODY1MTI1,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/9C7B6775EA1F477CAD4BB9B6426BA5F9?method=download&shareKey=79b28f6f869dc9db5c89998f9e4d2bf7">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/7140FBAF38234A218D142E18FA19EF20?method=download&shareKey=1b1019a87c047fbad130fd7a857b3b0c">
+<meta property="og:updated_time" content="2019-06-15T04:57:32.781Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="hexo 添加标签分类">
-<meta name="twitter:description" content="修改配置文件打开theme/next/_config.yml，找到如下配置，删除”categories”和“tags”前的注释符#。   123456789menu:  home: / || home  #about: /about/ || user  tags: /tags/ || tags  categories: /categories/ || th  archives: /archives">
-<meta name="twitter:image" content="https://promoon.github.io/2018/12/01/hexo_categories_tags/hexo_categories.png">
+<meta name="twitter:title" content="TCP协议详解">
+<meta name="twitter:description" content="首先基于整个来看，TCP/IP协议是应用最为广泛的模型，TCP/IP与OSI分层之间是由区别的，最主要的就是它将OSI模型中的会话层、表示层以及应用层合并为应用层。前提：TCP/IP是在网络互连的设备之间能够通信的前提下才被提出的协议。   网络层即互连网层，是使用IP协议，IP协议基于IP地址转发分包数据。   TCP、IP分层中互联网层与传输层的功能通常由操作系统提供。   IP是跨越网络传送">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170925224039039?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGVsYV8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 
 
 
@@ -122,13 +131,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/15/hexo-添加标签分类/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/15/TCP协议详解/">
 
 
 
 
 
-  <title>hexo 添加标签分类 | 天生的努力家</title>
+  <title>TCP协议详解 | 天生的努力家</title>
   
 
 
@@ -298,7 +307,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/hexo-添加标签分类/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/TCP协议详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -315,7 +324,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">hexo 添加标签分类</h1>
+          <h1 class="post-title" itemprop="name headline">TCP协议详解</h1>
         
 
         <div class="post-meta">
@@ -327,7 +336,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T11:38:02+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T12:53:41+08:00">
                 2019-06-15
               </time>
             
@@ -387,24 +396,66 @@
       
 
       
-        <h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>打开theme/next/_config.yml，找到如下配置，删除”categories”和“tags”前的注释符#。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || home</span><br><span class="line">  #about: /about/ || user</span><br><span class="line">  tags: /tags/ || tags</span><br><span class="line">  categories: /categories/ || th</span><br><span class="line">  archives: /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonweal: /404/ || heartbeat</span><br></pre></td></tr></table></figure>
-
+        <p>首先基于整个来看，TCP/IP协议是应用最为广泛的模型，TCP/IP与OSI分层之间是由区别的，最主要的就是它将OSI模型中的会话层、表示层以及应用层合并为应用层。<br>前提：<strong>TCP/IP是在网络互连的设备之间能够通信的前提下才被提出的协议</strong>。  
+网络层即互连网层，是使用IP协议，<strong>IP协议基于IP地址转发分包数据</strong>。  
+<strong>TCP、IP分层中互联网层与传输层的功能通常由操作系统提供</strong>。  
+IP是跨越网络传送数据包，使整个互联网都能收到数据的协议。IP协议是不具有重发机制，是非可靠性传输协议。  </p>
 <a id="more"></a>
-<p>##生成页面<br>进入博客根目录下，执行如下两条命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo create page tags</span><br><span class="line">$ hexo create page categories</span><br></pre></td></tr></table></figure>
+<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><p>TCP、UDp协议的TCP/IP传输层的两个具有代表性的协议。  </p>
+<h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><p>应用层主要负责处理特定的应用程序细节.<br>TCP/IP分层模型中将OSI中的应用层/表示层/会话层全都集中到了应用层中实现.<br>比如<strong>TCP/IP模型中的应用层要进行数据格式的处理, 要对通信进行管理, 确定连接方式等</strong>.  </p>
+<h3 id="SMTP协议与MIME"><a href="#SMTP协议与MIME" class="headerlink" title="SMTP协议与MIME"></a>SMTP协议与MIME</h3><p>发送电子邮件时用到的协议叫做SMTP协议(简单邮件传输协议). 但是早期的电子邮件只能发送文本格式的电子邮件, 而现在, 电子邮件的格式由==MIME(多用途互联网邮件扩展类型)协议扩展之后, 就能发送声音/图片/视频等多种类型的数据==.</p>
+<p>MIME: 在互联网上广泛使用的/用来定义邮件数据格式的一种规定.</p>
+<h3 id="FTP文件传输协议"><a href="#FTP文件传输协议" class="headerlink" title="FTP文件传输协议"></a>FTP文件传输协议</h3><p>文件传输是指将保存在本机磁盘上的文件转移到其它计算机硬盘上, 或将其它计算机硬盘上的文件转移到本机的磁盘上. 文件传输过程中使用的协议叫文件传输协议, 即FTP.</p>
+<p>使用FTP进行文件传输时, <strong>可以选择用二进制方式还是文本方式</strong>.   
+在FTP进行文件传输时<strong>会建立两个TCP连接, 分别是传输请求时所要用到的控制连接, 和实际传输数据时所要用到的数据连接</strong>.</p>
+<h3 id="SNMP网络管理"><a href="#SNMP网络管理" class="headerlink" title="SNMP网络管理"></a>SNMP网络管理</h3><p>在TCP/IP中进行网络管理时, 使用SNMP(简单网络管理协议). 使用SNMP管理的主机/路由器/网桥等都称为SNMP代理, 而管理的那一端称为管理器.</p>
+<p>在SNMP的代理端, 保存着网络接口的信息/通信数据量/异常数据量以及设备温度等信息.  </p>
+<h2 id="TCP-IP分层模型通信示例"><a href="#TCP-IP分层模型通信示例" class="headerlink" title="TCP/IP分层模型通信示例"></a>TCP/IP分层模型通信示例</h2><p><img src="https://img-blog.csdn.net/20170925224039039?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZGVsYV8=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image">  </p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TCP首部</td>
+<td>源端口号和目标端口号（用以识别发送主机跟接收主机上的应用）、序号（用以发送的包中哪部分是数据）以及校验和（用以判断数据是否被损坏）、确认应答号、窗口大小等</td>
+</tr>
+<tr>
+<td>UDP首部</td>
+<td>源端口号和目标端口号（用以识别发送主机跟接收主机上的应用）、校验和（用以判断数据是否被损坏，包括协议号和填充）以及包长度</td>
+</tr>
+<tr>
+<td>IP首部</td>
+<td>接收端IP地址以及发送端IP地址</td>
+</tr>
+<tr>
+<td>以太网首部</td>
+<td>接收端MAC地址、发送端MAC地址以及标志以太网类型的以太网数据的协议</td>
+</tr>
+</tbody></table>
+<p>TCP首部<br><img src="https://img-blog.csdn.net/20180324192146298?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMyOTk4MTUz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="image">  </p>
+<p>UDP首部<br><img src="https://upload-images.jianshu.io/upload_images/3130736-e353bfd5cf0f8f4d?imageMogr2/auto-orient/strip%7CimageView2/2/w/730/format/webp" alt="image"></p>
+<h1 id="TCP协议"><a href="#TCP协议" class="headerlink" title="TCP协议"></a>TCP协议</h1><p><img src="https://note.youdao.com/yws/api/personal/file/3146B6DF37F34C398001FA039666E11E?method=download&shareKey=e3a80394288572d16f3b0b8532622875" alt="image"><br>对于TCP协议，用户端需要向服务端发送请求连接，那么服务端必须有程序在这里等着接收请求，这些服务端程序就叫做<strong>守护进行</strong>。  
+就HTTp的服务端程序是httpd（HTTP守护进程），ssh程序就是sshd（SSH守护进程）。但是如果说操作系统中这些守护进程一直开着，那岂不是很占用资源，所以有一个<strong>超级守护进程，在收到客户端请求以后会创建（fork）新的进程（exec）为sshd等各个守护进程</strong>。  
+犹记得三次握手，发送的是SYN以及ACK包，所以需要注意：<br><strong>SYN（TCP连接请求包</strong>）：<br>按照所谓的TCP/IP说法，必然是包括数据链路层的以太网首部，网络层的IP首部，传输层就必然是TCP首部，但是TCP首部包括什么，必然是==有目标端口号，源端口号以及连接请求标志==。<br><strong>ACK（确认应答）</strong><br>这个就是接收端返回一个已收到消息的通知。TCP通过肯定的确认应答（ACK）实现可靠的数据传输，当发送端将数据发出后就会等待ACK，如果有ACK就说明数据传输成功，没有，那么发送端就会认为数据已经丢失，并进行重发。</p>
+<p>在TCP/IP或UDP/IP通信中通常采用5个信息来识别一个通信，它们是：源IP地址、目标IP地址、协议号、源端口号以及目标端口号。<br>所以对于不同的协议也就是一个TCP一个UDP哪怕相同的端口号，也是不同的，因为<strong>在到达IP层之后，就会检查相应的协议号，再传给相应协议的模块</strong>。  </p>
+<p>TCP与UDP最大的区别就是，<strong>TCP实现了数据传输时各种控制功能，可以进行丢包时的重发控制，还可以对次序乱掉的分包进行顺序控制</strong>。  </p>
+<p>显然丢包问题解决，但是TCP中如果接收端返回的ACK在中间丢失，那么就出现<strong>确认应答延迟</strong>，也就是发送端没有收到ACK，认为失败，进行重发，那么及手段就需要能够识别是否已经接收数据，并且判断是否需要接受，这个就是对应序列号。<br>序列号是按照顺序给发送数据的每一个字节（8位字节）都标上号码的编号，接收端查询接收数据的TCP首部的序列号和数据的长度，将自己下一步应该接受的序号作为确认应答返送回去，所以<strong>通过确认应答号和序列号，TCP就可以实现可靠传输</strong>。  </p>
+<h2 id="重发超时确定"><a href="#重发超时确定" class="headerlink" title="重发超时确定"></a>重发超时确定</h2><p>怎么就超时了？网络传输必然是收到各种因素的影响，TCP为了提供高性能通信，就在<strong>每次发包时都会计算往返时间以及偏差</strong>作为重发超时。  </p>
+<h2 id="关于三次握手四次挥手"><a href="#关于三次握手四次挥手" class="headerlink" title="关于三次握手四次挥手"></a>关于三次握手四次挥手</h2><p><img src="https://note.youdao.com/yws/api/personal/file/D3B5391BE8E442CCA8F6F91083139F8A?method=download&shareKey=ee115cc7aabd01ca01c72e7f37647568" alt="image">  </p>
+<h2 id="TCP以段为单位发送数据"><a href="#TCP以段为单位发送数据" class="headerlink" title="TCP以段为单位发送数据"></a>TCP以段为单位发送数据</h2><p>在建立TCP连接的同时，是需要确定发送数据包的单位的，也就是<strong>最大消息长度（MSS）</strong>，最理想的情况就是MSS正好是IP中不会被分片处理的最大数据长度。<br><strong>MSS是在三次握手的时候，在两端主机之间被计算得</strong>出，两端的主机在发出建立连接请求时，会在TCP首部写入MSS选项，告诉对方自己的接口能够适应的MSS的大小，然后会在两者之间选择一个<strong>较小</strong>得到值使用。  </p>
+<h2 id="利用窗口控制提高速度"><a href="#利用窗口控制提高速度" class="headerlink" title="利用窗口控制提高速度"></a>利用窗口控制提高速度</h2><p>TCP是以1个段为单位，每发一个段就进行一次确认应答处理，但是这样就导致一个bug：==包的往返时间越长通信性能就越低==。<br>那么TCP就使用窗口控制来进行并行处理，也就是说，发送端在发送了一个段之后不必一直等ACK，而是继续发，知道达到窗口的大小。那么这样就<strong>需要使用大量的缓冲区，通过对多个段同时进行确认应答</strong>。这个缓冲区主要针对的是发送端，也就是可能出现数据传输丢失，发送端需要进行重发，那么发送端就需要在缓冲区中保留这部分数据。<br>就可以认为是==滑动窗口机制==。  </p>
+<h2 id="窗口控制与重发控制"><a href="#窗口控制与重发控制" class="headerlink" title="窗口控制与重发控制"></a>窗口控制与重发控制</h2><p>这个就两种情况：<br>① <strong>ACK在返回途中丢失</strong>  </p>
+<p><img src="https://img-blog.csdnimg.cn/20190118223919860.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1ODY1MTI1,size_16,color_FFFFFF,t_70" alt="image">  </p>
+<p>② <strong>某个数据包在传输过程中丢失</strong> </p>
+<p><img src="https://img-blog.csdnimg.cn/20190118224804791.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1ODY1MTI1,size_16,color_FFFFFF,t_70" alt="image">  </p>
+<h2 id="流控制"><a href="#流控制" class="headerlink" title="流控制"></a>流控制</h2><p>这个主要是针对，发送端发送数据过来，接收端可能因为各种原因无法处理接收的数据，那么就又会导致重发，网络流量出现浪费。所以<br>TCP提供一种机制可以<strong>让发送端根据接收端的实际接收能力控制发送的数据</strong>量——流控制。<br>具体就是：==接收段主机向发送端主机通知自己可以接收数据的大小，于是发送端发送不超过这个限度的数据，这个就是窗口大小==。<br>同时由于缓冲区大小的限制，发送端也是可以影响窗口大小的。<br><img src="https://img-blog.csdnimg.cn/20190118225936369.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM1ODY1MTI1,size_16,color_FFFFFF,t_70" alt="image">  </p>
+<h2 id="拥塞控制"><a href="#拥塞控制" class="headerlink" title="拥塞控制"></a>拥塞控制</h2><p><img src="https://note.youdao.com/yws/api/personal/file/9C7B6775EA1F477CAD4BB9B6426BA5F9?method=download&shareKey=79b28f6f869dc9db5c89998f9e4d2bf7" alt="image"><br>就是传输数据为了方式出现传输过大，导致网络拥塞，所以TCP就会使用一个慢启动的算法，对于发送数据量进行控制。<br>就是从最开始的一个MSS发送，然后ACK之后就，窗口+1.<br>根据图，就是首先可以看到为了在发送端调节所要发送数据的量，定义了一个叫做“拥塞窗口”的概念。在慢启动的时候，将会这个拥塞窗口的大小设置为1个数据段（1MSS）发送数据，之后每收到一次确认应答（ACK），拥塞窗口的值就加1.在发送数据包时，将拥塞窗口的大小与接收端主机通知的窗口大小作比较，然后按照他们当中比较小的那个值，发送比其还要小的数据量。<br>如果重发采用超时机制，那么拥塞窗口的初始值可以设置为1以后再进行慢启动修正。有了上述这些机制，就可以有效地减少通信开始时连续发包导致的网络拥堵，还可以避免网络拥塞情况的发生。<br>不过，随着包的每次往返，拥塞窗口也会以1、2、4等指数函数的增长，拥堵状况激增甚至导致网络阻塞的发生。为了防止这些，引入了慢启动阈值的概念，只要拥塞窗口的值超出这个阈值，在每收到一次确认应答时，只允许以下面这种比例放大拥塞窗口：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">（1个数据段的字节数）/拥塞窗口（字节）*1个数据段字节数</span><br></pre></td></tr></table></figure>
 
-<p>分别打开这两个index.md的文件，修改其内容。<br>tags/index.md</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 标签</span><br><span class="line">date: 2018-12-01 01:12:43</span><br><span class="line">type: &quot;tags&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-<p>categories/index.md</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: 分类</span><br><span class="line">date: 2018-12-01 00:52:39</span><br><span class="line">type: &quot;categories&quot;</span><br><span class="line">---</span><br></pre></td></tr></table></figure>
-
-<h2 id="给文章加上分类和标签"><a href="#给文章加上分类和标签" class="headerlink" title="给文章加上分类和标签"></a>给文章加上分类和标签</h2><p>上述步骤仅仅是生成了分类和标签的导航栏，实际的分类或标签条目需要在文章中添加才行，打开要分类的文章，在文件头添加“tags”标签或“categories”进行分类。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">title: hexo 添加标签和分类 </span><br><span class="line">date: 2018-12-01 01:06:34</span><br><span class="line">categories: </span><br><span class="line">- hexo</span><br><span class="line">- config</span><br><span class="line">- tags</span><br><span class="line">tags:</span><br><span class="line">- hexo</span><br><span class="line">- tags</span><br></pre></td></tr></table></figure>
-
-<p>添加“- xxx”作为categories或tags的条目，在“tags”下添加多个条目表示给文章打了多个标签；而如果在“categories”下增加多个条目，则是一个嵌套的结构，例如上述配置会产生如下效果：<br><img width=" " alt=" " src="https://promoon.github.io/2018/12/01/hexo_categories_tags/hexo_categories.png"></p>
-<p>参考链接: <a href="https://promoon.github.io/2018/12/01/hexo_categories_tags/" target="_blank" rel="noopener">https://promoon.github.io/2018/12/01/hexo_categories_tags/</a></p>
+<p><img src="https://note.youdao.com/yws/api/personal/file/7140FBAF38234A218D142E18FA19EF20?method=download&shareKey=1b1019a87c047fbad130fd7a857b3b0c" alt="image"><br>拥塞窗口越大，确认应答的数目也会增加，不过随着每收到一个确认应答，其涨幅也会逐渐减少，甚至小过比一个数据段还要小的字节数。因此，拥塞窗口的大小会呈直线上升趋势。<br>TCP的通信开始时，并没有设置相应的慢启动阈值，而是在超时重发时，才会设置为当时拥塞窗口一半的大小。<br>由重复确认应答而出发得到高速重发与超时重发机制的处理多少有些不同，因为前者要求至少3次的确认应答数据段到达对方主机后才会出发，相比后者网络的拥堵要轻些。<br>而由重复确认应答进行高速重发控制时，慢启动阈值的大小被设置为当时窗口大小的一般。然后将窗口的大小设置为该慢启动阈值+3个数据段的大小。<br>有了这样的控制，TCP的拥塞窗口就如图发生变化，由于窗口的大小会直接影响数据被转发时的吞吐量，所以一般情况下，窗口越大，越会形成高吞吐量的通信。<br>当TCP通信开始以后，网络吞吐量会逐渐上升，但是随着网络拥堵的发生吞吐量也会急速下降。于是会再次进入吞吐量慢慢上升的过程，因此所谓TCP的吞吐量的特点就好像是在逐步占领网络带宽的感觉。</p>
 
       
     </div>
@@ -422,7 +473,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo相关/" rel="tag"># hexo相关</a>
+            <a href="/tags/通信协议/" rel="tag"># 通信协议</a>
           
         </div>
       
@@ -435,8 +486,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/14/HTTPS详解/" rel="next" title="HTTPS详解">
-                <i class="fa fa-chevron-left"></i> HTTPS详解
+              <a href="/2019/06/15/基于jdk1-8的ConcurrentHashMap源码/" rel="next" title="基于jdk1.8的ConcurrentHashMap源码">
+                <i class="fa fa-chevron-left"></i> 基于jdk1.8的ConcurrentHashMap源码
               </a>
             
           </div>
@@ -444,10 +495,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/15/从迭代器模式出发看ArrayList/" rel="prev" title="从迭代器模式出发看ArrayList">
-                从迭代器模式出发看ArrayList <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -581,7 +628,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改配置文件"><span class="nav-number">1.</span> <span class="nav-text">修改配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#给文章加上分类和标签"><span class="nav-number">2.</span> <span class="nav-text">给文章加上分类和标签</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#传输层"><span class="nav-number">1.</span> <span class="nav-text">传输层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应用层"><span class="nav-number">2.</span> <span class="nav-text">应用层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SMTP协议与MIME"><span class="nav-number">2.1.</span> <span class="nav-text">SMTP协议与MIME</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FTP文件传输协议"><span class="nav-number">2.2.</span> <span class="nav-text">FTP文件传输协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SNMP网络管理"><span class="nav-number">2.3.</span> <span class="nav-text">SNMP网络管理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP-IP分层模型通信示例"><span class="nav-number">3.</span> <span class="nav-text">TCP/IP分层模型通信示例</span></a></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP协议"><span class="nav-number"></span> <span class="nav-text">TCP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#重发超时确定"><span class="nav-number">1.</span> <span class="nav-text">重发超时确定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于三次握手四次挥手"><span class="nav-number">2.</span> <span class="nav-text">关于三次握手四次挥手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP以段为单位发送数据"><span class="nav-number">3.</span> <span class="nav-text">TCP以段为单位发送数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#利用窗口控制提高速度"><span class="nav-number">4.</span> <span class="nav-text">利用窗口控制提高速度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窗口控制与重发控制"><span class="nav-number">5.</span> <span class="nav-text">窗口控制与重发控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流控制"><span class="nav-number">6.</span> <span class="nav-text">流控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#拥塞控制"><span class="nav-number">7.</span> <span class="nav-text">拥塞控制</span></a></li></ol></li></div>
             
 
           </div>
