@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java,网络IO,">
+  <meta name="keywords" content="Java,JVM,">
 
 
 
@@ -79,26 +79,26 @@
 
 
 
-<meta name="description" content="java的I/O大概有80多个类，大概率上是可以分为四组：按照传输数据的数据格式：字节流与字符流，按照传输数据的传输方式：分为File（磁盘）与Socket（网络）。   所以影响IO的核心问题要么是数据格式影响要么就是传输方式影响。基于流的操作，前面已经介绍，有一点要注意的就是流最终卸载哪里必须要指定，要么是写到磁盘中要么是写到网络中，写网络事实上也是在写文件，只不过网络进一步处理就是底层操作系">
-<meta name="keywords" content="Java,网络IO">
+<meta name="description" content="JVM运行时区域如图，先说非线程共享的：">
+<meta name="keywords" content="Java,JVM">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深入分析java IO工作机制">
-<meta property="og:url" content="http://yoursite.com/2019/06/15/深入分析java-IO工作机制/index.html">
+<meta property="og:title" content="JVM内存">
+<meta property="og:url" content="http://yoursite.com/2019/06/15/JVM内存/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="java的I/O大概有80多个类，大概率上是可以分为四组：按照传输数据的数据格式：字节流与字符流，按照传输数据的传输方式：分为File（磁盘）与Socket（网络）。   所以影响IO的核心问题要么是数据格式影响要么就是传输方式影响。基于流的操作，前面已经介绍，有一点要注意的就是流最终卸载哪里必须要指定，要么是写到磁盘中要么是写到网络中，写网络事实上也是在写文件，只不过网络进一步处理就是底层操作系">
+<meta property="og:description" content="JVM运行时区域如图，先说非线程共享的：">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image015.jpg">
-<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image017.jpg">
-<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image019.jpg">
-<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image021.jpg">
-<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image023.jpg">
-<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image025.jpg">
-<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image027.jpg">
-<meta property="og:updated_time" content="2019-06-15T08:21:27.216Z">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/3FB54645FA5C43C78951BD2505C06526?method=download&shareKey=dbac180e5e21ffbd64831a1a20d0f40d">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/269164774B734384A73F776B9ADF8C49?method=download&shareKey=76da4a38930dd9fa649599a10ed9a96a">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/E85F0D9BDF47463588EE7508938C36CB?method=download&shareKey=59e878fc7ca5f02b5217d9a51f18436e">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/0DCEC00668DD48E9BE6CC9F9912FA1E9?method=download&shareKey=33f9b40a9b967799505e712bb73e0318">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/C2A8F7A928E0458493FF0A12369E1E5F?method=download&shareKey=0d46db2d64e46239b575fe1c545292f2">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/B643D236E62B4B68A98EC27BEFBABD49?method=download&shareKey=006f4d5e3c309e6864b7b68e67fc9f45">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/8C6D629104E24317A182B8E40BF2265A?method=download&shareKey=7edbd534676210ba3179bb87466f9a1e">
+<meta property="og:updated_time" content="2019-06-15T13:54:07.902Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深入分析java IO工作机制">
-<meta name="twitter:description" content="java的I/O大概有80多个类，大概率上是可以分为四组：按照传输数据的数据格式：字节流与字符流，按照传输数据的传输方式：分为File（磁盘）与Socket（网络）。   所以影响IO的核心问题要么是数据格式影响要么就是传输方式影响。基于流的操作，前面已经介绍，有一点要注意的就是流最终卸载哪里必须要指定，要么是写到磁盘中要么是写到网络中，写网络事实上也是在写文件，只不过网络进一步处理就是底层操作系">
-<meta name="twitter:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image015.jpg">
+<meta name="twitter:title" content="JVM内存">
+<meta name="twitter:description" content="JVM运行时区域如图，先说非线程共享的：">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/3FB54645FA5C43C78951BD2505C06526?method=download&shareKey=dbac180e5e21ffbd64831a1a20d0f40d">
 
 
 
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/15/深入分析java-IO工作机制/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/15/JVM内存/">
 
 
 
 
 
-  <title>深入分析java IO工作机制 | 天生的努力家</title>
+  <title>JVM内存 | 天生的努力家</title>
   
 
 
@@ -304,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/深入分析java-IO工作机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/JVM内存/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -321,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">深入分析java IO工作机制</h1>
+          <h1 class="post-title" itemprop="name headline">JVM内存</h1>
         
 
         <div class="post-meta">
@@ -333,7 +333,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:17:26+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T21:48:11+08:00">
                 2019-06-15
               </time>
             
@@ -393,26 +393,21 @@
       
 
       
-        <p>java的I/O大概有80多个类，大概率上是可以分为四组：<br>按照传输数据的数据格式：字节流与字符流，按照<strong>传输数据的传输方式：分为File（磁盘）与Socket（网络）</strong>。  
-所以影响IO的核心问题要么是数据格式影响要么就是传输方式影响。<br>基于流的操作，前面已经介绍，有一点要注意的就是流最终卸载哪里必须要指定，要么是写到磁盘中要么是写到网络中，写网络事实上也是在写文件，只不过网络进一步处理就是底层操作系统再将数据传送到其他地方而不是本地磁盘。  </p>
+        <h1 id="JVM运行时区域"><a href="#JVM运行时区域" class="headerlink" title="JVM运行时区域"></a>JVM运行时区域</h1><p><img src="https://note.youdao.com/yws/api/personal/file/3FB54645FA5C43C78951BD2505C06526?method=download&shareKey=dbac180e5e21ffbd64831a1a20d0f40d" alt="image"><br>如图，先说非线程共享的：  </p>
 <a id="more"></a>
-<h2 id="磁盘I-O的工作机制"><a href="#磁盘I-O的工作机制" class="headerlink" title="磁盘I/O的工作机制"></a>磁盘I/O的工作机制</h2><p>数据的操作，前面是说以哪种数据格式来传输数据，还有一个关键问题就是数据写到哪里，有一个主要方式就是<strong>将数据持久化到物理磁盘</strong>。下面就是数据持久化到物理磁盘的过程。<br><strong>数据在磁盘的唯一最小描述就是文件</strong>，也就是说上层应用程序就只能通过文件来操作磁盘上的数据，文件也是操作系统和磁盘驱动器交互的最小单元。值得注意的是Java中通畅的File并不代表一个真实存在的文件对象，当你指定一个路径描述符时，它就会返回一个代表这个路径相关联的一个虚拟对象，这个可能是一个真实存在的文件或者是一个包含多个文件的目录。<br>这样去做的原因是，因为大部分情况下，我们并不关心这个文件是否真的存在，而是关心这个文件到底如何操作。<br>只有当需要真正读取这个文件的时候，才会检查这个文件是不是存在。下图是如何从磁盘读取一段文本字符：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image015.jpg" alt="image"><br>当传入一个文件路径，将会根据这个File对象创建真正读取文件的操作对象，这时将会真正创建一个<strong>关联真实存在的磁盘文件的文件描述符FileDescriptor</strong>，通过这个对象可以直接控制这个磁盘文件。由于读的的是字符，所以需要将其转码为字节模式，至于如何从磁盘驱动器上读取一段数据，由操作系统帮忙完成。  </p>
-<h2 id="java-Socket的工作机制"><a href="#java-Socket的工作机制" class="headerlink" title="java Socket的工作机制"></a>java Socket的工作机制</h2><p>Socket就指的是计算机之间完成相互通信的一种抽象功能。<strong>大部分情况下Socket使用的是基于TCP/IP的流套接字，是一种稳定的通信协议</strong>。  
-下图是典型的基于Socket的通信的场景：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image017.jpg" alt="image"><br>就主机A的应用程序要能和主机B得到应用程序进行通信，必须经过Socket建立连接，而建立Socket连接必须需要底层TCP/IP协议建立TCP连接，<strong>建立TCP连接需要底层IP协议来寻址网络中的主机</strong>。网络层使用的IP协议可以帮助根据IP地址寻找目标主机，但是一台主机上可能运行着多个应用程序，如何才能<strong>与指定的应用程序通信就是要通过TCP或UDP的地址也就是==端口号==来指定</strong>。这样就可以通过一个Socket实例唯一代表一个主机上的应用程序的通信链路了。  </p>
-<h3 id="建立通信链路"><a href="#建立通信链路" class="headerlink" title="建立通信链路"></a>建立通信链路</h3><p>当客户端要与服务端通信，客户端首先要创建一个Socket实例，操作系统将为这个Socket实例分配一个没有被使用的本地端口号，并创建一个包含本地和远程地址和端口号的套接字数据结构，这个数据结构将一直保存在系统中直到这个连接关闭。在创建Socket实例的构造函数正确返回之前，将要进行TCP的三次握手协议，TCP握手协议完成后，Socket实例对象将创建完成，否则将抛出IOException错误。  </p>
-<p>与之对应的服务端将会创建一个ServerSocket实例，ServerSocket创建比较简单只要指定的端口号没有被占用，一般实例就会创建成功，同时操作系统也会为ServerSocket创建一个底层数据结构，这个数据结构中包含指定监听的端口号和包含监听地址的通配符，通常情况下“<em>”即监听所有地址。之后 *</em>当调用accept()方法时，将进入阻塞状态，等待客户端的请求**。当一个新的请求到来时，将为这个连接创建一个新的套接字数据结构，该套接字数据的信息包含的地址和端口信息正式请求源地址和端口。这个新创建的数据结构将会关联到ServerSocket实例的一个未完成的连接数据结构列表中，注意这时服务端与之对应的Socket实例并没有完成创建，等到与客户端的三次握手完成后，这个服务端的Socket实例才会返回，并将这个Socket实例对应的数据结构从未完成列表中移动到已完成列表中。所以ServerSocket所关联的列表中的每个数据结构，都代表与一个客户端的建立的TCP连接。<br>所以ServerSocket所关联的列表中每个数据结构，都代表与一个客户端的建立的TCP连接。  </p>
-<h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><p>数据传输是创建Socket的目的。下面是传输数据的具体方法。<br>当连接已经建立成功，服务端和客户端都会拥有一个Socket实例，每个Socket实例都有一个InputStream和OutputStream（<strong>主要原因是网络I/O是以字节流进行传输的</strong>），正是通过这两个对象来交换数据。<br>当Socket对象创建的时候，操作系统就会为InputStream与OutputStream分别分配一定大小的缓冲区，<strong>数据的写入和读取都是通过这个缓冲区完成的</strong>。写入端将数据写到==OutputStream对应的SendQ队列==中，当队列填满时，数据将被发送到另一端==InputStream的RecvQ队列==中，如果这是RecvQ已经满了，那么OutputStream的write就会阻塞知道可以接受那些数据。那么缓存区的大小以及写入端的速度和读取端的速度非常影响这个连接的数据传输效率，由于可能会发生阻塞，所以<strong>网络I/O与磁盘I/O在数据的写入读取时还有一个协调的过程，如果两边同时传送数据就有可能出现死锁</strong>。  </p>
-<h2 id="NIO的工作方式"><a href="#NIO的工作方式" class="headerlink" title="NIO的工作方式"></a>NIO的工作方式</h2><p>不管是磁盘IO还是网络IO，数据在写入OutputStream或者从InputStream读取时都有可能会发生阻塞。<strong>一旦有线程阻塞就将会失去CPU的使用权</strong>（这里的这句话就是说线程阻塞，就是在等，那等的时候CPU为了高效，肯定就不管你了，先去搞其他的，所以就是说失去了CPU的使用权），这在当期那的大规模访问量和有性能要求情况下是不能接受的，虽然当前的网络I/O有一些解决办法，如一个客户端一个处理线程，出现阻塞时只是一个线程阻塞而不会影响其他线程工作，还有为了减少系统线程的开销，采用线程池的办法减少系统创建和回收的成本，但是面对一些问题依旧无法解决，如当前需要大量HTTp长连接的情况，但是并不是每时每刻都在传输数据，那就不能说是同时创建那么多线程来保持连接。即使线程的数量不是问题，仍然有一些问题还是无法避免的，如这种情况，我们想给某些客户端更高的服务优先级，很难通过设计线程的优先级来完成，另外一种情况是，我们需要让每个客户端的请求在服务端可能需要访问一些竞争资源，由于这些客户端是在不同线程中，因此需要同步，而往往要实现这些<strong>同步操作</strong>要远远比用单线程复杂很多。以上这些情况都说明，我们需要另外一种新的 I/O 操作方式。  </p>
-<h3 id="NIO的工作机制"><a href="#NIO的工作机制" class="headerlink" title="NIO的工作机制"></a>NIO的工作机制</h3><p>NIO的相关类图如下：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image019.jpg" alt="image"><br>可以看到是三个主要类：<strong>Channel、Buffer以及Selector</strong>，NIO就是通过这三个来实现非阻塞IO的。<br><strong>Channel</strong>就可以看做是一个<strong>双向的非阻塞</strong>的通道，在通道的两边都可以进行数据的读写操作。<br><strong>Selector</strong>：就是实现了一个线程来管理多个通道（采用了复用与解复用的方式使得一个线程可以管理多个通道，即可以将多个流合并成一个流，或者把一个流分成多个流的方式）。<br><strong>Buffer</strong>：就是缓存区，就是和上面的解释是没有什么不同的，用于缓存数据，可以<strong>保存多个channel的数据</strong>。  
-然后就是通过一段NIO代码来理解它们的工作机制：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selector</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    ByteBuffer buffer=<span class="keyword">new</span> ByteBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">    Selector selector=Selector.open();</span><br><span class="line">    ServerSocketChannel ssc=ServerSocketChannel.opne();</span><br><span class="line">    ssc.configureBlocking(<span class="keyword">false</span>);<span class="comment">//设置为非阻塞方式</span></span><br><span class="line">    ssc.socket().bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">8080</span>));</span><br><span class="line">    ssc.register(selector，SelectionKey.OP_ACCEPT)；<span class="comment">//注册监听事件</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            Set selectedKeys = selector.selectedKeys();<span class="comment">//取得所有key集合</span></span><br><span class="line">            Iterator it = selectedKeys.iterator();</span><br><span class="line">            <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">                SelectionKey key = (SelectionKey) it.next();</span><br><span class="line">                <span class="keyword">if</span> ((key.readyOps() &amp; SelectionKey.OP_ACCEPT) == SelectionKey.OP_ACCEPT) &#123;</span><br><span class="line">                    ServerSocketChannel ssChannel = (ServerSocketChannel) key.channel();</span><br><span class="line">                 SocketChannel sc = ssChannel.accept();<span class="comment">//接受到服务端的请求</span></span><br><span class="line">                    sc.configureBlocking(<span class="keyword">false</span>);</span><br><span class="line">                    sc.register(selector, SelectionKey.OP_READ);</span><br><span class="line">                    it.remove();</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> </span><br><span class="line">                ((key.readyOps() &amp; SelectionKey.OP_READ) == SelectionKey.OP_READ) &#123;</span><br><span class="line">                    SocketChannel sc = (SocketChannel) key.channel();</span><br><span class="line">                    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                        buffer.clear();</span><br><span class="line">                        <span class="keyword">int</span> n = sc.read(buffer);<span class="comment">//读取数据</span></span><br><span class="line">                        <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        buffer.flip();</span><br><span class="line">                    &#125;</span><br><span class="line">                    it.remove();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>就调用Selector的静态工厂方法创建一个选择器，创建一个服务端的Channel绑定到一个Socket对象，并把这个通道信道注册到选择器上，把这个通信信道设置为非阻塞模式。然后就可以调用Selector的selectKeys方法来检查已经注册在这个选择器上所有通道信道是否有需要的事件发生，如果有某个事件发生，将会返回所有的SelectionKey，通过这个对象Channel方法就可以取得这个通信信道对象从而可以读取通信的数据，而这里<strong>读取的数据是Buffer，这个Buffer就是人类可以控制的缓冲器</strong>。  
-在上面，是将Server端的监听连接请求的时间和处理请求的事件放在一个线程中，但是在<strong>实际应用中是放在两个线程中，一个线程专门负责监听客户端的连接请求，而是以阻塞的方式执行的，另一个线程专门是来处理请求，这个专门处理请求的线程才是真正采用NIO的方式</strong>，像 Web 服务器 Tomcat 和 Jetty 都是这个处理方式。<br>基于NIO的Socket请求处理过程：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image021.jpg" alt="image"><br>上图中的 Selector 可以同时监听一组通信信道（Channel）上的 I/O 状态，前提是这个 Selector 要已经注册到这些通信信道中。选择器 Selector 可以调用 select() 方法检查已经注册的通信信道上的是否有 I/O 已经准备好，如果没有至少一个信道 I/O 状态有变化，那么 select 方法会阻塞等待或在超时时间后会返回 0。上图中如果有多个信道有数据，那么将会将这些数据分配到对应的数据 Buffer 中。所以关键的地方是有一个线程来处理所有连接的数据交互，每个连接的数据交互都不是阻塞方式，所以可以同时处理大量的连接请求。  </p>
-<h3 id="Buffer的工作方式"><a href="#Buffer的工作方式" class="headerlink" title="Buffer的工作方式"></a>Buffer的工作方式</h3><p>Buffer是如何接受和写出数据？Buffer可以理解是一组基本数据类型的元素列表，通过几个变量来保存这个数据的当前位置状态，也就是有四个索引。<br>索引 | 说明<br>—|—<br>capacity | 缓冲区数组的总长度<br>position | 下一个要操作的数据元素的位置<br>limit |缓冲区数组不可操作的下一个元素的位置，limit&lt;=capacity<br>mark |用于记录当前position的前一个位置或者默认是0<br>实际操作时，关系如图：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image023.jpg" alt="image"><br>通过ByteBuffer.allocate(11)方法创建一个11个byte的数组缓冲区，初始状态如图，position位置为0，capacity和limit默认都是数组长度。当写入5个字节时位置变化如图：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image025.jpg" alt="image"><br>然后需要将缓冲区的5个字节数据写入Channel通信信道，所以需要调用byteBuffer.filp()方法，然后状态变成下面：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image027.jpg" alt="image"><br>这时磁层操作系统就可以从缓冲区中正确读取这5个字节数据发送出去。在下一次写数据之前，调用clear()方法，缓冲区的索引状态又回到初始位置。<br>还有一点需要说明，<strong>通过 Channel 获取的 I/O 数据首先要经过操作系统的 Socket 缓冲区再将数据复制到 Buffer 中</strong>，这个的操作系统缓冲区就是底层的 TCP 协议关联的 RecvQ 或者 SendQ 队列，从操作系统缓冲区到用户缓冲区复制数据比较耗性能，<strong>Buffer 提供了另外一种直接操作操作系统缓冲区的的方式</strong>即 ByteBuffer.allocateDirector(size)，这个方法返回的 byteBuffer 就是与底层存储空间关联的缓冲区，它的操作方式与 linux2.4 内核的 sendfile 操作方式类似。  </p>
-<p>NIO必然是实现高速IO。针对的是<strong>NIO将最耗时的I/O操作（即填充和提取缓冲区）转移回操作系统</strong>，因为极大地提高速度。  </p>
-<h2 id="流与块的比较"><a href="#流与块的比较" class="headerlink" title="流与块的比较"></a>流与块的比较</h2><p>就NIO是面向块来处理数据。但是块是如何存在？注意字符与字节只是传输的数据格式，重点就是传输方式磁盘以及网络IO。<strong>磁盘IO没有缓冲这么一说，但是网络也就是Socket IO会有缓冲区以及队列等</strong>。  
-从web开发来讲就是网络IO很容易发生阻塞，而磁盘的IO就是读写的话，读不会阻塞，本机自己写应该遇到阻塞很少，主要还是网络IO。所以==NIO主要面对的就是网络IO==。<br>在NIO中加入Buffer对象，就是一个创新，面向流的IO中，试讲数据直接写入或读到Stream对象中，而NIO是所有的数据都是用缓冲区处理的，读是读到缓冲区中，写是写到缓冲区中。然后通道的两端必然是缓冲区。<br>最主要是什么，就是使用了选择器单线程处理，IO就是通过多线程进行多个IO连接读写。但是线程的创建销毁就很麻烦，所以NIO使用选择器来处理，就是说进行轮询管理多个通道，进行处理。</p>
+<p>① <strong>程序计数器</strong>：就是在==JVM中多线程是通过线程轮流切换并分配处理器执行时间实现==的，那么无论何时事实上虚拟机中是只有一个线程在运行的，然后就是既然是线程切换，也就是线程每次切换的时候都需要记录当前运行状态，才能在下次切换回来的时候恢复到正确的执行位置，所以每个线程都应该有属于自己的独立的程序计数器。所以<strong>程序计数器是唯一一个不会出现内存溢出情况的区域</strong>。  
+② <strong>虚拟机栈</strong>：这个是在程序中方法运行的时候会创建一个栈帧，用于存储如局部变量表、操作数栈、指向运行时常量池的引用、方法返回地址以及附加信息等。这个使用栈结构主要是因为方法里面可能是套方法的，要后进先出的。这个栈区域有两种异常情况：a. 就是==线程请求的栈深度大于虚拟机所允许的深度==，所以有==StackOverflowError==；b. 有些虚拟机栈的==深度是可以动态扩展==的，如果==扩展时无法申请到足够的内存==，==就会抛出OutOfMemoryError异常==。<br><img src="https://note.youdao.com/yws/api/personal/file/269164774B734384A73F776B9ADF8C49?method=download&shareKey=76da4a38930dd9fa649599a10ed9a96a" alt="image"><br>③ <strong>本地方法区（栈）</strong>：本地方法栈与虚拟机栈是相似的，只不过虚拟机栈是为了虚拟机执行java方法（也就是字节码）服务的，而==本地方法栈是为了虚拟机使用的<strong>Native</strong>方法服务==的。可能出现的异常也是和虚拟机栈一样。<br>然后即使线程共享的：<br>④ <strong>java堆</strong>：是唯一程序员可以管理的，该地方的唯一目的就是：==存放对象实例==。就是所有的对象实例以及数组都要在堆上分配。基本上Java堆是虚拟机管理的内存中最大的一块，==在虚拟机启动时创建，通过参数“-Xmx和-Xms”控制==。java堆是垃圾回收器管理的主要区域。<br>但是java堆肯定不是直接一大坨就是让你放，为了更加方便管理，它的分类方式有：<br>从<strong>内存分配角度</strong>看，线程共享的java堆中可能划分==出多个线程私有的分配缓冲区==；<br>从<strong>内存回收的角度</strong>看，是可以细分为：==新生代以及老年代==，再细分就是==Eden空间、from survivor空间以及to survivor空间==。<br>然后就是当堆中<strong>没有内存完成实例分配，并且堆也无法再扩展</strong>时，将会抛出OutOfMemoryError异常。<br>⑤ <strong>方法区</strong>：它就是用于存储已经被虚拟机加载的==类信息、常量、静态变量、即时编译器编译后的代码==等数据，关于这部分的垃圾收集，就是很随意甚至可以选择不实现垃圾收集，而且即使垃圾收集它也是在做==类信息的卸载以及常量池的回收==。依旧报异常也是在报OutOfMemoryError。<br>⑥ <strong>运行时常量池</strong>：是方法区的一部分，是用于存放编译期生成的各种字面变量和符号引用，这部分内容将在类加载后进入方法区的运行时常量池中存放。<br>⑦ <strong>直接内存</strong>：由于JDK中新加的NIO类，引入了一种基于通道和缓存区的I/O方式，就可以使用Native函数库直接分配==堆外内存==，然后通过一个存储在java堆中的DirectByteBuffer对象作为这块内存的引用进行操作。这样就避免了来回在java堆和native堆中来回复制数据。  </p>
+<hr>
+<h1 id="对象的创建"><a href="#对象的创建" class="headerlink" title="对象的创建"></a>对象的创建</h1><p><img src="https://note.youdao.com/yws/api/personal/file/E85F0D9BDF47463588EE7508938C36CB?method=download&shareKey=59e878fc7ca5f02b5217d9a51f18436e" alt="image"><br>首先说明这个对象就是java对象，是不包含数组和class对象的，然后就是需要在常量池中看该类是不是已经被加载过，没有的话就需要去进行类加载，java类加载过程如图：<br><img src="https://note.youdao.com/yws/api/personal/file/0DCEC00668DD48E9BE6CC9F9912FA1E9?method=download&shareKey=33f9b40a9b967799505e712bb73e0318" alt="image"><br>类加载完毕，就会在堆中对新生的这个对象实例分配内存，具体如何分配是依据与堆存储实例对象的方式，如果它直接将所有使用的内存放在一边，没用的放在另一边，指针挪动就可以，有的是堆里面通过一个空闲列表记录那些内存可用，哪些不可用，那就直接从空闲列表里面取就可以。但是依旧是具有多线程操作的这个问题，所以有两种解决方案：<br>① <strong>虚拟机使用CAS配上失败重试的方式保证更新操作的原子性</strong>。  
+② <strong>将内存分配的动作==按照线程划分在不同的空间之中进行==，即每个线程在java堆中预分配一小块内存，称之为==本地线程分配缓冲==</strong>。  </p>
+<h1 id="对象的内存布局"><a href="#对象的内存布局" class="headerlink" title="对象的内存布局"></a>对象的内存布局</h1><p>对象在内存中存储的布局可以分为：<strong>对象头、实例数据以及对齐填充</strong>。  
+其中对象头Mark Word如下：<br><img src="https://note.youdao.com/yws/api/personal/file/C2A8F7A928E0458493FF0A12369E1E5F?method=download&shareKey=0d46db2d64e46239b575fe1c545292f2" alt="image"><br>对象头的另外一部分<strong>是类型指针，即对象指向它的类元数据的指针</strong>。  
+然后就是实例数据，这个是对象最终要的部分。<br>至于对齐填充主要是因为<strong>在jvm中对象的大小必须是8字节的整数倍</strong>，那如果实例数据部分没有对齐，那就必须通过对齐填充来补全。<br>那程序运行的时候，也就是在方法运行的时候即虚拟机栈中，会使用到对象实例，所以对于对象的访问时至关重要的，对象的访问有两种方式：<br><img src="https://note.youdao.com/yws/api/personal/file/B643D236E62B4B68A98EC27BEFBABD49?method=download&shareKey=006f4d5e3c309e6864b7b68e67fc9f45" alt="image"><br><img src="https://note.youdao.com/yws/api/personal/file/8C6D629104E24317A182B8E40BF2265A?method=download&shareKey=7edbd534676210ba3179bb87466f9a1e" alt="image"><br>然后现在使用的是<strong>直接指针访问，因为定位快</strong>。但是需要说明的就是关于使用句柄，方便的是如果垃圾清理实例对象被移动了，那么就是只需要改变句柄中的指针就可以，就不用修改虚拟机栈中的引用（reference）了。  </p>
+<h1 id="OutOfMemoryError"><a href="#OutOfMemoryError" class="headerlink" title="OutOfMemoryError"></a>OutOfMemoryError</h1><h2 id="基于堆"><a href="#基于堆" class="headerlink" title="基于堆"></a>基于堆</h2><p>这个是这样，堆中存储的是对象实例，那如果说实例创建很多，就会导致报错“OutOfMemoryError”。但是一般这个有两种可能导致：<br>① <strong>内存泄漏</strong>：这个就是说因为错误或者其他可能导致==程序没有释放已经不用的内存==；<br>② <strong>内存溢出</strong>：这个就是创建太多活着的实例，那就可以去检查是不是中间可以把已经不用的删除掉；  </p>
+<h2 id="基于虚拟机栈和本地方法栈"><a href="#基于虚拟机栈和本地方法栈" class="headerlink" title="基于虚拟机栈和本地方法栈"></a>基于虚拟机栈和本地方法栈</h2><ul>
+<li>如果线程请求的栈深度大于虚拟机所允许的最大深度，就抛出StackOverflowError异常；</li>
+<li>如果虚拟机在扩展栈时无法申请到足够的内存空间，就抛出OutOfMemoryError异常；</li>
+</ul>
 
       
     </div>
@@ -432,7 +427,7 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/网络IO/" rel="tag"># 网络IO</a>
+            <a href="/tags/JVM/" rel="tag"># JVM</a>
           
         </div>
       
@@ -445,8 +440,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/15/HTTP之用户认证以及功能追加/" rel="next" title="HTTP之用户认证以及功能追加">
-                <i class="fa fa-chevron-left"></i> HTTP之用户认证以及功能追加
+              <a href="/2019/06/15/Schema与数据类型优化/" rel="next" title="Schema与数据类型优化">
+                <i class="fa fa-chevron-left"></i> Schema与数据类型优化
               </a>
             
           </div>
@@ -455,8 +450,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/15/java-socket编程/" rel="prev" title="java socket编程">
-                java socket编程 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/15/垃圾处理/" rel="prev" title="垃圾处理">
+                垃圾处理 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -591,7 +586,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘I-O的工作机制"><span class="nav-number">1.</span> <span class="nav-text">磁盘I/O的工作机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-Socket的工作机制"><span class="nav-number">2.</span> <span class="nav-text">java Socket的工作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立通信链路"><span class="nav-number">2.1.</span> <span class="nav-text">建立通信链路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据传输"><span class="nav-number">2.2.</span> <span class="nav-text">数据传输</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NIO的工作方式"><span class="nav-number">3.</span> <span class="nav-text">NIO的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NIO的工作机制"><span class="nav-number">3.1.</span> <span class="nav-text">NIO的工作机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer的工作方式"><span class="nav-number">3.2.</span> <span class="nav-text">Buffer的工作方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流与块的比较"><span class="nav-number">4.</span> <span class="nav-text">流与块的比较</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM运行时区域"><span class="nav-number">1.</span> <span class="nav-text">JVM运行时区域</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象的创建"><span class="nav-number">2.</span> <span class="nav-text">对象的创建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对象的内存布局"><span class="nav-number">3.</span> <span class="nav-text">对象的内存布局</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OutOfMemoryError"><span class="nav-number">4.</span> <span class="nav-text">OutOfMemoryError</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基于堆"><span class="nav-number">4.1.</span> <span class="nav-text">基于堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于虚拟机栈和本地方法栈"><span class="nav-number">4.2.</span> <span class="nav-text">基于虚拟机栈和本地方法栈</span></a></li></ol></li></ol></div>
             
 
           </div>
