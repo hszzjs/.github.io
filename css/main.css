@@ -186,7 +186,7 @@ th {
 body {
   position: relative;
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 2;
   color: #555;
   background: #f5f7f9;
@@ -203,7 +203,7 @@ body {
 }
 @media (min-width: 1600px) {
   body {
-    font-size: 22px;
+    font-size: 18px;
   }
 }
 h1,
@@ -445,7 +445,7 @@ body {
 .header-inner {
   margin: 0 auto;
   padding: 100px 0 70px;
-  width: 700px;
+  width: 900px;
 }
 @media (min-width: 1600px) {
   .container .header-inner {
@@ -457,7 +457,7 @@ body {
 }
 .main-inner {
   margin: 0 auto;
-  width: 700px;
+  width: 900px;
 }
 @media (min-width: 1600px) {
   .container .main-inner {
@@ -474,7 +474,7 @@ body {
 .footer-inner {
   box-sizing: border-box;
   margin: 20px auto;
-  width: 700px;
+  width: 900px;
 }
 @media (min-width: 1600px) {
   .container .footer-inner {
@@ -1238,7 +1238,7 @@ pre .javascript .function {
 .post-body .figure .caption {
   margin: -20px auto 15px;
   text-align: center;
-  font-size: 20px;
+  font-size: 16px;
   color: #999;
   font-weight: bold;
   line-height: 1;
@@ -1823,7 +1823,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #eb12d7;
+  background: #b91ff7;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2599,7 +2599,7 @@ pre .javascript .function {
 .header {
   position: relative;
   margin: 0 auto;
-  width: 960px;
+  width: 1200px;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .header {
@@ -2659,7 +2659,7 @@ pre .javascript .function {
   }
 }
 .container .main-inner {
-  width: 960px;
+  width: 1200px;
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .container .main-inner {
@@ -2675,7 +2675,7 @@ pre .javascript .function {
   float: right;
   box-sizing: border-box;
   padding: 40px;
-  width: 700px;
+  width: 900px;
   background: #fff;
   min-height: 700px;
   box-shadow: initial;
@@ -2718,7 +2718,7 @@ pre .javascript .function {
   display: none;
 }
 .footer-inner {
-  width: 960px;
+  width: 1200px;
   padding-left: 260px;
 }
 @media (min-width: 768px) and (max-width: 991px) {
@@ -2990,4 +2990,17 @@ pre .javascript .function {
   .post-body {
     text-align: justify;
   }
+}
+.post-toc .nav .nav-child {
+  display: block;
+}
+.post-toc ol {
+  font-size: 13px;
+}
+.bg_content {
+  position: fixed;
+  top: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
 }
