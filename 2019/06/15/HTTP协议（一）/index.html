@@ -79,21 +79,23 @@
 
 
 
-<meta name="description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
+<meta name="description" content="TCP/IP的分层管理应用层应用层决定了向用户提供应用服务时通信的活动；TCP/IP协议族内预存了各类通用的应用服务，比如，FTP（File Transfer Protocol，文件传输协议）和DNS（Domain Name System，域名系统）服务就是其中两类。HTTP协议也是位于该层。">
 <meta name="keywords" content="通信协议">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTPS详解">
-<meta property="og:url" content="http://yoursite.com/2019/06/14/HTTPS详解/index.html">
+<meta property="og:title" content="HTTP协议（一）">
+<meta property="og:url" content="http://yoursite.com/2019/06/15/HTTP协议（一）/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
+<meta property="og:description" content="TCP/IP的分层管理应用层应用层决定了向用户提供应用服务时通信的活动；TCP/IP协议族内预存了各类通用的应用服务，比如，FTP（File Transfer Protocol，文件传输协议）和DNS（Domain Name System，域名系统）服务就是其中两类。HTTP协议也是位于该层。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/69B5155913704248B013D2FF44F4A796?method=download&shareKey=10e91fb8ea6b12344d8f9ff76ae07e63">
-<meta property="og:updated_time" content="2019-06-15T03:52:07.005Z">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/F85FC9E9DF7E4E7CB21D5B2FED1F73DD?method=download&shareKey=8d196b0e9a1d68640a39014145d88105">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/51007AC50094416AA0CA856328579759?method=download&shareKey=8607186e157d2b0a342467d55609355b">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/C6D7F40FCCFC48A7BD9B4115BDCB9502?method=download&shareKey=3bd2688a1775420029cf8adc5b80bc3b">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/B993E4C8937E4FCC91CE7074AAEF8A60?method=download&shareKey=0e219baffe98bd9f480066c0749e3ba4">
+<meta property="og:updated_time" content="2019-06-15T07:58:37.376Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTPS详解">
-<meta name="twitter:description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
-<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46">
+<meta name="twitter:title" content="HTTP协议（一）">
+<meta name="twitter:description" content="TCP/IP的分层管理应用层应用层决定了向用户提供应用服务时通信的活动；TCP/IP协议族内预存了各类通用的应用服务，比如，FTP（File Transfer Protocol，文件传输协议）和DNS（Domain Name System，域名系统）服务就是其中两类。HTTP协议也是位于该层。">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/F85FC9E9DF7E4E7CB21D5B2FED1F73DD?method=download&shareKey=8d196b0e9a1d68640a39014145d88105">
 
 
 
@@ -123,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/14/HTTPS详解/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/15/HTTP协议（一）/">
 
 
 
 
 
-  <title>HTTPS详解 | 天生的努力家</title>
+  <title>HTTP协议（一） | 天生的努力家</title>
   
 
 
@@ -299,7 +301,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/14/HTTPS详解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/HTTP协议（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -316,7 +318,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HTTPS详解</h1>
+          <h1 class="post-title" itemprop="name headline">HTTP协议（一）</h1>
         
 
         <div class="post-meta">
@@ -328,8 +330,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-14T21:24:56+08:00">
-                2019-06-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T15:54:18+08:00">
+                2019-06-15
               </time>
             
 
@@ -388,27 +390,49 @@
       
 
       
-        <h1 id="HTTP的bug"><a href="#HTTP的bug" class="headerlink" title="HTTP的bug"></a>HTTP的bug</h1><h2 id="通信使用明文可能会被窃听"><a href="#通信使用明文可能会被窃听" class="headerlink" title="通信使用明文可能会被窃听"></a>通信使用明文可能会被窃听</h2><h3 id="TCP-IP是可能被窃听的网络"><a href="#TCP-IP是可能被窃听的网络" class="headerlink" title="TCP/IP是可能被窃听的网络"></a>TCP/IP是可能被窃听的网络</h3><p><strong>按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视</strong>。  
-窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。  </p>
+        <h1 id="TCP-IP的分层管理"><a href="#TCP-IP的分层管理" class="headerlink" title="TCP/IP的分层管理"></a>TCP/IP的分层管理</h1><h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><p><strong>应用层决定了向用户提供应用服务时通信的活动</strong>；TCP/IP协议族内预存了各类通用的应用服务，比如，FTP（File Transfer Protocol，文件传输协议）和DNS（Domain Name System，域名系统）服务就是其中两类。HTTP协议也是位于该层。  </p>
 <a id="more"></a>
-<h3 id="加密处理防止被窃听"><a href="#加密处理防止被窃听" class="headerlink" title="加密处理防止被窃听"></a>加密处理防止被窃听</h3><p>加密的对象可以有：  </p>
-<h4 id="通信的加密"><a href="#通信的加密" class="headerlink" title="通信的加密"></a>通信的加密</h4><p>HTTP协议中没有加密机制，但可以通过和SSL或者TLS的组合使用，加密HTTP的通信内容。<br><strong>就是用SSL建立安全通信线路之后，就可以在这条线路上进行HTTP通信了</strong>。与SSL组合使用的HTTP被称为HTTPS。  </p>
-<h4 id="内容的加密"><a href="#内容的加密" class="headerlink" title="内容的加密"></a>内容的加密</h4><p>这个是<strong>将参与通信的内容本身加密</strong>的方式。由于HTTP协议中没有加密机制，那么就对HTTP协议传输的内容本身加密。即把HTTP报文里包含的内容进行加密处理。<br>即对于报文主体进行加密处理。<br>但是，由于该方式不同于 SSL 或 TLS 将整个通信线路加密处理， 所以内容仍有被篡改的风险。  </p>
-<h3 id="不验证通信方的身份就可能遭遇伪装"><a href="#不验证通信方的身份就可能遭遇伪装" class="headerlink" title="不验证通信方的身份就可能遭遇伪装"></a>不验证通信方的身份就可能遭遇伪装</h3><h4 id="任何人都可发起请求"><a href="#任何人都可发起请求" class="headerlink" title="任何人都可发起请求"></a>任何人都可发起请求</h4><h4 id="查明对手的证书"><a href="#查明对手的证书" class="headerlink" title="查明对手的证书"></a>查明对手的证书</h4><p>虽然使用 HTTP 协议无法确定通信方，但如果使用SSL则可以。<strong>SSL不仅提供加密处理，而且还使用了一种被称为证书的手段， 可用于确定方</strong>。  
-证书很难伪造。<br><strong>客户端持有证书即可完成个人身份的确认，也可用于对web网站的认证环节</strong>。  </p>
-<h3 id="无法证明报文的完整性，可能已经遭到篡改"><a href="#无法证明报文的完整性，可能已经遭到篡改" class="headerlink" title="无法证明报文的完整性，可能已经遭到篡改"></a>无法证明报文的完整性，可能已经遭到篡改</h3><h4 id="接收的内容可能有误"><a href="#接收的内容可能有误" class="headerlink" title="接收的内容可能有误"></a>接收的内容可能有误</h4><h4 id="如何防止篡改"><a href="#如何防止篡改" class="headerlink" title="如何防止篡改"></a>如何防止篡改</h4><p>虽然有使用 HTTP 协议确定报文完整性的方法， 但事实上并不便捷、 可靠。 其中常用的是 MD5 和 SHA-1 等散列值校验的方法， 以及用来确认文件的数字签名方法。<br>事实上甚至大多数需要客户端的用户亲自验证，浏览器无法自动帮用户检查。<br>SSL 提供认证和加密处理及摘要功能。 仅靠 HTTP确保完整性是非常困难的，因此通过和其他协议组合使用来实现这个目标。  </p>
-<h2 id="HTTP-加密-认证-完整性保护-HTTPS"><a href="#HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="HTTP+加密+认证+完整性保护=HTTPS"></a>HTTP+加密+认证+完整性保护=HTTPS</h2><h3 id="HTTPS是表面为SSL的HTTP"><a href="#HTTPS是表面为SSL的HTTP" class="headerlink" title="HTTPS是表面为SSL的HTTP"></a>HTTPS是表面为SSL的HTTP</h3><p><img src="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46" alt="image">  </p>
-<h3 id="相互交换秘钥的公开密钥加密方式"><a href="#相互交换秘钥的公开密钥加密方式" class="headerlink" title="相互交换秘钥的公开密钥加密方式"></a>相互交换秘钥的公开密钥加密方式</h3><p>SSL采用一种叫<strong>公开密钥加密</strong>的加密处理方式。  </p>
-<h4 id="共享密钥加密的困境"><a href="#共享密钥加密的困境" class="headerlink" title="共享密钥加密的困境"></a>共享密钥加密的困境</h4><p>加密和解密<strong>同用一个密钥</strong>的方式称为共享密钥加密（Common key crypto system） ， 也被叫做<strong>对称密钥加密</strong>。  
-这样一旦秘钥在客户端与服务器端进行交换的时候，被监听获取，就很尴尬了。  </p>
-<h3 id="使用两把秘钥的公开密钥加密"><a href="#使用两把秘钥的公开密钥加密" class="headerlink" title="使用两把秘钥的公开密钥加密"></a>使用两把秘钥的公开密钥加密</h3><p>公开密钥加密使用一对非对称的密钥。 一把叫做私有密钥（private key） ， 另一把叫做公开密钥（public key） 。顾名思义， <strong>私有密钥不能让其他任何人知道， 而公开密钥则可以随意发布</strong>， 任何人都可以获得。<br>这个就是公钥用于加密，私钥用于解密，反正公钥是共享的谁都可以得到。所以互送一下秘钥也是可以的。  </p>
-<h4 id="HTTPS采用混合加密机制"><a href="#HTTPS采用混合加密机制" class="headerlink" title="HTTPS采用混合加密机制"></a>HTTPS采用混合加密机制</h4><p>这么做主要是考虑到公开密钥加密的处理速度很慢。所以就可以通过公开密钥加密的来确保共享密钥加密的秘钥只有客户端与服务器端拥有，然后直接使用共享加密来对于通信内容进行加密。  </p>
-<h3 id="证明公开密钥正确性的证书"><a href="#证明公开密钥正确性的证书" class="headerlink" title="证明公开密钥正确性的证书"></a>证明公开密钥正确性的证书</h3><p>还有一个个问题就是在于无法确认公开密钥在交换的时候的安全性，那么咋搞。就使用由数字证书认证机构（CA）和其相关机关颁发的公开密钥证书。<br>数字证书认证机构在判明提出申请者的身份之后， 会对已申请的公开密钥做数字签名， 然后分配这个已签名的公开密钥， 并将该公开密钥放入公钥证书后绑定在一起。<br>接到证书的客户端可使用数字证书认证机构的公开密钥，对那张证书上的数字签名进行验证，一旦验证通过，客户端便可明确两件事： 一， 认证服务器的公开密钥的是真实有效的数字证书认证机构。 二， 服务器的公开密钥是值得信赖的。<br><img src="https://note.youdao.com/yws/api/personal/file/69B5155913704248B013D2FF44F4A796?method=download&shareKey=10e91fb8ea6b12344d8f9ff76ae07e63" alt="image">  </p>
-<h4 id="可证明组织真实性的-EV-SSL-证书"><a href="#可证明组织真实性的-EV-SSL-证书" class="headerlink" title="可证明组织真实性的 EV SSL 证书"></a>可证明组织真实性的 EV SSL 证书</h4><h4 id="用以确认客户端的客户端证书"><a href="#用以确认客户端的客户端证书" class="headerlink" title="用以确认客户端的客户端证书"></a>用以确认客户端的客户端证书</h4><p>以客户端证书进行客户端认证， 证明服务器正在通信的对方始终是预料之内的客户端， 其作用跟服务器证书如出一辙。<br>安全性极高的认证机构可颁发客户端证书但仅用于特殊用途的业务。 比如那些可支撑客户端证书支出费用的业务。<br>事实上难点在于客户端并不是一定会拥有所谓的证书  </p>
-<h2 id="HTTPS的安全通信机制"><a href="#HTTPS的安全通信机制" class="headerlink" title="HTTPS的安全通信机制"></a>HTTPS的安全通信机制</h2><p><strong>步 骤1 :</strong>  <strong>客户端通过发送 Client Hello报文开始SSL通信</strong>。报文中包含客户端支持的SSL的指定版本、加密组件（Cipher Suite） 列表（所使用的加密算法及密钥长度等） 。<br><strong>步 骤2 :</strong>  <strong>服务器可进行SSL通信时，会以Server Hello报文作为应答</strong>。和客户端一样，在报文中包含SSL版本以及加密组件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的<br><strong>步 骤3 :</strong> 之后服务器发送 Certificate 报文。 报文中包含<strong>公开密钥证书</strong>。
-<strong>步 骤4 :</strong> 最后服务器发送 Server Hello Done 报文通知客户端， 最初阶段的 <strong>SSL 握手协商</strong>部分结束。<br><strong>步 骤5 :</strong> SSL 第一次握手结束之后， 客户端以 Client Key Exchange 报文作为回应。报文中包含通信加密中使用的一种被称为 <strong>Pre-master secret 的随机密码串</strong>。 该报文已用步骤 3 中的公开密钥进行加密。<br><strong>步 骤6 :</strong> 接着客户端继续发送 Change Cipher Spec 报文。 该报文会提示服务器， <strong>在此报文之后的通信会采用 Pre-master secret 密钥加</strong>密。<br><strong>步 骤7 :</strong> <strong>客户端发送 Finished 报文</strong>。 该报文包含连接至今全部报文的整体校验值。 这次握手协商是否能够成功， 要以服务器是否能够正确解密该报文作为判定标准。<br><strong>步 骤8 :</strong> 服务器同样发送 Change Cipher Spec 报文。<br><strong>步 骤9 :</strong> 服务器同样发送 Finished 报文。<br><strong>步 骤10 :</strong> 服务器和客户端的 <strong>Finished 报文交换完毕之后， SSL 连接就算建立完成</strong>。 当然， 通信会受到 SSL的保护。 从此处开始进行应用层协议的通信， 即发送 HTTP 请求。<br><strong>步 骤11 :</strong> 应用层协议通信， 即发送 HTTP 响应。<br><strong>步 骤12 :</strong> 最后由客户端断开连接。 断开连接时， 发送 close_notify 报文。 上图做了一些省略， 这步之后再发送 TCP FIN 报文来关闭与 TCP 的通信。</p>
-<p>事实上可以认为整个https是分为四个阶段：<br>① 客户端发起请求，协商好要用的SSL版本等，服务器端再通过回复报文，将公开密钥证书给客户端，这就是SSL握手协商；<br>② 接着客户端就通过拿到的公开密钥将随机密码串加密给到服务器端，然后客户端使用那个密码串加密的Finished报文给服务器，服务器解密成功，再回复Finished加密报文，客户端解密成功，那就哦了；<br>③ 开始使用那个密码串进行HTTP层的传输。所以上面就可以认为是SSL层的。<br>④ 结束后，就是使用TCP FIN那一套结束通信。<br>在以上流程中， 应用层发送数据时会附加一种叫做 MAC（Message Authentication Code） 的报文摘要。MAC 能够查知报文是否遭到篡改， 从而保护报文的完整性。  </p>
-<h4 id="SSl和TLS"><a href="#SSl和TLS" class="headerlink" title="SSl和TLS"></a>SSl和TLS</h4><p>HTTPS 比 HTTP 要慢 2 到 100 倍。<br>SSL 的慢分两种。 一种是指<strong>通信慢</strong>。 另一种是指由于<strong>大量消耗 CPU 及内存等资源</strong>， 导致处理速度变慢。  </p>
+<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><p><strong>传输层对上层应用层，提供出于网络连接中的两台计算机之间的数据传输</strong>。在传输层有两个性质不同的协议：TCP（Transmission Control Protocol，传输控制协议）和UDP（User Data Protocol，用户数据协议）。  </p>
+<h2 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h2><p><strong>网络层用于处理在网络上流动的数据包，数据包是网络传输的最小数据单位</strong>。该层规定了通过怎样的路径（所谓的传输路线）到达对方计算机，并把数据包送给对方。<br>与对方计算机之间通过多态计算机或网络设备进行传输时，网络层所起的作用就是在众多选项内选择一条传输路线。  </p>
+<h2 id="链路层"><a href="#链路层" class="headerlink" title="链路层"></a>链路层</h2><p>用于胡成立连接网络的硬件部分，包括控制操作系统、硬件的设备驱动、NIC、以及光纤等物理可见部分（还包括连接器等一切传输媒介）。硬件的范畴均在链路层的作用范围之间。<br>HTTP==》TCP ==》 IP ==》 网络  </p>
+<h1 id="与HTTP关系密切的协议：IP、TCP以及DNS"><a href="#与HTTP关系密切的协议：IP、TCP以及DNS" class="headerlink" title="与HTTP关系密切的协议：IP、TCP以及DNS"></a>与HTTP关系密切的协议：IP、TCP以及DNS</h1><h2 id="负责传输的IP协议"><a href="#负责传输的IP协议" class="headerlink" title="负责传输的IP协议"></a>负责传输的IP协议</h2><p>IP位于网络层，使用ARP协议凭借MAC地址进行通信。  </p>
+<h2 id="确保可靠性的TCP协议"><a href="#确保可靠性的TCP协议" class="headerlink" title="确保可靠性的TCP协议"></a>确保可靠性的TCP协议</h2><p>TCP位于传输层，提供可靠的字节流服务，所谓的==字节流服务==是指，为了方便传输，将大块的数据分割为==报文段（segment）为单位的数据包进行管理==。而可靠的传输服务是指，能够将数据准确可靠地传给对方。TCP协议为了更容易传送大数据才把数据分割，而且TCP协议能够确认数据最终是否送达对方。  </p>
+<h2 id="负责域名解析的DNS服务"><a href="#负责域名解析的DNS服务" class="headerlink" title="负责域名解析的DNS服务"></a>负责域名解析的DNS服务</h2><p>DNS也是应用于应用层的协议，它提供域名到IP地址之间的解析服务<br><img src="https://note.youdao.com/yws/api/personal/file/F85FC9E9DF7E4E7CB21D5B2FED1F73DD?method=download&shareKey=8d196b0e9a1d68640a39014145d88105" alt="image">  </p>
+<h1 id="URI（统一资源标识符）与URL（统一资源定位符）"><a href="#URI（统一资源标识符）与URL（统一资源定位符）" class="headerlink" title="URI（统一资源标识符）与URL（统一资源定位符）"></a>URI（统一资源标识符）与URL（统一资源定位符）</h1><h2 id="URI"><a href="#URI" class="headerlink" title="URI"></a>URI</h2><p><strong>Uniform</strong>：规定统一的格式可方便处理多种不同类型的资源，而不用根据上下文环境来识别资源指定的访问方式。另外加入新增的协议方案（如HTTP:或ftp:）也更容易。<br><strong>Resource</strong>：资源的定义是“可标识的任何东西”。除了文档文件、图像或服务（例如当天的天气预报）等能够区别于其他类型的，全都可作为资源。另外资源不仅可以是单一的，也可以是多数的集合体。<br><strong>Identitier</strong>：标识可标识的对象，也称为标识符，综上所述，URI就是由某个协议方案标识的资源的定位标识符。协议方案是指访问资源所使用的协议类型名。  </p>
+<p>URI是用字符串标识某一互联网资源，而URL标识资源的地点（互联网上所处的位置）。可见URL是URI的子集。  </p>
+<h3 id="URI格式"><a href="#URI格式" class="headerlink" title="URI格式"></a>URI格式</h3><p><img src="https://note.youdao.com/yws/api/personal/file/51007AC50094416AA0CA856328579759?method=download&shareKey=8607186e157d2b0a342467d55609355b" alt="image"><br>使用 http: 或 https: 等协议方案名获取访问资源时要指定协议类型。不区分字母大小写，最后附一个冒号（:） 。<br>也可使用 data: 或 javascript: 这类指定数据或脚本程序的方案名。<br><strong>登录信息认证</strong>：指定用户名和密码作为服务器端获取资源时必要的登录信息（身份认证），此项是可选项。<br><strong>服务器地址</strong>：使用绝对URI必须指定带访问的服务器地址，地址可以是类似hackr.jp这种DNS可解析的名称，或是1992.168.1.1这类IPv4地址名，还可以是[0:0:0:0:0:0:0:1]这样用方括号括起来的IPv6地址名。<br><strong>服务器端口号</strong>：指定服务器连接的网络端口号。此项也是可选项，若用户省略则自动使用默认端口号。<br><strong>带层次的文件路径</strong>：指定服务器上的文件路径来定位特指的资源。这与UNIX系统的文件目录结构相似。<br><strong>查询字符串</strong>：针对已指定的文件路径内的资源，可以使用查询字符串传入任意参数。此项可选。<br><strong>片段标识符</strong>：使用片段标识符通常可标记出已获取资源中的子资源（文档内的某个位置） 。 但在 RFC 中并没有明确规定其使用方法。 该项也为可选项。  </p>
+<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><p>主要基于HTTP/1.1版本。<br>HTTP协议主要是用于客户端和服务器端之间的通信。HTTP协议规定，请求从客户端发出，最后服务器端响应应该请求并返回。<br>客户端发送给某个HTTP服务器端的请求报文中的内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /index.htm HTTP/1.1</span><br><span class="line">Host: hackr.jp</span><br></pre></td></tr></table></figure>
+
+<p>起始行的get表示请求访问服务器的类型，称为方法，随后的字符串就表示了请求访问的资源对象，也就是请求的URI。最后的HTTP那个就是HTTP的版本号，用来提示客户端的HTTP协议功能。<br>所以说<strong>请求报文是由请求方法、请求URI、协议版本、可选的请求首部字段和内容实体构成</strong>。  
+接收到请求的服务器，会将请求内容的处理结果以响应的形式返回。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Tue, 10 Jul 2012 06:50:15 GMT</span><br><span class="line">Content-Length: 362</span><br><span class="line">Content-Type: text/html</span><br><span class="line"></span><br><span class="line">&lt;html&gt;</span><br><span class="line">……</span><br></pre></td></tr></table></figure>
+
+<p>就开始是协议版本号，然后==就是200 OK表示的就是请求的处理结果的状态码以及原因短语==。下一行显示了创建响应的日期时间，是首部字段内的一个属性。<br>接着以一空行分割，之后的内容称为资源实体的主体。响应报文基本上由协议版本、状态码（表示请求成功或失败的数字代码）、用以解释状态码的原因短语、可选的响应首部字段以及实体构成。  </p>
+<h2 id="HTTP是不保存状态的协议"><a href="#HTTP是不保存状态的协议" class="headerlink" title="HTTP是不保存状态的协议"></a>HTTP是不保存状态的协议</h2><p><strong>HTTP是无状态协议</strong>，HTTP协议自身不对请求和响应之间的通信状态进行保存，也就是说==HTTP协议对于发送过的请求或响应都不做持久化处理==。<br>为何这么做，主要是<strong>为了更快地处理大量事务，确保协议的可伸缩性</strong>，而特意把HTTP协议涉及成如此简单的。<br>虽然HTTP是无状态协议，但是依旧希望可以实现期望的保存状态功能，于是就引入了Cookie技术，使得状态得以管理。  </p>
+<h2 id="请求URI定位资源"><a href="#请求URI定位资源" class="headerlink" title="请求URI定位资源"></a>请求URI定位资源</h2><p>==HTTP协议使用URI定位互联网上的资源==，正式因为URI的特定功能，在互联网上任意位置的资源都能访问到。<br>当客户端请求访问资源而发送请求时，URI需要将作为报文中的请求URI包含在内，指定请求URI的方式有很多。<br>然后就是如果不是访问特定资源而胡思对服务器本身发起请求，可以用一个*来代替请求URI。下面这个例子就是查询HTTP服务器端支持的HTTP方法种类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OPTIONS * HTTP/1.1</span><br></pre></td></tr></table></figure>
+
+<h2 id="告知服务器意图的HTTP方法"><a href="#告知服务器意图的HTTP方法" class="headerlink" title="告知服务器意图的HTTP方法"></a>告知服务器意图的HTTP方法</h2><h3 id="GET：获取资源"><a href="#GET：获取资源" class="headerlink" title="GET：获取资源"></a>GET：获取资源</h3><p><strong>GET方法是用来请求访问已被URI识别的资源</strong>。指定的资源服务器端解析后返回响应内容。也就是说，如果请求的资源是文本，那就保持原样返回；如果是像CGI（Common Gateway Interface，通用网管接口）那样的程序，就返回经过执行后的输出结果。  </p>
+<h3 id="POST：传输实体主体"><a href="#POST：传输实体主体" class="headerlink" title="POST：传输实体主体"></a>POST：传输实体主体</h3><p>POST方法用来传输实体的主体。==虽然GET方法也可以传输实体的主体，但是一般不用GET方法进行传输，而是使用POST方法==。虽说POST的功能与GET相似，但是POST的主要目的并不是获取响应的主体内容。  </p>
+<h3 id="put：传输文件"><a href="#put：传输文件" class="headerlink" title="put：传输文件"></a>put：传输文件</h3><p>put方法用于传输文件，就像ftp协议的的文件上传一样，<strong>要求在请求报文的主体中的主体中包含文件内容，然后保存到请求URI指定的位置</strong>。  
+但是由于HTTP/1.1的PUT方法自身不带验证机制，任何人都可以上传文件，存在安全性问题，因此一般的web网站不使用该方法。若配合web应用程序的验证机制，或架构设计采用REST<br>（表征状态转移）标准的同类web网站，就可能开放使用PUT方法。  </p>
+<h3 id="HEAD：获得报文首部"><a href="#HEAD：获得报文首部" class="headerlink" title="HEAD：获得报文首部"></a>HEAD：获得报文首部</h3><p>HEAD方法和GET方法一样，<strong>只是不返回报文主题部分</strong>，用于确认URI的有效性以及资源更新的日期时间。  </p>
+<h3 id="DELETE：删除文件"><a href="#DELETE：删除文件" class="headerlink" title="DELETE：删除文件"></a>DELETE：删除文件</h3><p>DELETE方法用于删除文件，是与PUT相反的方法。<strong>DELETE方法按请求URI删除指定的资源</strong>。  
+但是， HTTP/1.1 的 DELETE 方法本身和 PUT 方法一样不带验证机制， 所以一般的 Web网站也不使用DELETE 方法。 当配合 Web 应用程序的验证机制， 或遵守 REST标准时还是有可能会开放使用的。  </p>
+<h3 id="OPTIONS：询问支持的方法"><a href="#OPTIONS：询问支持的方法" class="headerlink" title="OPTIONS：询问支持的方法"></a>OPTIONS：询问支持的方法</h3><p>就是直接查询针对请求URI指定的资源支持的方法。  </p>
+<h3 id="Trace：追踪路径"><a href="#Trace：追踪路径" class="headerlink" title="Trace：追踪路径"></a>Trace：追踪路径</h3><p>==TRACE方法就是让web服务器端将之前的请求通信环回给客户端的方法==。<br>发送请求时，在Max-Forwards首部字段中填入数值，每经过一个服务器端就将该数字减1，当数值刚好减到0时，就停止继续传输，最后接收到请求的服务器端则返回状态码200 OK的响应。<br>但是Trace方法不怎么常用，再加上它容易引发XST（跨站追踪）攻击，通常更不会用到。  </p>
+<h3 id="CONNECT：要求用隧道协议连接代理"><a href="#CONNECT：要求用隧道协议连接代理" class="headerlink" title="CONNECT：要求用隧道协议连接代理"></a>CONNECT：要求用隧道协议连接代理</h3><p><strong>CONNECT方法要求在与代理服务器通信时建立隧道，实现用隧道协议进行TCP通信</strong>。主要使用SSL（Secure Sockets Layer，安全套接层）和TLS（Transport Layer Security，传输层安全）协议把通信内容加密后经网络传输。<br>格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CONNECT 代理服务器名:端口号 HTTP版本</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/C6D7F40FCCFC48A7BD9B4115BDCB9502?method=download&shareKey=3bd2688a1775420029cf8adc5b80bc3b" alt="image"></p>
+<h2 id="使用方法下达命令"><a href="#使用方法下达命令" class="headerlink" title="使用方法下达命令"></a>使用方法下达命令</h2><p>向请求URI指定的资源发送请求报文时，采用称为方法的命令。<br>方法的作用在于，可以指定请求的资源按期望产生某种行为。方法中有GET、POST以及HEAD等。<br>如图：<br><img src="https://note.youdao.com/yws/api/personal/file/B993E4C8937E4FCC91CE7074AAEF8A60?method=download&shareKey=0e219baffe98bd9f480066c0749e3ba4" alt="image">  </p>
+<h2 id="持久连接节省通信量"><a href="#持久连接节省通信量" class="headerlink" title="持久连接节省通信量"></a>持久连接节省通信量</h2><p>这个主要是HTTP通信一次就要断开一次TCP连接，所以如果遇到一个包含多张图片的HTML页面时，这样断开连接多次就会增加所谓的通信量的开销。<br>所以解决方案如下：  </p>
+<h3 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h3><p>为了解决上述TCP连接问题，就有了持久连接，主要特点是：<strong>只要任意一端没有明确提出断开连接，则保持TCP连接状态</strong>。  
+所以就是说==持久连接是旨在建立1次TCP连接后进行多次请求和响应的交==互。<br>持久连接的好处就是在于减少了TCP连接的重复建立和断开所造成的额外开销，减轻了服务器端的负载。另外，减少开销的那部分时间，使HTTP请求和响应能够更早地结束，这样web页面的显示速度也就响应提高了。<br>在HTTP/1.1中，所有的连接默认都是持久连接，但在HTTP/1.0内并未标准化，虽然有一部分服务器通过非标准的手段实现了持久连接，但服务器端不一定能够支持持久连接。毫无疑问，除了服务器端，客户端也是需要持久化连接的。  </p>
+<h3 id="管线化"><a href="#管线化" class="headerlink" title="管线化"></a>管线化</h3><p>持久连接使得多数请求以管线化方式发送称为可能。从前发送请求后需等待并收到响应，才能发送下一个请求。管线化技术出现后，<strong>不用等待响应亦可直接发送下一个请求</strong>。  
+这样就能够做到<strong>同时并行发送多个请求</strong>，而不需要一个接一个地等待响应了。  </p>
+<h2 id="使用Cookie的状态管理"><a href="#使用Cookie的状态管理" class="headerlink" title="使用Cookie的状态管理"></a>使用Cookie的状态管理</h2><p><strong>无状态协议的优点就是不必保存状态，自然可减少服务器的CPU以及内存资源的消耗</strong>。从另一侧面说，也正是因为HTTP协议本身是非常简单的。<br>毕竟真的如果说让服务器记住所有连接的客户端，想想都有点可怕。<br>Cookie技术就是通过在请求和响应报文中写入Cookie信息来控制客户端的状态。Cookie会根据从服务器端发送的响应报文内的一个叫set-cookie的首部字段信息，通知客户端保存cookie。当下次客户端再往该服务器发送请求时，客户端会自动在请求报文中加入Cookie值后发送出去。<br>服务器端发现客户端发送过来的 Cookie 后， 会去检查究竟是从哪一个客户端发来的连接请求， 然后对比服务器上的记录， 最后得到之前的状态信息。</p>
 
       
     </div>
@@ -439,8 +463,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/14/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2019/06/15/TCP协议详解/" rel="next" title="TCP协议详解">
+                <i class="fa fa-chevron-left"></i> TCP协议详解
               </a>
             
           </div>
@@ -449,8 +473,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/15/hexo-添加标签分类/" rel="prev" title="hexo 添加标签分类">
-                hexo 添加标签分类 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/15/HTTP协议（二）/" rel="prev" title="HTTP协议（二）之报文">
+                HTTP协议（二）之报文 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -585,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP的bug"><span class="nav-number">1.</span> <span class="nav-text">HTTP的bug</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通信使用明文可能会被窃听"><span class="nav-number">1.1.</span> <span class="nav-text">通信使用明文可能会被窃听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP是可能被窃听的网络"><span class="nav-number">1.1.1.</span> <span class="nav-text">TCP/IP是可能被窃听的网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密处理防止被窃听"><span class="nav-number">1.1.2.</span> <span class="nav-text">加密处理防止被窃听</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通信的加密"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">通信的加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内容的加密"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">内容的加密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不验证通信方的身份就可能遭遇伪装"><span class="nav-number">1.1.3.</span> <span class="nav-text">不验证通信方的身份就可能遭遇伪装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#任何人都可发起请求"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">任何人都可发起请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查明对手的证书"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">查明对手的证书</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无法证明报文的完整性，可能已经遭到篡改"><span class="nav-number">1.1.4.</span> <span class="nav-text">无法证明报文的完整性，可能已经遭到篡改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接收的内容可能有误"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">接收的内容可能有误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何防止篡改"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">如何防止篡改</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-加密-认证-完整性保护-HTTPS"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP+加密+认证+完整性保护=HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS是表面为SSL的HTTP"><span class="nav-number">1.2.1.</span> <span class="nav-text">HTTPS是表面为SSL的HTTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相互交换秘钥的公开密钥加密方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">相互交换秘钥的公开密钥加密方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共享密钥加密的困境"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">共享密钥加密的困境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用两把秘钥的公开密钥加密"><span class="nav-number">1.2.3.</span> <span class="nav-text">使用两把秘钥的公开密钥加密</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS采用混合加密机制"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">HTTPS采用混合加密机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明公开密钥正确性的证书"><span class="nav-number">1.2.4.</span> <span class="nav-text">证明公开密钥正确性的证书</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可证明组织真实性的-EV-SSL-证书"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">可证明组织真实性的 EV SSL 证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用以确认客户端的客户端证书"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">用以确认客户端的客户端证书</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS的安全通信机制"><span class="nav-number">1.3.</span> <span class="nav-text">HTTPS的安全通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SSl和TLS"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">SSl和TLS</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-IP的分层管理"><span class="nav-number">1.</span> <span class="nav-text">TCP/IP的分层管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#应用层"><span class="nav-number">1.1.</span> <span class="nav-text">应用层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输层"><span class="nav-number">1.2.</span> <span class="nav-text">传输层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网络层"><span class="nav-number">1.3.</span> <span class="nav-text">网络层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链路层"><span class="nav-number">1.4.</span> <span class="nav-text">链路层</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#与HTTP关系密切的协议：IP、TCP以及DNS"><span class="nav-number">2.</span> <span class="nav-text">与HTTP关系密切的协议：IP、TCP以及DNS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#负责传输的IP协议"><span class="nav-number">2.1.</span> <span class="nav-text">负责传输的IP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确保可靠性的TCP协议"><span class="nav-number">2.2.</span> <span class="nav-text">确保可靠性的TCP协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#负责域名解析的DNS服务"><span class="nav-number">2.3.</span> <span class="nav-text">负责域名解析的DNS服务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#URI（统一资源标识符）与URL（统一资源定位符）"><span class="nav-number">3.</span> <span class="nav-text">URI（统一资源标识符）与URL（统一资源定位符）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#URI"><span class="nav-number">3.1.</span> <span class="nav-text">URI</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#URI格式"><span class="nav-number">3.1.1.</span> <span class="nav-text">URI格式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP协议"><span class="nav-number">4.</span> <span class="nav-text">HTTP协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP是不保存状态的协议"><span class="nav-number">4.1.</span> <span class="nav-text">HTTP是不保存状态的协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求URI定位资源"><span class="nav-number">4.2.</span> <span class="nav-text">请求URI定位资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#告知服务器意图的HTTP方法"><span class="nav-number">4.3.</span> <span class="nav-text">告知服务器意图的HTTP方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GET：获取资源"><span class="nav-number">4.3.1.</span> <span class="nav-text">GET：获取资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POST：传输实体主体"><span class="nav-number">4.3.2.</span> <span class="nav-text">POST：传输实体主体</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#put：传输文件"><span class="nav-number">4.3.3.</span> <span class="nav-text">put：传输文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HEAD：获得报文首部"><span class="nav-number">4.3.4.</span> <span class="nav-text">HEAD：获得报文首部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DELETE：删除文件"><span class="nav-number">4.3.5.</span> <span class="nav-text">DELETE：删除文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OPTIONS：询问支持的方法"><span class="nav-number">4.3.6.</span> <span class="nav-text">OPTIONS：询问支持的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Trace：追踪路径"><span class="nav-number">4.3.7.</span> <span class="nav-text">Trace：追踪路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CONNECT：要求用隧道协议连接代理"><span class="nav-number">4.3.8.</span> <span class="nav-text">CONNECT：要求用隧道协议连接代理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用方法下达命令"><span class="nav-number">4.4.</span> <span class="nav-text">使用方法下达命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#持久连接节省通信量"><span class="nav-number">4.5.</span> <span class="nav-text">持久连接节省通信量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#持久连接"><span class="nav-number">4.5.1.</span> <span class="nav-text">持久连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#管线化"><span class="nav-number">4.5.2.</span> <span class="nav-text">管线化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Cookie的状态管理"><span class="nav-number">4.6.</span> <span class="nav-text">使用Cookie的状态管理</span></a></li></ol></li></ol></div>
             
 
           </div>

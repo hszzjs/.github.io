@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="通信协议,">
+  <meta name="keywords" content="Java,网络IO,">
 
 
 
@@ -79,21 +79,26 @@
 
 
 
-<meta name="description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
-<meta name="keywords" content="通信协议">
+<meta name="description" content="java的I/O大概有80多个类，大概率上是可以分为四组：按照传输数据的数据格式：字节流与字符流，按照传输数据的传输方式：分为File（磁盘）与Socket（网络）。   所以影响IO的核心问题要么是数据格式影响要么就是传输方式影响。基于流的操作，前面已经介绍，有一点要注意的就是流最终卸载哪里必须要指定，要么是写到磁盘中要么是写到网络中，写网络事实上也是在写文件，只不过网络进一步处理就是底层操作系">
+<meta name="keywords" content="Java,网络IO">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTPS详解">
-<meta property="og:url" content="http://yoursite.com/2019/06/14/HTTPS详解/index.html">
+<meta property="og:title" content="深入分析java IO工作机制">
+<meta property="og:url" content="http://yoursite.com/2019/06/15/深入分析java-IO工作机制/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
+<meta property="og:description" content="java的I/O大概有80多个类，大概率上是可以分为四组：按照传输数据的数据格式：字节流与字符流，按照传输数据的传输方式：分为File（磁盘）与Socket（网络）。   所以影响IO的核心问题要么是数据格式影响要么就是传输方式影响。基于流的操作，前面已经介绍，有一点要注意的就是流最终卸载哪里必须要指定，要么是写到磁盘中要么是写到网络中，写网络事实上也是在写文件，只不过网络进一步处理就是底层操作系">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/69B5155913704248B013D2FF44F4A796?method=download&shareKey=10e91fb8ea6b12344d8f9ff76ae07e63">
-<meta property="og:updated_time" content="2019-06-15T03:52:07.005Z">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image015.jpg">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image017.jpg">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image019.jpg">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image021.jpg">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image023.jpg">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image025.jpg">
+<meta property="og:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image027.jpg">
+<meta property="og:updated_time" content="2019-06-15T08:21:27.216Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTPS详解">
-<meta name="twitter:description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
-<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46">
+<meta name="twitter:title" content="深入分析java IO工作机制">
+<meta name="twitter:description" content="java的I/O大概有80多个类，大概率上是可以分为四组：按照传输数据的数据格式：字节流与字符流，按照传输数据的传输方式：分为File（磁盘）与Socket（网络）。   所以影响IO的核心问题要么是数据格式影响要么就是传输方式影响。基于流的操作，前面已经介绍，有一点要注意的就是流最终卸载哪里必须要指定，要么是写到磁盘中要么是写到网络中，写网络事实上也是在写文件，只不过网络进一步处理就是底层操作系">
+<meta name="twitter:image" content="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image015.jpg">
 
 
 
@@ -123,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/14/HTTPS详解/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/15/深入分析java-IO工作机制/">
 
 
 
 
 
-  <title>HTTPS详解 | 天生的努力家</title>
+  <title>深入分析java IO工作机制 | 天生的努力家</title>
   
 
 
@@ -299,7 +304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/14/HTTPS详解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/深入分析java-IO工作机制/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -316,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HTTPS详解</h1>
+          <h1 class="post-title" itemprop="name headline">深入分析java IO工作机制</h1>
         
 
         <div class="post-meta">
@@ -328,8 +333,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-14T21:24:56+08:00">
-                2019-06-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:17:26+08:00">
+                2019-06-15
               </time>
             
 
@@ -388,27 +393,26 @@
       
 
       
-        <h1 id="HTTP的bug"><a href="#HTTP的bug" class="headerlink" title="HTTP的bug"></a>HTTP的bug</h1><h2 id="通信使用明文可能会被窃听"><a href="#通信使用明文可能会被窃听" class="headerlink" title="通信使用明文可能会被窃听"></a>通信使用明文可能会被窃听</h2><h3 id="TCP-IP是可能被窃听的网络"><a href="#TCP-IP是可能被窃听的网络" class="headerlink" title="TCP/IP是可能被窃听的网络"></a>TCP/IP是可能被窃听的网络</h3><p><strong>按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视</strong>。  
-窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。  </p>
+        <p>java的I/O大概有80多个类，大概率上是可以分为四组：<br>按照传输数据的数据格式：字节流与字符流，按照<strong>传输数据的传输方式：分为File（磁盘）与Socket（网络）</strong>。  
+所以影响IO的核心问题要么是数据格式影响要么就是传输方式影响。<br>基于流的操作，前面已经介绍，有一点要注意的就是流最终卸载哪里必须要指定，要么是写到磁盘中要么是写到网络中，写网络事实上也是在写文件，只不过网络进一步处理就是底层操作系统再将数据传送到其他地方而不是本地磁盘。  </p>
 <a id="more"></a>
-<h3 id="加密处理防止被窃听"><a href="#加密处理防止被窃听" class="headerlink" title="加密处理防止被窃听"></a>加密处理防止被窃听</h3><p>加密的对象可以有：  </p>
-<h4 id="通信的加密"><a href="#通信的加密" class="headerlink" title="通信的加密"></a>通信的加密</h4><p>HTTP协议中没有加密机制，但可以通过和SSL或者TLS的组合使用，加密HTTP的通信内容。<br><strong>就是用SSL建立安全通信线路之后，就可以在这条线路上进行HTTP通信了</strong>。与SSL组合使用的HTTP被称为HTTPS。  </p>
-<h4 id="内容的加密"><a href="#内容的加密" class="headerlink" title="内容的加密"></a>内容的加密</h4><p>这个是<strong>将参与通信的内容本身加密</strong>的方式。由于HTTP协议中没有加密机制，那么就对HTTP协议传输的内容本身加密。即把HTTP报文里包含的内容进行加密处理。<br>即对于报文主体进行加密处理。<br>但是，由于该方式不同于 SSL 或 TLS 将整个通信线路加密处理， 所以内容仍有被篡改的风险。  </p>
-<h3 id="不验证通信方的身份就可能遭遇伪装"><a href="#不验证通信方的身份就可能遭遇伪装" class="headerlink" title="不验证通信方的身份就可能遭遇伪装"></a>不验证通信方的身份就可能遭遇伪装</h3><h4 id="任何人都可发起请求"><a href="#任何人都可发起请求" class="headerlink" title="任何人都可发起请求"></a>任何人都可发起请求</h4><h4 id="查明对手的证书"><a href="#查明对手的证书" class="headerlink" title="查明对手的证书"></a>查明对手的证书</h4><p>虽然使用 HTTP 协议无法确定通信方，但如果使用SSL则可以。<strong>SSL不仅提供加密处理，而且还使用了一种被称为证书的手段， 可用于确定方</strong>。  
-证书很难伪造。<br><strong>客户端持有证书即可完成个人身份的确认，也可用于对web网站的认证环节</strong>。  </p>
-<h3 id="无法证明报文的完整性，可能已经遭到篡改"><a href="#无法证明报文的完整性，可能已经遭到篡改" class="headerlink" title="无法证明报文的完整性，可能已经遭到篡改"></a>无法证明报文的完整性，可能已经遭到篡改</h3><h4 id="接收的内容可能有误"><a href="#接收的内容可能有误" class="headerlink" title="接收的内容可能有误"></a>接收的内容可能有误</h4><h4 id="如何防止篡改"><a href="#如何防止篡改" class="headerlink" title="如何防止篡改"></a>如何防止篡改</h4><p>虽然有使用 HTTP 协议确定报文完整性的方法， 但事实上并不便捷、 可靠。 其中常用的是 MD5 和 SHA-1 等散列值校验的方法， 以及用来确认文件的数字签名方法。<br>事实上甚至大多数需要客户端的用户亲自验证，浏览器无法自动帮用户检查。<br>SSL 提供认证和加密处理及摘要功能。 仅靠 HTTP确保完整性是非常困难的，因此通过和其他协议组合使用来实现这个目标。  </p>
-<h2 id="HTTP-加密-认证-完整性保护-HTTPS"><a href="#HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="HTTP+加密+认证+完整性保护=HTTPS"></a>HTTP+加密+认证+完整性保护=HTTPS</h2><h3 id="HTTPS是表面为SSL的HTTP"><a href="#HTTPS是表面为SSL的HTTP" class="headerlink" title="HTTPS是表面为SSL的HTTP"></a>HTTPS是表面为SSL的HTTP</h3><p><img src="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46" alt="image">  </p>
-<h3 id="相互交换秘钥的公开密钥加密方式"><a href="#相互交换秘钥的公开密钥加密方式" class="headerlink" title="相互交换秘钥的公开密钥加密方式"></a>相互交换秘钥的公开密钥加密方式</h3><p>SSL采用一种叫<strong>公开密钥加密</strong>的加密处理方式。  </p>
-<h4 id="共享密钥加密的困境"><a href="#共享密钥加密的困境" class="headerlink" title="共享密钥加密的困境"></a>共享密钥加密的困境</h4><p>加密和解密<strong>同用一个密钥</strong>的方式称为共享密钥加密（Common key crypto system） ， 也被叫做<strong>对称密钥加密</strong>。  
-这样一旦秘钥在客户端与服务器端进行交换的时候，被监听获取，就很尴尬了。  </p>
-<h3 id="使用两把秘钥的公开密钥加密"><a href="#使用两把秘钥的公开密钥加密" class="headerlink" title="使用两把秘钥的公开密钥加密"></a>使用两把秘钥的公开密钥加密</h3><p>公开密钥加密使用一对非对称的密钥。 一把叫做私有密钥（private key） ， 另一把叫做公开密钥（public key） 。顾名思义， <strong>私有密钥不能让其他任何人知道， 而公开密钥则可以随意发布</strong>， 任何人都可以获得。<br>这个就是公钥用于加密，私钥用于解密，反正公钥是共享的谁都可以得到。所以互送一下秘钥也是可以的。  </p>
-<h4 id="HTTPS采用混合加密机制"><a href="#HTTPS采用混合加密机制" class="headerlink" title="HTTPS采用混合加密机制"></a>HTTPS采用混合加密机制</h4><p>这么做主要是考虑到公开密钥加密的处理速度很慢。所以就可以通过公开密钥加密的来确保共享密钥加密的秘钥只有客户端与服务器端拥有，然后直接使用共享加密来对于通信内容进行加密。  </p>
-<h3 id="证明公开密钥正确性的证书"><a href="#证明公开密钥正确性的证书" class="headerlink" title="证明公开密钥正确性的证书"></a>证明公开密钥正确性的证书</h3><p>还有一个个问题就是在于无法确认公开密钥在交换的时候的安全性，那么咋搞。就使用由数字证书认证机构（CA）和其相关机关颁发的公开密钥证书。<br>数字证书认证机构在判明提出申请者的身份之后， 会对已申请的公开密钥做数字签名， 然后分配这个已签名的公开密钥， 并将该公开密钥放入公钥证书后绑定在一起。<br>接到证书的客户端可使用数字证书认证机构的公开密钥，对那张证书上的数字签名进行验证，一旦验证通过，客户端便可明确两件事： 一， 认证服务器的公开密钥的是真实有效的数字证书认证机构。 二， 服务器的公开密钥是值得信赖的。<br><img src="https://note.youdao.com/yws/api/personal/file/69B5155913704248B013D2FF44F4A796?method=download&shareKey=10e91fb8ea6b12344d8f9ff76ae07e63" alt="image">  </p>
-<h4 id="可证明组织真实性的-EV-SSL-证书"><a href="#可证明组织真实性的-EV-SSL-证书" class="headerlink" title="可证明组织真实性的 EV SSL 证书"></a>可证明组织真实性的 EV SSL 证书</h4><h4 id="用以确认客户端的客户端证书"><a href="#用以确认客户端的客户端证书" class="headerlink" title="用以确认客户端的客户端证书"></a>用以确认客户端的客户端证书</h4><p>以客户端证书进行客户端认证， 证明服务器正在通信的对方始终是预料之内的客户端， 其作用跟服务器证书如出一辙。<br>安全性极高的认证机构可颁发客户端证书但仅用于特殊用途的业务。 比如那些可支撑客户端证书支出费用的业务。<br>事实上难点在于客户端并不是一定会拥有所谓的证书  </p>
-<h2 id="HTTPS的安全通信机制"><a href="#HTTPS的安全通信机制" class="headerlink" title="HTTPS的安全通信机制"></a>HTTPS的安全通信机制</h2><p><strong>步 骤1 :</strong>  <strong>客户端通过发送 Client Hello报文开始SSL通信</strong>。报文中包含客户端支持的SSL的指定版本、加密组件（Cipher Suite） 列表（所使用的加密算法及密钥长度等） 。<br><strong>步 骤2 :</strong>  <strong>服务器可进行SSL通信时，会以Server Hello报文作为应答</strong>。和客户端一样，在报文中包含SSL版本以及加密组件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的<br><strong>步 骤3 :</strong> 之后服务器发送 Certificate 报文。 报文中包含<strong>公开密钥证书</strong>。
-<strong>步 骤4 :</strong> 最后服务器发送 Server Hello Done 报文通知客户端， 最初阶段的 <strong>SSL 握手协商</strong>部分结束。<br><strong>步 骤5 :</strong> SSL 第一次握手结束之后， 客户端以 Client Key Exchange 报文作为回应。报文中包含通信加密中使用的一种被称为 <strong>Pre-master secret 的随机密码串</strong>。 该报文已用步骤 3 中的公开密钥进行加密。<br><strong>步 骤6 :</strong> 接着客户端继续发送 Change Cipher Spec 报文。 该报文会提示服务器， <strong>在此报文之后的通信会采用 Pre-master secret 密钥加</strong>密。<br><strong>步 骤7 :</strong> <strong>客户端发送 Finished 报文</strong>。 该报文包含连接至今全部报文的整体校验值。 这次握手协商是否能够成功， 要以服务器是否能够正确解密该报文作为判定标准。<br><strong>步 骤8 :</strong> 服务器同样发送 Change Cipher Spec 报文。<br><strong>步 骤9 :</strong> 服务器同样发送 Finished 报文。<br><strong>步 骤10 :</strong> 服务器和客户端的 <strong>Finished 报文交换完毕之后， SSL 连接就算建立完成</strong>。 当然， 通信会受到 SSL的保护。 从此处开始进行应用层协议的通信， 即发送 HTTP 请求。<br><strong>步 骤11 :</strong> 应用层协议通信， 即发送 HTTP 响应。<br><strong>步 骤12 :</strong> 最后由客户端断开连接。 断开连接时， 发送 close_notify 报文。 上图做了一些省略， 这步之后再发送 TCP FIN 报文来关闭与 TCP 的通信。</p>
-<p>事实上可以认为整个https是分为四个阶段：<br>① 客户端发起请求，协商好要用的SSL版本等，服务器端再通过回复报文，将公开密钥证书给客户端，这就是SSL握手协商；<br>② 接着客户端就通过拿到的公开密钥将随机密码串加密给到服务器端，然后客户端使用那个密码串加密的Finished报文给服务器，服务器解密成功，再回复Finished加密报文，客户端解密成功，那就哦了；<br>③ 开始使用那个密码串进行HTTP层的传输。所以上面就可以认为是SSL层的。<br>④ 结束后，就是使用TCP FIN那一套结束通信。<br>在以上流程中， 应用层发送数据时会附加一种叫做 MAC（Message Authentication Code） 的报文摘要。MAC 能够查知报文是否遭到篡改， 从而保护报文的完整性。  </p>
-<h4 id="SSl和TLS"><a href="#SSl和TLS" class="headerlink" title="SSl和TLS"></a>SSl和TLS</h4><p>HTTPS 比 HTTP 要慢 2 到 100 倍。<br>SSL 的慢分两种。 一种是指<strong>通信慢</strong>。 另一种是指由于<strong>大量消耗 CPU 及内存等资源</strong>， 导致处理速度变慢。  </p>
+<h2 id="磁盘I-O的工作机制"><a href="#磁盘I-O的工作机制" class="headerlink" title="磁盘I/O的工作机制"></a>磁盘I/O的工作机制</h2><p>数据的操作，前面是说以哪种数据格式来传输数据，还有一个关键问题就是数据写到哪里，有一个主要方式就是<strong>将数据持久化到物理磁盘</strong>。下面就是数据持久化到物理磁盘的过程。<br><strong>数据在磁盘的唯一最小描述就是文件</strong>，也就是说上层应用程序就只能通过文件来操作磁盘上的数据，文件也是操作系统和磁盘驱动器交互的最小单元。值得注意的是Java中通畅的File并不代表一个真实存在的文件对象，当你指定一个路径描述符时，它就会返回一个代表这个路径相关联的一个虚拟对象，这个可能是一个真实存在的文件或者是一个包含多个文件的目录。<br>这样去做的原因是，因为大部分情况下，我们并不关心这个文件是否真的存在，而是关心这个文件到底如何操作。<br>只有当需要真正读取这个文件的时候，才会检查这个文件是不是存在。下图是如何从磁盘读取一段文本字符：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image015.jpg" alt="image"><br>当传入一个文件路径，将会根据这个File对象创建真正读取文件的操作对象，这时将会真正创建一个<strong>关联真实存在的磁盘文件的文件描述符FileDescriptor</strong>，通过这个对象可以直接控制这个磁盘文件。由于读的的是字符，所以需要将其转码为字节模式，至于如何从磁盘驱动器上读取一段数据，由操作系统帮忙完成。  </p>
+<h2 id="java-Socket的工作机制"><a href="#java-Socket的工作机制" class="headerlink" title="java Socket的工作机制"></a>java Socket的工作机制</h2><p>Socket就指的是计算机之间完成相互通信的一种抽象功能。<strong>大部分情况下Socket使用的是基于TCP/IP的流套接字，是一种稳定的通信协议</strong>。  
+下图是典型的基于Socket的通信的场景：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image017.jpg" alt="image"><br>就主机A的应用程序要能和主机B得到应用程序进行通信，必须经过Socket建立连接，而建立Socket连接必须需要底层TCP/IP协议建立TCP连接，<strong>建立TCP连接需要底层IP协议来寻址网络中的主机</strong>。网络层使用的IP协议可以帮助根据IP地址寻找目标主机，但是一台主机上可能运行着多个应用程序，如何才能<strong>与指定的应用程序通信就是要通过TCP或UDP的地址也就是==端口号==来指定</strong>。这样就可以通过一个Socket实例唯一代表一个主机上的应用程序的通信链路了。  </p>
+<h3 id="建立通信链路"><a href="#建立通信链路" class="headerlink" title="建立通信链路"></a>建立通信链路</h3><p>当客户端要与服务端通信，客户端首先要创建一个Socket实例，操作系统将为这个Socket实例分配一个没有被使用的本地端口号，并创建一个包含本地和远程地址和端口号的套接字数据结构，这个数据结构将一直保存在系统中直到这个连接关闭。在创建Socket实例的构造函数正确返回之前，将要进行TCP的三次握手协议，TCP握手协议完成后，Socket实例对象将创建完成，否则将抛出IOException错误。  </p>
+<p>与之对应的服务端将会创建一个ServerSocket实例，ServerSocket创建比较简单只要指定的端口号没有被占用，一般实例就会创建成功，同时操作系统也会为ServerSocket创建一个底层数据结构，这个数据结构中包含指定监听的端口号和包含监听地址的通配符，通常情况下“<em>”即监听所有地址。之后 *</em>当调用accept()方法时，将进入阻塞状态，等待客户端的请求**。当一个新的请求到来时，将为这个连接创建一个新的套接字数据结构，该套接字数据的信息包含的地址和端口信息正式请求源地址和端口。这个新创建的数据结构将会关联到ServerSocket实例的一个未完成的连接数据结构列表中，注意这时服务端与之对应的Socket实例并没有完成创建，等到与客户端的三次握手完成后，这个服务端的Socket实例才会返回，并将这个Socket实例对应的数据结构从未完成列表中移动到已完成列表中。所以ServerSocket所关联的列表中的每个数据结构，都代表与一个客户端的建立的TCP连接。<br>所以ServerSocket所关联的列表中每个数据结构，都代表与一个客户端的建立的TCP连接。  </p>
+<h3 id="数据传输"><a href="#数据传输" class="headerlink" title="数据传输"></a>数据传输</h3><p>数据传输是创建Socket的目的。下面是传输数据的具体方法。<br>当连接已经建立成功，服务端和客户端都会拥有一个Socket实例，每个Socket实例都有一个InputStream和OutputStream（<strong>主要原因是网络I/O是以字节流进行传输的</strong>），正是通过这两个对象来交换数据。<br>当Socket对象创建的时候，操作系统就会为InputStream与OutputStream分别分配一定大小的缓冲区，<strong>数据的写入和读取都是通过这个缓冲区完成的</strong>。写入端将数据写到==OutputStream对应的SendQ队列==中，当队列填满时，数据将被发送到另一端==InputStream的RecvQ队列==中，如果这是RecvQ已经满了，那么OutputStream的write就会阻塞知道可以接受那些数据。那么缓存区的大小以及写入端的速度和读取端的速度非常影响这个连接的数据传输效率，由于可能会发生阻塞，所以<strong>网络I/O与磁盘I/O在数据的写入读取时还有一个协调的过程，如果两边同时传送数据就有可能出现死锁</strong>。  </p>
+<h2 id="NIO的工作方式"><a href="#NIO的工作方式" class="headerlink" title="NIO的工作方式"></a>NIO的工作方式</h2><p>不管是磁盘IO还是网络IO，数据在写入OutputStream或者从InputStream读取时都有可能会发生阻塞。<strong>一旦有线程阻塞就将会失去CPU的使用权</strong>（这里的这句话就是说线程阻塞，就是在等，那等的时候CPU为了高效，肯定就不管你了，先去搞其他的，所以就是说失去了CPU的使用权），这在当期那的大规模访问量和有性能要求情况下是不能接受的，虽然当前的网络I/O有一些解决办法，如一个客户端一个处理线程，出现阻塞时只是一个线程阻塞而不会影响其他线程工作，还有为了减少系统线程的开销，采用线程池的办法减少系统创建和回收的成本，但是面对一些问题依旧无法解决，如当前需要大量HTTp长连接的情况，但是并不是每时每刻都在传输数据，那就不能说是同时创建那么多线程来保持连接。即使线程的数量不是问题，仍然有一些问题还是无法避免的，如这种情况，我们想给某些客户端更高的服务优先级，很难通过设计线程的优先级来完成，另外一种情况是，我们需要让每个客户端的请求在服务端可能需要访问一些竞争资源，由于这些客户端是在不同线程中，因此需要同步，而往往要实现这些<strong>同步操作</strong>要远远比用单线程复杂很多。以上这些情况都说明，我们需要另外一种新的 I/O 操作方式。  </p>
+<h3 id="NIO的工作机制"><a href="#NIO的工作机制" class="headerlink" title="NIO的工作机制"></a>NIO的工作机制</h3><p>NIO的相关类图如下：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image019.jpg" alt="image"><br>可以看到是三个主要类：<strong>Channel、Buffer以及Selector</strong>，NIO就是通过这三个来实现非阻塞IO的。<br><strong>Channel</strong>就可以看做是一个<strong>双向的非阻塞</strong>的通道，在通道的两边都可以进行数据的读写操作。<br><strong>Selector</strong>：就是实现了一个线程来管理多个通道（采用了复用与解复用的方式使得一个线程可以管理多个通道，即可以将多个流合并成一个流，或者把一个流分成多个流的方式）。<br><strong>Buffer</strong>：就是缓存区，就是和上面的解释是没有什么不同的，用于缓存数据，可以<strong>保存多个channel的数据</strong>。  
+然后就是通过一段NIO代码来理解它们的工作机制：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">selector</span><span class="params">()</span> <span class="keyword">throws</span> IOException</span>&#123;</span><br><span class="line">    ByteBuffer buffer=<span class="keyword">new</span> ByteBuffer.allocate(<span class="number">1024</span>);</span><br><span class="line">    Selector selector=Selector.open();</span><br><span class="line">    ServerSocketChannel ssc=ServerSocketChannel.opne();</span><br><span class="line">    ssc.configureBlocking(<span class="keyword">false</span>);<span class="comment">//设置为非阻塞方式</span></span><br><span class="line">    ssc.socket().bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">8080</span>));</span><br><span class="line">    ssc.register(selector，SelectionKey.OP_ACCEPT)；<span class="comment">//注册监听事件</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">            Set selectedKeys = selector.selectedKeys();<span class="comment">//取得所有key集合</span></span><br><span class="line">            Iterator it = selectedKeys.iterator();</span><br><span class="line">            <span class="keyword">while</span> (it.hasNext()) &#123;</span><br><span class="line">                SelectionKey key = (SelectionKey) it.next();</span><br><span class="line">                <span class="keyword">if</span> ((key.readyOps() &amp; SelectionKey.OP_ACCEPT) == SelectionKey.OP_ACCEPT) &#123;</span><br><span class="line">                    ServerSocketChannel ssChannel = (ServerSocketChannel) key.channel();</span><br><span class="line">                 SocketChannel sc = ssChannel.accept();<span class="comment">//接受到服务端的请求</span></span><br><span class="line">                    sc.configureBlocking(<span class="keyword">false</span>);</span><br><span class="line">                    sc.register(selector, SelectionKey.OP_READ);</span><br><span class="line">                    it.remove();</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> </span><br><span class="line">                ((key.readyOps() &amp; SelectionKey.OP_READ) == SelectionKey.OP_READ) &#123;</span><br><span class="line">                    SocketChannel sc = (SocketChannel) key.channel();</span><br><span class="line">                    <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                        buffer.clear();</span><br><span class="line">                        <span class="keyword">int</span> n = sc.read(buffer);<span class="comment">//读取数据</span></span><br><span class="line">                        <span class="keyword">if</span> (n &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        buffer.flip();</span><br><span class="line">                    &#125;</span><br><span class="line">                    it.remove();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就调用Selector的静态工厂方法创建一个选择器，创建一个服务端的Channel绑定到一个Socket对象，并把这个通道信道注册到选择器上，把这个通信信道设置为非阻塞模式。然后就可以调用Selector的selectKeys方法来检查已经注册在这个选择器上所有通道信道是否有需要的事件发生，如果有某个事件发生，将会返回所有的SelectionKey，通过这个对象Channel方法就可以取得这个通信信道对象从而可以读取通信的数据，而这里<strong>读取的数据是Buffer，这个Buffer就是人类可以控制的缓冲器</strong>。  
+在上面，是将Server端的监听连接请求的时间和处理请求的事件放在一个线程中，但是在<strong>实际应用中是放在两个线程中，一个线程专门负责监听客户端的连接请求，而是以阻塞的方式执行的，另一个线程专门是来处理请求，这个专门处理请求的线程才是真正采用NIO的方式</strong>，像 Web 服务器 Tomcat 和 Jetty 都是这个处理方式。<br>基于NIO的Socket请求处理过程：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image021.jpg" alt="image"><br>上图中的 Selector 可以同时监听一组通信信道（Channel）上的 I/O 状态，前提是这个 Selector 要已经注册到这些通信信道中。选择器 Selector 可以调用 select() 方法检查已经注册的通信信道上的是否有 I/O 已经准备好，如果没有至少一个信道 I/O 状态有变化，那么 select 方法会阻塞等待或在超时时间后会返回 0。上图中如果有多个信道有数据，那么将会将这些数据分配到对应的数据 Buffer 中。所以关键的地方是有一个线程来处理所有连接的数据交互，每个连接的数据交互都不是阻塞方式，所以可以同时处理大量的连接请求。  </p>
+<h3 id="Buffer的工作方式"><a href="#Buffer的工作方式" class="headerlink" title="Buffer的工作方式"></a>Buffer的工作方式</h3><p>Buffer是如何接受和写出数据？Buffer可以理解是一组基本数据类型的元素列表，通过几个变量来保存这个数据的当前位置状态，也就是有四个索引。<br>索引 | 说明<br>—|—<br>capacity | 缓冲区数组的总长度<br>position | 下一个要操作的数据元素的位置<br>limit |缓冲区数组不可操作的下一个元素的位置，limit&lt;=capacity<br>mark |用于记录当前position的前一个位置或者默认是0<br>实际操作时，关系如图：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image023.jpg" alt="image"><br>通过ByteBuffer.allocate(11)方法创建一个11个byte的数组缓冲区，初始状态如图，position位置为0，capacity和limit默认都是数组长度。当写入5个字节时位置变化如图：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image025.jpg" alt="image"><br>然后需要将缓冲区的5个字节数据写入Channel通信信道，所以需要调用byteBuffer.filp()方法，然后状态变成下面：<br><img src="https://www.ibm.com/developerworks/cn/java/j-lo-javaio/image027.jpg" alt="image"><br>这时磁层操作系统就可以从缓冲区中正确读取这5个字节数据发送出去。在下一次写数据之前，调用clear()方法，缓冲区的索引状态又回到初始位置。<br>还有一点需要说明，<strong>通过 Channel 获取的 I/O 数据首先要经过操作系统的 Socket 缓冲区再将数据复制到 Buffer 中</strong>，这个的操作系统缓冲区就是底层的 TCP 协议关联的 RecvQ 或者 SendQ 队列，从操作系统缓冲区到用户缓冲区复制数据比较耗性能，<strong>Buffer 提供了另外一种直接操作操作系统缓冲区的的方式</strong>即 ByteBuffer.allocateDirector(size)，这个方法返回的 byteBuffer 就是与底层存储空间关联的缓冲区，它的操作方式与 linux2.4 内核的 sendfile 操作方式类似。  </p>
+<p>NIO必然是实现高速IO。针对的是<strong>NIO将最耗时的I/O操作（即填充和提取缓冲区）转移回操作系统</strong>，因为极大地提高速度。  </p>
+<h2 id="流与块的比较"><a href="#流与块的比较" class="headerlink" title="流与块的比较"></a>流与块的比较</h2><p>就NIO是面向块来处理数据。但是块是如何存在？注意字符与字节只是传输的数据格式，重点就是传输方式磁盘以及网络IO。<strong>磁盘IO没有缓冲这么一说，但是网络也就是Socket IO会有缓冲区以及队列等</strong>。  
+从web开发来讲就是网络IO很容易发生阻塞，而磁盘的IO就是读写的话，读不会阻塞，本机自己写应该遇到阻塞很少，主要还是网络IO。所以==NIO主要面对的就是网络IO==。<br>在NIO中加入Buffer对象，就是一个创新，面向流的IO中，试讲数据直接写入或读到Stream对象中，而NIO是所有的数据都是用缓冲区处理的，读是读到缓冲区中，写是写到缓冲区中。然后通道的两端必然是缓冲区。<br>最主要是什么，就是使用了选择器单线程处理，IO就是通过多线程进行多个IO连接读写。但是线程的创建销毁就很麻烦，所以NIO使用选择器来处理，就是说进行轮询管理多个通道，进行处理。</p>
 
       
     </div>
@@ -426,7 +430,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/通信协议/" rel="tag"># 通信协议</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/网络IO/" rel="tag"># 网络IO</a>
           
         </div>
       
@@ -439,8 +445,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/14/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2019/06/15/HTTP之用户认证以及功能追加/" rel="next" title="HTTP之用户认证以及功能追加">
+                <i class="fa fa-chevron-left"></i> HTTP之用户认证以及功能追加
               </a>
             
           </div>
@@ -449,8 +455,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/15/hexo-添加标签分类/" rel="prev" title="hexo 添加标签分类">
-                hexo 添加标签分类 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/15/java-socket编程/" rel="prev" title="java socket编程">
+                java socket编程 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -585,7 +591,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP的bug"><span class="nav-number">1.</span> <span class="nav-text">HTTP的bug</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通信使用明文可能会被窃听"><span class="nav-number">1.1.</span> <span class="nav-text">通信使用明文可能会被窃听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP是可能被窃听的网络"><span class="nav-number">1.1.1.</span> <span class="nav-text">TCP/IP是可能被窃听的网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密处理防止被窃听"><span class="nav-number">1.1.2.</span> <span class="nav-text">加密处理防止被窃听</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通信的加密"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">通信的加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内容的加密"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">内容的加密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不验证通信方的身份就可能遭遇伪装"><span class="nav-number">1.1.3.</span> <span class="nav-text">不验证通信方的身份就可能遭遇伪装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#任何人都可发起请求"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">任何人都可发起请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查明对手的证书"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">查明对手的证书</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无法证明报文的完整性，可能已经遭到篡改"><span class="nav-number">1.1.4.</span> <span class="nav-text">无法证明报文的完整性，可能已经遭到篡改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接收的内容可能有误"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">接收的内容可能有误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何防止篡改"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">如何防止篡改</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-加密-认证-完整性保护-HTTPS"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP+加密+认证+完整性保护=HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS是表面为SSL的HTTP"><span class="nav-number">1.2.1.</span> <span class="nav-text">HTTPS是表面为SSL的HTTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相互交换秘钥的公开密钥加密方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">相互交换秘钥的公开密钥加密方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共享密钥加密的困境"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">共享密钥加密的困境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用两把秘钥的公开密钥加密"><span class="nav-number">1.2.3.</span> <span class="nav-text">使用两把秘钥的公开密钥加密</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS采用混合加密机制"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">HTTPS采用混合加密机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明公开密钥正确性的证书"><span class="nav-number">1.2.4.</span> <span class="nav-text">证明公开密钥正确性的证书</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可证明组织真实性的-EV-SSL-证书"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">可证明组织真实性的 EV SSL 证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用以确认客户端的客户端证书"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">用以确认客户端的客户端证书</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS的安全通信机制"><span class="nav-number">1.3.</span> <span class="nav-text">HTTPS的安全通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SSl和TLS"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">SSl和TLS</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#磁盘I-O的工作机制"><span class="nav-number">1.</span> <span class="nav-text">磁盘I/O的工作机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-Socket的工作机制"><span class="nav-number">2.</span> <span class="nav-text">java Socket的工作机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#建立通信链路"><span class="nav-number">2.1.</span> <span class="nav-text">建立通信链路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据传输"><span class="nav-number">2.2.</span> <span class="nav-text">数据传输</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#NIO的工作方式"><span class="nav-number">3.</span> <span class="nav-text">NIO的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NIO的工作机制"><span class="nav-number">3.1.</span> <span class="nav-text">NIO的工作机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Buffer的工作方式"><span class="nav-number">3.2.</span> <span class="nav-text">Buffer的工作方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流与块的比较"><span class="nav-number">4.</span> <span class="nav-text">流与块的比较</span></a></li></ol></div>
             
 
           </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="通信协议,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,21 +79,16 @@
 
 
 
-<meta name="description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
-<meta name="keywords" content="通信协议">
-<meta property="og:type" content="article">
-<meta property="og:title" content="HTTPS详解">
-<meta property="og:url" content="http://yoursite.com/2019/06/14/HTTPS详解/index.html">
+<meta name="description" content="稳住，能赢。猥琐，别浪。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="天生的努力家">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
+<meta property="og:description" content="稳住，能赢。猥琐，别浪。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/69B5155913704248B013D2FF44F4A796?method=download&shareKey=10e91fb8ea6b12344d8f9ff76ae07e63">
-<meta property="og:updated_time" content="2019-06-15T03:52:07.005Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTPS详解">
-<meta name="twitter:description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
-<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46">
+<meta name="twitter:title" content="天生的努力家">
+<meta name="twitter:description" content="稳住，能赢。猥琐，别浪。">
 
 
 
@@ -123,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/14/HTTPS详解/">
+  <link rel="canonical" href="http://yoursite.com/page/2/">
 
 
 
 
 
-  <title>HTTPS详解 | 天生的努力家</title>
+  <title>天生的努力家</title>
   
 
 
@@ -148,7 +143,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 	<a href="https://github.com/hszzjs" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 	
@@ -284,9 +280,744 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/TCP协议详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/15/TCP协议详解/" itemprop="url">TCP协议详解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T12:53:41+08:00">
+                2019-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>首先基于整个来看，TCP/IP协议是应用最为广泛的模型，TCP/IP与OSI分层之间是由区别的，最主要的就是它将OSI模型中的会话层、表示层以及应用层合并为应用层。<br>前提：<strong>TCP/IP是在网络互连的设备之间能够通信的前提下才被提出的协议</strong>。  
+网络层即互连网层，是使用IP协议，<strong>IP协议基于IP地址转发分包数据</strong>。  
+<strong>TCP、IP分层中互联网层与传输层的功能通常由操作系统提供</strong>。  
+IP是跨越网络传送数据包，使整个互联网都能收到数据的协议。IP协议是不具有重发机制，是非可靠性传输协议。  </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/15/TCP协议详解/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/基于jdk1-8的ConcurrentHashMap源码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/15/基于jdk1-8的ConcurrentHashMap源码/" itemprop="url">基于jdk1.8的ConcurrentHashMap源码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T12:41:39+08:00">
+                2019-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>首先这里是基于jdk1.8的，必然是与1.7不同的，所以先看下两者的结构图：<br>1.7结构图：<br><img src="https://javadoop.com/blogimages/map/3.png" alt="image">  </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/15/基于jdk1-8的ConcurrentHashMap源码/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/HashMap源码阅读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/15/HashMap源码阅读/" itemprop="url">HashMap源码阅读</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T12:35:00+08:00">
+                2019-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>先放两张图：<br><img src="https://note.youdao.com/yws/api/personal/file/8DCB86B87EFF49E8B365E4225224273E?method=download&shareKey=d233125d8276f0d8774443845626c6a7" alt="image">  </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/15/HashMap源码阅读/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/从迭代器模式出发看ArrayList/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/15/从迭代器模式出发看ArrayList/" itemprop="url">从迭代器模式出发看ArrayList</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T12:17:02+08:00">
+                2019-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <!-- ![image](https://wx4.sinaimg.cn/mw690/7120d2ddly1g41lme7xaaj20v10jg49m.jpg) -->
+<p>首先说明迭代器模式被集合用来实现访问聚合对象中的各个元素，而不用暴露这个对象的内部表示。类图如下：<br><img src="https://www.runoob.com/wp-content/uploads/2014/08/iterator_pattern_uml_diagram.jpg" alt="image"><br>首先ArrayList的角色就是这里的NameRespository，所以代码里面会重写接口Container中的getIterator来创造迭代器，然后关于NameIterator具体的迭代器类实现也是在ArrayList中以内部类的形式来实现，具体代码如下（在其中一步一步解读）：</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/15/从迭代器模式出发看ArrayList/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/hexo-添加标签分类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/15/hexo-添加标签分类/" itemprop="url">hexo 添加标签分类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T11:38:02+08:00">
+                2019-06-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>打开theme/next/_config.yml，找到如下配置，删除”categories”和“tags”前的注释符#。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">menu:</span><br><span class="line">  home: / || home</span><br><span class="line">  #about: /about/ || user</span><br><span class="line">  tags: /tags/ || tags</span><br><span class="line">  categories: /categories/ || th</span><br><span class="line">  archives: /archives/ || archive</span><br><span class="line">  #schedule: /schedule/ || calendar</span><br><span class="line">  #sitemap: /sitemap.xml || sitemap</span><br><span class="line">  #commonweal: /404/ || heartbeat</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/15/hexo-添加标签分类/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
 
   
 
@@ -316,7 +1047,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HTTPS详解</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/14/HTTPS详解/" itemprop="url">HTTPS详解</a></h1>
         
 
         <div class="post-meta">
@@ -388,28 +1121,17 @@
       
 
       
-        <h1 id="HTTP的bug"><a href="#HTTP的bug" class="headerlink" title="HTTP的bug"></a>HTTP的bug</h1><h2 id="通信使用明文可能会被窃听"><a href="#通信使用明文可能会被窃听" class="headerlink" title="通信使用明文可能会被窃听"></a>通信使用明文可能会被窃听</h2><h3 id="TCP-IP是可能被窃听的网络"><a href="#TCP-IP是可能被窃听的网络" class="headerlink" title="TCP/IP是可能被窃听的网络"></a>TCP/IP是可能被窃听的网络</h3><p><strong>按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视</strong>。  
+        
+          <h1 id="HTTP的bug"><a href="#HTTP的bug" class="headerlink" title="HTTP的bug"></a>HTTP的bug</h1><h2 id="通信使用明文可能会被窃听"><a href="#通信使用明文可能会被窃听" class="headerlink" title="通信使用明文可能会被窃听"></a>通信使用明文可能会被窃听</h2><h3 id="TCP-IP是可能被窃听的网络"><a href="#TCP-IP是可能被窃听的网络" class="headerlink" title="TCP/IP是可能被窃听的网络"></a>TCP/IP是可能被窃听的网络</h3><p><strong>按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视</strong>。  
 窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。  </p>
-<a id="more"></a>
-<h3 id="加密处理防止被窃听"><a href="#加密处理防止被窃听" class="headerlink" title="加密处理防止被窃听"></a>加密处理防止被窃听</h3><p>加密的对象可以有：  </p>
-<h4 id="通信的加密"><a href="#通信的加密" class="headerlink" title="通信的加密"></a>通信的加密</h4><p>HTTP协议中没有加密机制，但可以通过和SSL或者TLS的组合使用，加密HTTP的通信内容。<br><strong>就是用SSL建立安全通信线路之后，就可以在这条线路上进行HTTP通信了</strong>。与SSL组合使用的HTTP被称为HTTPS。  </p>
-<h4 id="内容的加密"><a href="#内容的加密" class="headerlink" title="内容的加密"></a>内容的加密</h4><p>这个是<strong>将参与通信的内容本身加密</strong>的方式。由于HTTP协议中没有加密机制，那么就对HTTP协议传输的内容本身加密。即把HTTP报文里包含的内容进行加密处理。<br>即对于报文主体进行加密处理。<br>但是，由于该方式不同于 SSL 或 TLS 将整个通信线路加密处理， 所以内容仍有被篡改的风险。  </p>
-<h3 id="不验证通信方的身份就可能遭遇伪装"><a href="#不验证通信方的身份就可能遭遇伪装" class="headerlink" title="不验证通信方的身份就可能遭遇伪装"></a>不验证通信方的身份就可能遭遇伪装</h3><h4 id="任何人都可发起请求"><a href="#任何人都可发起请求" class="headerlink" title="任何人都可发起请求"></a>任何人都可发起请求</h4><h4 id="查明对手的证书"><a href="#查明对手的证书" class="headerlink" title="查明对手的证书"></a>查明对手的证书</h4><p>虽然使用 HTTP 协议无法确定通信方，但如果使用SSL则可以。<strong>SSL不仅提供加密处理，而且还使用了一种被称为证书的手段， 可用于确定方</strong>。  
-证书很难伪造。<br><strong>客户端持有证书即可完成个人身份的确认，也可用于对web网站的认证环节</strong>。  </p>
-<h3 id="无法证明报文的完整性，可能已经遭到篡改"><a href="#无法证明报文的完整性，可能已经遭到篡改" class="headerlink" title="无法证明报文的完整性，可能已经遭到篡改"></a>无法证明报文的完整性，可能已经遭到篡改</h3><h4 id="接收的内容可能有误"><a href="#接收的内容可能有误" class="headerlink" title="接收的内容可能有误"></a>接收的内容可能有误</h4><h4 id="如何防止篡改"><a href="#如何防止篡改" class="headerlink" title="如何防止篡改"></a>如何防止篡改</h4><p>虽然有使用 HTTP 协议确定报文完整性的方法， 但事实上并不便捷、 可靠。 其中常用的是 MD5 和 SHA-1 等散列值校验的方法， 以及用来确认文件的数字签名方法。<br>事实上甚至大多数需要客户端的用户亲自验证，浏览器无法自动帮用户检查。<br>SSL 提供认证和加密处理及摘要功能。 仅靠 HTTP确保完整性是非常困难的，因此通过和其他协议组合使用来实现这个目标。  </p>
-<h2 id="HTTP-加密-认证-完整性保护-HTTPS"><a href="#HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="HTTP+加密+认证+完整性保护=HTTPS"></a>HTTP+加密+认证+完整性保护=HTTPS</h2><h3 id="HTTPS是表面为SSL的HTTP"><a href="#HTTPS是表面为SSL的HTTP" class="headerlink" title="HTTPS是表面为SSL的HTTP"></a>HTTPS是表面为SSL的HTTP</h3><p><img src="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46" alt="image">  </p>
-<h3 id="相互交换秘钥的公开密钥加密方式"><a href="#相互交换秘钥的公开密钥加密方式" class="headerlink" title="相互交换秘钥的公开密钥加密方式"></a>相互交换秘钥的公开密钥加密方式</h3><p>SSL采用一种叫<strong>公开密钥加密</strong>的加密处理方式。  </p>
-<h4 id="共享密钥加密的困境"><a href="#共享密钥加密的困境" class="headerlink" title="共享密钥加密的困境"></a>共享密钥加密的困境</h4><p>加密和解密<strong>同用一个密钥</strong>的方式称为共享密钥加密（Common key crypto system） ， 也被叫做<strong>对称密钥加密</strong>。  
-这样一旦秘钥在客户端与服务器端进行交换的时候，被监听获取，就很尴尬了。  </p>
-<h3 id="使用两把秘钥的公开密钥加密"><a href="#使用两把秘钥的公开密钥加密" class="headerlink" title="使用两把秘钥的公开密钥加密"></a>使用两把秘钥的公开密钥加密</h3><p>公开密钥加密使用一对非对称的密钥。 一把叫做私有密钥（private key） ， 另一把叫做公开密钥（public key） 。顾名思义， <strong>私有密钥不能让其他任何人知道， 而公开密钥则可以随意发布</strong>， 任何人都可以获得。<br>这个就是公钥用于加密，私钥用于解密，反正公钥是共享的谁都可以得到。所以互送一下秘钥也是可以的。  </p>
-<h4 id="HTTPS采用混合加密机制"><a href="#HTTPS采用混合加密机制" class="headerlink" title="HTTPS采用混合加密机制"></a>HTTPS采用混合加密机制</h4><p>这么做主要是考虑到公开密钥加密的处理速度很慢。所以就可以通过公开密钥加密的来确保共享密钥加密的秘钥只有客户端与服务器端拥有，然后直接使用共享加密来对于通信内容进行加密。  </p>
-<h3 id="证明公开密钥正确性的证书"><a href="#证明公开密钥正确性的证书" class="headerlink" title="证明公开密钥正确性的证书"></a>证明公开密钥正确性的证书</h3><p>还有一个个问题就是在于无法确认公开密钥在交换的时候的安全性，那么咋搞。就使用由数字证书认证机构（CA）和其相关机关颁发的公开密钥证书。<br>数字证书认证机构在判明提出申请者的身份之后， 会对已申请的公开密钥做数字签名， 然后分配这个已签名的公开密钥， 并将该公开密钥放入公钥证书后绑定在一起。<br>接到证书的客户端可使用数字证书认证机构的公开密钥，对那张证书上的数字签名进行验证，一旦验证通过，客户端便可明确两件事： 一， 认证服务器的公开密钥的是真实有效的数字证书认证机构。 二， 服务器的公开密钥是值得信赖的。<br><img src="https://note.youdao.com/yws/api/personal/file/69B5155913704248B013D2FF44F4A796?method=download&shareKey=10e91fb8ea6b12344d8f9ff76ae07e63" alt="image">  </p>
-<h4 id="可证明组织真实性的-EV-SSL-证书"><a href="#可证明组织真实性的-EV-SSL-证书" class="headerlink" title="可证明组织真实性的 EV SSL 证书"></a>可证明组织真实性的 EV SSL 证书</h4><h4 id="用以确认客户端的客户端证书"><a href="#用以确认客户端的客户端证书" class="headerlink" title="用以确认客户端的客户端证书"></a>用以确认客户端的客户端证书</h4><p>以客户端证书进行客户端认证， 证明服务器正在通信的对方始终是预料之内的客户端， 其作用跟服务器证书如出一辙。<br>安全性极高的认证机构可颁发客户端证书但仅用于特殊用途的业务。 比如那些可支撑客户端证书支出费用的业务。<br>事实上难点在于客户端并不是一定会拥有所谓的证书  </p>
-<h2 id="HTTPS的安全通信机制"><a href="#HTTPS的安全通信机制" class="headerlink" title="HTTPS的安全通信机制"></a>HTTPS的安全通信机制</h2><p><strong>步 骤1 :</strong>  <strong>客户端通过发送 Client Hello报文开始SSL通信</strong>。报文中包含客户端支持的SSL的指定版本、加密组件（Cipher Suite） 列表（所使用的加密算法及密钥长度等） 。<br><strong>步 骤2 :</strong>  <strong>服务器可进行SSL通信时，会以Server Hello报文作为应答</strong>。和客户端一样，在报文中包含SSL版本以及加密组件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的<br><strong>步 骤3 :</strong> 之后服务器发送 Certificate 报文。 报文中包含<strong>公开密钥证书</strong>。
-<strong>步 骤4 :</strong> 最后服务器发送 Server Hello Done 报文通知客户端， 最初阶段的 <strong>SSL 握手协商</strong>部分结束。<br><strong>步 骤5 :</strong> SSL 第一次握手结束之后， 客户端以 Client Key Exchange 报文作为回应。报文中包含通信加密中使用的一种被称为 <strong>Pre-master secret 的随机密码串</strong>。 该报文已用步骤 3 中的公开密钥进行加密。<br><strong>步 骤6 :</strong> 接着客户端继续发送 Change Cipher Spec 报文。 该报文会提示服务器， <strong>在此报文之后的通信会采用 Pre-master secret 密钥加</strong>密。<br><strong>步 骤7 :</strong> <strong>客户端发送 Finished 报文</strong>。 该报文包含连接至今全部报文的整体校验值。 这次握手协商是否能够成功， 要以服务器是否能够正确解密该报文作为判定标准。<br><strong>步 骤8 :</strong> 服务器同样发送 Change Cipher Spec 报文。<br><strong>步 骤9 :</strong> 服务器同样发送 Finished 报文。<br><strong>步 骤10 :</strong> 服务器和客户端的 <strong>Finished 报文交换完毕之后， SSL 连接就算建立完成</strong>。 当然， 通信会受到 SSL的保护。 从此处开始进行应用层协议的通信， 即发送 HTTP 请求。<br><strong>步 骤11 :</strong> 应用层协议通信， 即发送 HTTP 响应。<br><strong>步 骤12 :</strong> 最后由客户端断开连接。 断开连接时， 发送 close_notify 报文。 上图做了一些省略， 这步之后再发送 TCP FIN 报文来关闭与 TCP 的通信。</p>
-<p>事实上可以认为整个https是分为四个阶段：<br>① 客户端发起请求，协商好要用的SSL版本等，服务器端再通过回复报文，将公开密钥证书给客户端，这就是SSL握手协商；<br>② 接着客户端就通过拿到的公开密钥将随机密码串加密给到服务器端，然后客户端使用那个密码串加密的Finished报文给服务器，服务器解密成功，再回复Finished加密报文，客户端解密成功，那就哦了；<br>③ 开始使用那个密码串进行HTTP层的传输。所以上面就可以认为是SSL层的。<br>④ 结束后，就是使用TCP FIN那一套结束通信。<br>在以上流程中， 应用层发送数据时会附加一种叫做 MAC（Message Authentication Code） 的报文摘要。MAC 能够查知报文是否遭到篡改， 从而保护报文的完整性。  </p>
-<h4 id="SSl和TLS"><a href="#SSl和TLS" class="headerlink" title="SSl和TLS"></a>SSl和TLS</h4><p>HTTPS 比 HTTP 要慢 2 到 100 倍。<br>SSL 的慢分两种。 一种是指<strong>通信慢</strong>。 另一种是指由于<strong>大量消耗 CPU 及内存等资源</strong>， 导致处理速度变慢。  </p>
-
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/14/HTTPS详解/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
     
@@ -424,40 +1146,14 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/通信协议/" rel="tag"># 通信协议</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/06/14/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/06/15/hexo-添加标签分类/" rel="prev" title="hexo 添加标签分类">
-                hexo 添加标签分类 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -467,11 +1163,146 @@
   </article>
 
 
+    
+      
 
-    <div class="post-spread">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/14/hello-world/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/14/hello-world/" itemprop="url">Hello World</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-14T20:49:23+08:00">
+                2019-06-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+
+          
+        
       
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
   </div>
+  
+  
+  
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
@@ -479,10 +1310,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -503,17 +1330,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -575,22 +1393,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP的bug"><span class="nav-number">1.</span> <span class="nav-text">HTTP的bug</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通信使用明文可能会被窃听"><span class="nav-number">1.1.</span> <span class="nav-text">通信使用明文可能会被窃听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP是可能被窃听的网络"><span class="nav-number">1.1.1.</span> <span class="nav-text">TCP/IP是可能被窃听的网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密处理防止被窃听"><span class="nav-number">1.1.2.</span> <span class="nav-text">加密处理防止被窃听</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通信的加密"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">通信的加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内容的加密"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">内容的加密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不验证通信方的身份就可能遭遇伪装"><span class="nav-number">1.1.3.</span> <span class="nav-text">不验证通信方的身份就可能遭遇伪装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#任何人都可发起请求"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">任何人都可发起请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查明对手的证书"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">查明对手的证书</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无法证明报文的完整性，可能已经遭到篡改"><span class="nav-number">1.1.4.</span> <span class="nav-text">无法证明报文的完整性，可能已经遭到篡改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接收的内容可能有误"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">接收的内容可能有误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何防止篡改"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">如何防止篡改</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-加密-认证-完整性保护-HTTPS"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP+加密+认证+完整性保护=HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS是表面为SSL的HTTP"><span class="nav-number">1.2.1.</span> <span class="nav-text">HTTPS是表面为SSL的HTTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相互交换秘钥的公开密钥加密方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">相互交换秘钥的公开密钥加密方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共享密钥加密的困境"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">共享密钥加密的困境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用两把秘钥的公开密钥加密"><span class="nav-number">1.2.3.</span> <span class="nav-text">使用两把秘钥的公开密钥加密</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS采用混合加密机制"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">HTTPS采用混合加密机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明公开密钥正确性的证书"><span class="nav-number">1.2.4.</span> <span class="nav-text">证明公开密钥正确性的证书</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可证明组织真实性的-EV-SSL-证书"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">可证明组织真实性的 EV SSL 证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用以确认客户端的客户端证书"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">用以确认客户端的客户端证书</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS的安全通信机制"><span class="nav-number">1.3.</span> <span class="nav-text">HTTPS的安全通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SSl和TLS"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">SSl和TLS</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -735,10 +1537,6 @@
 
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 

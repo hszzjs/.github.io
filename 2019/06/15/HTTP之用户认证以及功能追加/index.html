@@ -79,16 +79,17 @@
 
 
 
-<meta name="description" content="稳住，能赢。猥琐，别浪。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="天生的努力家">
-<meta property="og:url" content="http://yoursite.com/tags/Java/index.html">
+<meta name="description" content="确认访问用户身份的认证BASIC认证 步骤1: 当请求的资源需要 BASIC 认证时， 服务器会随状态码 ==401 Authorization Required==， 返回带 WWWAuthenticate首部字段的响应。 该字段内包含认证的方式（BASIC） 及 Request-URI 安全域字符串（realm） 。 步骤2: 接收到状态码 401 的客户端为了通过 BASIC 认证， 需要将">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP之用户认证以及功能追加">
+<meta property="og:url" content="http://yoursite.com/2019/06/15/HTTP之用户认证以及功能追加/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="稳住，能赢。猥琐，别浪。">
+<meta property="og:description" content="确认访问用户身份的认证BASIC认证 步骤1: 当请求的资源需要 BASIC 认证时， 服务器会随状态码 ==401 Authorization Required==， 返回带 WWWAuthenticate首部字段的响应。 该字段内包含认证的方式（BASIC） 及 Request-URI 安全域字符串（realm） 。 步骤2: 接收到状态码 401 的客户端为了通过 BASIC 认证， 需要将">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-15T08:20:09.705Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="天生的努力家">
-<meta name="twitter:description" content="稳住，能赢。猥琐，别浪。">
+<meta name="twitter:title" content="HTTP之用户认证以及功能追加">
+<meta name="twitter:description" content="确认访问用户身份的认证BASIC认证 步骤1: 当请求的资源需要 BASIC 认证时， 服务器会随状态码 ==401 Authorization Required==， 返回带 WWWAuthenticate首部字段的响应。 该字段内包含认证的方式（BASIC） 及 Request-URI 安全域字符串（realm） 。 步骤2: 接收到状态码 401 的客户端为了通过 BASIC 认证， 需要将">
 
 
 
@@ -118,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/Java/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/15/HTTP之用户认证以及功能追加/">
 
 
 
 
 
-  <title>Tag: Java | 天生的努力家</title>
+  <title>HTTP之用户认证以及功能追加 | 天生的努力家</title>
   
 
 
@@ -143,7 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/hszzjs" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 	
@@ -280,156 +281,200 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Java<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/HTTP之用户认证以及功能追加/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/06/15/java-socket编程/" itemprop="url">
-              
-                <span itemprop="name">java socket编程</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">HTTP之用户认证以及功能追加</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T16:22:12+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:08:49+08:00">
+                2019-06-15
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/15/深入分析java-IO工作机制/" itemprop="url">
-              
-                <span itemprop="name">深入分析java IO工作机制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T16:17:26+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/15/基于jdk1-8的ConcurrentHashMap源码/" itemprop="url">
-              
-                <span itemprop="name">基于jdk1.8的ConcurrentHashMap源码</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T12:41:39+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/15/HashMap源码阅读/" itemprop="url">
-              
-                <span itemprop="name">HashMap源码阅读</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T12:35:00+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/15/从迭代器模式出发看ArrayList/" itemprop="url">
-              
-                <span itemprop="name">从迭代器模式出发看ArrayList</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T12:17:02+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+        <h1 id="确认访问用户身份的认证"><a href="#确认访问用户身份的认证" class="headerlink" title="确认访问用户身份的认证"></a>确认访问用户身份的认证</h1><h2 id="BASIC认证"><a href="#BASIC认证" class="headerlink" title="BASIC认证"></a>BASIC认证</h2><p> <strong>步骤1</strong>: 当请求的资源需要 BASIC 认证时， 服务器会随状态码 ==401 Authorization Required==， 返回带 WWWAuthenticate首部字段的响应。 该字段内包含认证的方式（BASIC） 及 Request-URI 安全域字符串（realm） 。<br> <strong>步骤2</strong>: 接收到状态码 401 的客户端为了通过 BASIC 认证， 需要将==用户 ID及密码==发送给服务器。发送的字符串内容是由用户 ID 和密码构成， 两者中间以冒号（:） 连接后， 再经过 ==Base64 编码==处理。<br> <strong>步骤3</strong>: 接收到包含首部字段 Authorization 请求的服务器， 会对认证信息的正确性进行验证。 如==验证通过，则返回一条包含 Request-URI 资源的响应==。</p>
+<a id="more"></a>
+<p>但是存在问题如下：<br>① 用户ID以及密码在HTTP等非加密通信的线路上，被盗可能性极高；<br>② 一般浏览器无法执行认证注销，所以不能重新进行一次BASIC认证；<br>所以认证上的不灵活且安全性低，导致其不常用。  </p>
+<h2 id="DIGEST认证"><a href="#DIGEST认证" class="headerlink" title="DIGEST认证"></a>DIGEST认证</h2><p>DIGEST 认证同样使用质询 / 响应的方式（challenge/response） ， 但不会像 BASIC 认证那样直接发送明文密码。  </p>
+<p><strong>步骤1</strong>: 请求需认证的资源时， 服务器会随着状态码 401 Authorization Required， <strong>返回带 WWW-Authenticate首部字段的响应</strong>。 该字段内包含质问响应方式认证所需的==临时质询码==（随机数， nonce） 。<br>首部字段 WWW-Authenticate 内必须包含 realm 和 nonce 这两个字段的信息。 客户端就是依靠向服务器回送这两个值进行认证的。<br>nonce 是一种每次随返回的 401 响应生成的任意随机字符串。 该字符串通常推荐由 Base64 编码的十六进制数的组成形式， 但实际内容依赖服务器的具体实现。<br><strong>步骤2</strong>: 接收到 401 状态码的客户端， 返回的响应中<strong>包含 DIGEST 认证必须的首部字段 Authorization 信息</strong>。
+首部字段 Authorization 内必须包含 username、 realm、 nonce、 uri 和 response 的字段信息。 其中， realm和 nonce 就是之前从服务器接收到的响应中的字段。<br>username 是 realm 限定范围内可进行认证的用户名。<br>uri（digest-uri） 即 Request-URI 的值，但考虑到经代理转发后 Request-URI 的值可能被修改， 因此事先会复制一份副本保存在 uri 内。<br><strong>response 也可叫做 Request-Digest， 存放经过 MD5 运算后的密码字符串</strong>， 形成响应码。<br><strong>步骤3</strong>: 接收到包含首部字段 Authorization 请求的服务器， 会确认认证信息的正确性。 认证通过后则返回包含 Request-URI 资源的响应。  </p>
+<p>能看出来，Digest认证==提供防止密码被窃听的保护机制==，但并没有防止用户伪装的机制。然后就是它的使用也不是那么零落。  </p>
+<h2 id="SSL客户端认证（客户端证书）"><a href="#SSL客户端认证（客户端证书）" class="headerlink" title="SSL客户端认证（客户端证书）"></a>SSL客户端认证（客户端证书）</h2><p>SSL 客户端认证是借由 HTTPS 的客户端证书完成认证的方式。   </p>
+<p><strong>步骤1</strong>: 接收到需要认证资源的请求， 服务器会发送 Certificate Request 报文， 要求客户端提供<strong>客户端证书</strong>。
+<strong>步骤2</strong>: 用户选择将发送的客户端证书后， 客户端会把客户端证书信息以 Client Certificate 报文方式发送给服务器<br><strong>步骤3</strong>: 服务器验证客户端证书验证通过后方可领取证书内客户端的公开密钥， 然后开始 HTTPS 加密通信</p>
+<p>然后就是SSl客户端认证事实上<strong>是先通过客户端证书来认证客户端计算机，然后通过密码（表单认证）来确定是否为用户本人行</strong>为。<br>也就是双因素认证。然后客户端证书是要钱的。  </p>
+<h2 id="基于表单认证"><a href="#基于表单认证" class="headerlink" title="基于表单认证"></a>基于表单认证</h2><h3 id="认证多半是基于表单认证"><a href="#认证多半是基于表单认证" class="headerlink" title="认证多半是基于表单认证"></a>认证多半是基于表单认证</h3><p>SSL 客户端认证虽然具有高度的安全等级， 但因为导入及维持费用等问题， 还尚未普及。  </p>
+<h3 id="Session管理以及Cookie应用"><a href="#Session管理以及Cookie应用" class="headerlink" title="Session管理以及Cookie应用"></a>Session管理以及Cookie应用</h3><p>基于表单认证本身是通过服务器端的 Web 应用， 将客户端发送过来的用户 ID 和密码与之前登录过的信息做匹配来进行认证的。<br>鉴于 HTTP 是无状态协议， 之前已认证成功的用户状态无法通过协议层面保存下来。 即， 无法实现状态管理， 因此即使当该用户下一次继续访问， 也无法区分他与其他的用户。 于是我们会使用 Cookie 来管理Session， 以弥补 HTTP 协议中不存在的状态管理功能。  </p>
+<p><strong>步骤1</strong>:  客户端把用户 ID 和密码等登录信息放入报文的实体部分， 通常是以 POST 方法把请求发送给服务器。<br><strong>步骤2</strong>: 服务器会发放用以识别用户的 Session ID。 通过验证从客户端发送过来的登录信息进行身份认证，然后<strong>把用户的认证状态与 Session ID 绑定后记录在服务器端</strong>。
+ 向客户端返回响应时， 会在==首部字段 Set-Cookie 内写入 Session ID（如 PHPSESSID=028a8c…）== 。<br> 为减轻跨站脚本攻击（XSS） 造成的损失， 建议事先在 Cookie 内加上 httponly 属性。<br> <strong>步骤3</strong>: 客户端接收到从服务器端发来的 Session ID 后， 会将其作为 Cookie 保存在本地。 下次向服务器发送请求时， 浏览器会自动发送 Cookie， 所以 Session ID 也随之发送到服务器。 <strong>服务器端可通过验证接收到的Session ID 识别用户和其认证状态。</strong></p>
+<h1 id="基于HTTP的功能追加协议"><a href="#基于HTTP的功能追加协议" class="headerlink" title="基于HTTP的功能追加协议"></a>基于HTTP的功能追加协议</h1><h2 id="消除HTTP瓶颈的SPDY"><a href="#消除HTTP瓶颈的SPDY" class="headerlink" title="消除HTTP瓶颈的SPDY"></a>消除HTTP瓶颈的SPDY</h2><p>瓶颈如下：  </p>
+<ul>
+<li>一条连接上只可发送一个请求</li>
+<li>请求只能从客户端开始。 客户端不可以接收除响应以外的指令。</li>
+<li>请求 / 响应首部未经压缩就发送。 首部信息越多延迟越大。</li>
+<li>发送冗长的首部。 每次互相发送相同的首部造成的浪费较多。</li>
+<li>可任意选择数据压缩格式。 非强制压缩发送。<h4 id="Ajax的解决办法"><a href="#Ajax的解决办法" class="headerlink" title="Ajax的解决办法"></a>Ajax的解决办法</h4>异步加载，只更新一部分内容，进而减少响应中传输的数据量会因此而减少。<br>但是利用 Ajax 实时地从服务器获取内容， 有可能会导致大量请求产生。而且也没有说解决HTTP协议本身的问题。  <h4 id="Comet的解决办法"><a href="#Comet的解决办法" class="headerlink" title="Comet的解决办法"></a>Comet的解决办法</h4>通常， 服务器端接收到请求， 在处理完毕后就会立即返回响应， 但<strong>为了实现推送功能， Comet 会先将响应置<br>于挂起状态</strong>， 当服务器端有内容更新时， 再返回该响应。 因此， 服务器端一旦有更新， 就可以立即反馈给客<br>户端。<br>但是这样==为了维持连接耗费更多的资源==。  <h3 id="SPDY的设计与功能"><a href="#SPDY的设计与功能" class="headerlink" title="SPDY的设计与功能"></a>SPDY的设计与功能</h3>SPDY 没有完全改写 HTTP 协议， 而是在 TCP/IP 的应用层与运输层之间通过新加会话层的形式运作。 同时，考虑到安全性问题， SPDY 规定通信中使用 SSL。<br>这样使得HTTP协议获得额外功能：  </li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>功能名称</th>
+<th>具体</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>多路复用流</td>
+<td><strong>通过单一的 TCP 连接， 可以无限制处理多个 HTTP 请求</strong>。 所有请求的处理都在一条 TCP 连接上完成， 因此，TCP 的处理效率得到提高。</td>
+</tr>
+<tr>
+<td>赋予请求优先级</td>
+<td><strong>SPDY 不仅可以无限制地并发处理请求， 还可以给请求逐个分配优先级顺序</strong>。这样主要是为了在发送多个请求时， 解决因带宽低而导致响应变慢的问题。</td>
+</tr>
+<tr>
+<td>压缩HTTP首部</td>
+<td>压缩 HTTP 请求和响应的首部。 这样一来， 通信产生的数据包数量和发送的字节数就更少了。</td>
+</tr>
+<tr>
+<td>推送功能</td>
+<td>支持服务器主动向客户端推送数据的功能。 这样， 服务器可直接发送数据， 而不必等待客户端的请求</td>
+</tr>
+<tr>
+<td>服务器提示功能</td>
+<td>服务器可以主动提示客户端请求所需的资源。 由于在客户端发现资源之前就可以获知资源的存在， 因此在资源已缓存等情况下， 可以避免发送不必要的请求。</td>
+</tr>
+</tbody></table>
+<p>SPDY 的确是一种可有效消除 HTTP 瓶颈的技术， 但很多 Web 网站存在的问题并非仅仅是由 HTTP 瓶颈所导致。</p>
+<h2 id="使用浏览器进行全双工通信的websocket"><a href="#使用浏览器进行全双工通信的websocket" class="headerlink" title="使用浏览器进行全双工通信的websocket"></a>使用浏览器进行全双工通信的websocket</h2><p>WebSocket， 即 Web 浏览器与 Web 服务器之间全双工通信标准。   </p>
+<h3 id="WebSocket协议"><a href="#WebSocket协议" class="headerlink" title="WebSocket协议"></a>WebSocket协议</h3><p>一旦 Web 服务器与客户端之间建立起 WebSocket 协议的通信连接， 之后所有的通信都依靠这个专用协议进行。 <strong>通信过程中可==互相发送== JSON、 XML、 HTML 或图片等任意格式的数据</strong>。  </p>
+<h4 id="推送功能"><a href="#推送功能" class="headerlink" title="推送功能"></a>推送功能</h4><p>支持由服务器向客户端推送数据的推送功能。 这样， 服务器可直接发送数据， 而不必等待客户端的请求。  </p>
+<h4 id="减少通信量"><a href="#减少通信量" class="headerlink" title="减少通信量"></a>减少通信量</h4><p>只要建立起 WebSocket 连接， 就希望一直保持连接状态。 和 HTTP 相比， 不但每次连接时的总开销减少，而且由于 WebSocket 的首部信息很小， 通信量也相应减少了。<br>实现websocket通信，就是在HTTP连接建立之后，需要完成一次“握手”。成功握手确立 WebSocket 连接之后， 通信时不再使用 HTTP 的数据帧， 而采用 WebSocket 独立的数据帧。  </p>
+<h1 id="构建web内容的技术"><a href="#构建web内容的技术" class="headerlink" title="构建web内容的技术"></a>构建web内容的技术</h1>
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/15/HTTP协议（三）/" rel="next" title="HTTP协议（三）之报文">
+                <i class="fa fa-chevron-left"></i> HTTP协议（三）之报文
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/15/深入分析java-IO工作机制/" rel="prev" title="深入分析java IO工作机制">
+                深入分析java IO工作机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -437,6 +482,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -457,8 +506,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -520,6 +578,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#确认访问用户身份的认证"><span class="nav-number">1.</span> <span class="nav-text">确认访问用户身份的认证</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#BASIC认证"><span class="nav-number">1.1.</span> <span class="nav-text">BASIC认证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DIGEST认证"><span class="nav-number">1.2.</span> <span class="nav-text">DIGEST认证</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSL客户端认证（客户端证书）"><span class="nav-number">1.3.</span> <span class="nav-text">SSL客户端认证（客户端证书）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于表单认证"><span class="nav-number">1.4.</span> <span class="nav-text">基于表单认证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#认证多半是基于表单认证"><span class="nav-number">1.4.1.</span> <span class="nav-text">认证多半是基于表单认证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session管理以及Cookie应用"><span class="nav-number">1.4.2.</span> <span class="nav-text">Session管理以及Cookie应用</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基于HTTP的功能追加协议"><span class="nav-number">2.</span> <span class="nav-text">基于HTTP的功能追加协议</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#消除HTTP瓶颈的SPDY"><span class="nav-number">2.1.</span> <span class="nav-text">消除HTTP瓶颈的SPDY</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Ajax的解决办法"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">Ajax的解决办法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Comet的解决办法"><span class="nav-number">2.1.0.2.</span> <span class="nav-text">Comet的解决办法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SPDY的设计与功能"><span class="nav-number">2.1.1.</span> <span class="nav-text">SPDY的设计与功能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用浏览器进行全双工通信的websocket"><span class="nav-number">2.2.</span> <span class="nav-text">使用浏览器进行全双工通信的websocket</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WebSocket协议"><span class="nav-number">2.2.1.</span> <span class="nav-text">WebSocket协议</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#推送功能"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">推送功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#减少通信量"><span class="nav-number">2.2.1.2.</span> <span class="nav-text">减少通信量</span></a></li></ol></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#构建web内容的技术"><span class="nav-number">3.</span> <span class="nav-text">构建web内容的技术</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -664,6 +738,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

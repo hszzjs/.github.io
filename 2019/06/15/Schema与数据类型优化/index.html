@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -79,16 +79,18 @@
 
 
 
-<meta name="description" content="稳住，能赢。猥琐，别浪。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="天生的努力家">
-<meta property="og:url" content="http://yoursite.com/tags/Java/index.html">
+<meta name="description" content="前言：良好的逻辑设计与物理设计时高性能的基石，应该根据系统将要执行的查询语句来设计Schema，比如反范式的设计可以加快某些类型的查询，但是可能导致另一些类型的查询变慢。Mysql独有的特性和实现细节对性能的影响也很大。">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Schema与数据类型优化">
+<meta property="og:url" content="http://yoursite.com/2019/06/15/Schema与数据类型优化/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="稳住，能赢。猥琐，别浪。">
+<meta property="og:description" content="前言：良好的逻辑设计与物理设计时高性能的基石，应该根据系统将要执行的查询语句来设计Schema，比如反范式的设计可以加快某些类型的查询，但是可能导致另一些类型的查询变慢。Mysql独有的特性和实现细节对性能的影响也很大。">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-15T08:42:13.567Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="天生的努力家">
-<meta name="twitter:description" content="稳住，能赢。猥琐，别浪。">
+<meta name="twitter:title" content="Schema与数据类型优化">
+<meta name="twitter:description" content="前言：良好的逻辑设计与物理设计时高性能的基石，应该根据系统将要执行的查询语句来设计Schema，比如反范式的设计可以加快某些类型的查询，但是可能导致另一些类型的查询变慢。Mysql独有的特性和实现细节对性能的影响也很大。">
 
 
 
@@ -118,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/Java/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/15/Schema与数据类型优化/">
 
 
 
 
 
-  <title>Tag: Java | 天生的努力家</title>
+  <title>Schema与数据类型优化 | 天生的努力家</title>
   
 
 
@@ -143,7 +145,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/hszzjs" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 	
@@ -280,156 +282,190 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block tag">
-
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>Java<small>Tag</small>
-        </h1>
-      </div>
-
-      
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/Schema与数据类型优化/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/06/15/java-socket编程/" itemprop="url">
-              
-                <span itemprop="name">java socket编程</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Schema与数据类型优化</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T16:22:12+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:41:22+08:00">
+                2019-06-15
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/15/深入分析java-IO工作机制/" itemprop="url">
-              
-                <span itemprop="name">深入分析java IO工作机制</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T16:17:26+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+      
 
       
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/15/基于jdk1-8的ConcurrentHashMap源码/" itemprop="url">
-              
-                <span itemprop="name">基于jdk1.8的ConcurrentHashMap源码</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T12:41:39+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/15/HashMap源码阅读/" itemprop="url">
-              
-                <span itemprop="name">HashMap源码阅读</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T12:35:00+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/06/15/从迭代器模式出发看ArrayList/" itemprop="url">
-              
-                <span itemprop="name">从迭代器模式出发看ArrayList</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T12:17:02+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+        <p>前言：良好的逻辑设计与物理设计时高性能的基石，应该根据系统将要执行的查询语句来设计Schema，比如反范式的设计可以加快某些类型的查询，但是可能导致另一些类型的查询变慢。Mysql独有的特性和实现细节对性能的影响也很大。  </p>
+<a id="more"></a>
+<h1 id="选择优化的数据类型"><a href="#选择优化的数据类型" class="headerlink" title="选择优化的数据类型"></a>选择优化的数据类型</h1><p>原则：  </p>
+<ul>
+<li><strong>更小的通常更好</strong>：就是尽量使用可以正确存储数据的最小数据类型。因为他们可以占用更少的磁盘、内存和CPU缓存，并且处理时需要的CPU周期更少。</li>
+<li><strong>简单就好</strong>：简单数据类型和操作通常需要更少的CPU周期。比如，应该使用mysql内建的类型而不是字符串来存储日期和时间，另一个就是应该使用整型存储IP地址。</li>
+<li><strong>尽量避免NULL</strong>：就是通常情况下==最好指定列为NOT NULL，除非真的需要存储NULL值==。因为查询中包含可谓NULL的列，对于mysql来说更难优化，因为可为NULL的列使得索引、索引统计和值比较都变得更为复杂。可为NULL的列会使用更多的存储空间，然后可为NULL的列作为索引的时候，每个索引记录需要一个额外的字节。甚至在MyISAM中会导致固定大小的索引变为可变大小的索引。</li>
+</ul>
+<p><strong>Notice</strong>：DATETIME和TIMESAMP列都可以存储相同类型的数据：时间和日期，精确到秒，但是TIMESTAMP只使用DATETIME一般的存储空间，并且会根究时区变化，具有特殊的自动更新能力。  </p>
+<h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><p>TINYINT、SMALLINT、MEDIUMINT、INT以及BIGINT。整数类型有可选的UNSIGNED属性，就是说明不允许有负值。  </p>
+<h2 id="实数类型"><a href="#实数类型" class="headerlink" title="实数类型"></a>实数类型</h2><p>实数是带有小数部分的数字，它们不只是为了存储小数部分，也可以使用DECIMAL存储比BIGINT还大的整数。  </p>
+<h2 id="字符串类型"><a href="#字符串类型" class="headerlink" title="字符串类型"></a>字符串类型</h2><h3 id="VARCHAR和CHAR类型"><a href="#VARCHAR和CHAR类型" class="headerlink" title="VARCHAR和CHAR类型"></a>VARCHAR和CHAR类型</h3><p><strong>VARCHAR</strong>：该类型用于存储可变长字符串，是最常见的字符串数据类型。它比定长类型更节省空间。VARCHAR需要使用1或2个额外字节记录字符串的长度。VARCHAR节省了存储空间，所以对性能也有帮助，但是由于行是变长的，在UPDATE时可能使行变得比原来更长，就会导致需要做额外的工作。<br><strong>CHAR</strong>：CHAR类型是定长的，mysql总是根据定义的字符串长度分配足够的空间、CHAR值会根据需要采用空格进行填充以方便比较==。CHAR适合存储很短的字符串，或者所有值都逼近同一个长度==。比如，CHAR很适合存储密码的MD5，因为定长，然后对于经常变更的数据，CHAR也比VARCHAR更好，因为定长的CHAR类型不容易产生碎片。  </p>
+<h3 id="BLOB和TEXT类型"><a href="#BLOB和TEXT类型" class="headerlink" title="BLOB和TEXT类型"></a>BLOB和TEXT类型</h3><p>BLOB和TEXT都是为了存储很大的数据而设计的字符串数据类型，分别采用二进制和字符方式存储。与其他类型不同，mysql把每个BLOB和TEXT值当做一个独立的对象处理。存储引擎在存储时通常会做特殊处理。  </p>
+<h3 id="使用枚举（ENUM）代替字符串类型"><a href="#使用枚举（ENUM）代替字符串类型" class="headerlink" title="使用枚举（ENUM）代替字符串类型"></a>使用枚举（ENUM）代替字符串类型</h3><p>有时候可以使用枚举列代替常用的字符串类型。枚举列可以将一些重复的字符串存储在一个预定义的集合。在特定情况下，把CHAR/VARCHAR列与枚举列进行关联可能会比直接关联CHAR/VARCHAR列更慢。  </p>
+<h2 id="时间和日期类型"><a href="#时间和日期类型" class="headerlink" title="时间和日期类型"></a>时间和日期类型</h2><p>mysql可以使用许多类型来保存日期和时间值。<br><strong>DATETIME</strong>：这个类型能保存大范围的值，从1001年到9999年，精度为妙，它把时间和日期封装到格式为YYYYMMDDHHMMSS的整数中，与时区无关，使用==8个字节==的存储空间。<br><strong>TIMESTAMP</strong>：使用4个字节存储空间，只能表示1970年到2038年。<br>在没有特殊行为之外，应该尽量使用TIMESTAMP，因为它比DATETIME空间效率更高。  </p>
+<h2 id="位数据类型"><a href="#位数据类型" class="headerlink" title="位数据类型"></a>位数据类型</h2><h2 id="选择标识符"><a href="#选择标识符" class="headerlink" title="选择标识符"></a>选择标识符</h2><h2 id="特殊类型数据"><a href="#特殊类型数据" class="headerlink" title="特殊类型数据"></a>特殊类型数据</h2><h1 id="mysql设计中的陷阱"><a href="#mysql设计中的陷阱" class="headerlink" title="mysql设计中的陷阱"></a>mysql设计中的陷阱</h1><ul>
+<li>太多的列</li>
+<li>太多的关联</li>
+<li>全能的枚举：就是过度使用枚举</li>
+<li>变相的枚举</li>
+<li>非此发明的NULL：就是空值，不一定要使用NULL，可以使用对应的特殊值、或者空字符串等<h1 id="范式和反范式"><a href="#范式和反范式" class="headerlink" title="范式和反范式"></a>范式和反范式</h1>在范式化的数据库中，每个事实数据会出现并且只出现一次。相反，在反范式化的数据库中，信息是冗余的，可能会存储在多个地方。  <h1 id="OVER"><a href="#OVER" class="headerlink" title="OVER"></a>OVER</h1></li>
+</ul>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/15/mysql索引/" rel="next" title="mysql索引">
+                <i class="fa fa-chevron-left"></i> mysql索引
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -437,6 +473,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -457,8 +497,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -520,6 +569,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#选择优化的数据类型"><span class="nav-number">1.</span> <span class="nav-text">选择优化的数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整数类型"><span class="nav-number">1.1.</span> <span class="nav-text">整数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实数类型"><span class="nav-number">1.2.</span> <span class="nav-text">实数类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符串类型"><span class="nav-number">1.3.</span> <span class="nav-text">字符串类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#VARCHAR和CHAR类型"><span class="nav-number">1.3.1.</span> <span class="nav-text">VARCHAR和CHAR类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BLOB和TEXT类型"><span class="nav-number">1.3.2.</span> <span class="nav-text">BLOB和TEXT类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用枚举（ENUM）代替字符串类型"><span class="nav-number">1.3.3.</span> <span class="nav-text">使用枚举（ENUM）代替字符串类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#时间和日期类型"><span class="nav-number">1.4.</span> <span class="nav-text">时间和日期类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#位数据类型"><span class="nav-number">1.5.</span> <span class="nav-text">位数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选择标识符"><span class="nav-number">1.6.</span> <span class="nav-text">选择标识符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊类型数据"><span class="nav-number">1.7.</span> <span class="nav-text">特殊类型数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mysql设计中的陷阱"><span class="nav-number">2.</span> <span class="nav-text">mysql设计中的陷阱</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#范式和反范式"><span class="nav-number">3.</span> <span class="nav-text">范式和反范式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#OVER"><span class="nav-number">4.</span> <span class="nav-text">OVER</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -664,6 +729,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 

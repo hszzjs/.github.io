@@ -79,21 +79,27 @@
 
 
 
-<meta name="description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
+<meta name="description" content="HTTP首部HTTP协议的请求和响应报文必定包含HTTP首部，首部内容为客户端和服务器分别处理请求和响应提供的所需要信息。对于客户端用户来说，这些信息中的大部分内容都无需亲自查看。在报文的众多字段中，HTTP首部字段包含的信心最为丰富。">
 <meta name="keywords" content="通信协议">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTPS详解">
-<meta property="og:url" content="http://yoursite.com/2019/06/14/HTTPS详解/index.html">
+<meta property="og:title" content="HTTP协议（三）之报文">
+<meta property="og:url" content="http://yoursite.com/2019/06/15/HTTP协议（三）/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
+<meta property="og:description" content="HTTP首部HTTP协议的请求和响应报文必定包含HTTP首部，首部内容为客户端和服务器分别处理请求和响应提供的所需要信息。对于客户端用户来说，这些信息中的大部分内容都无需亲自查看。在报文的众多字段中，HTTP首部字段包含的信心最为丰富。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46">
-<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/69B5155913704248B013D2FF44F4A796?method=download&shareKey=10e91fb8ea6b12344d8f9ff76ae07e63">
-<meta property="og:updated_time" content="2019-06-15T03:52:07.005Z">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/D4F7E5B7273C4C81AEC52C7FEB4D5EDF?method=download&shareKey=2e03138cb5214aee6ad70184459da4bc">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/D501FB8532034B028A7E180C36B13F45?method=download&shareKey=d2b6014f0e93bf35cc4bc75858b23186">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/693A7BE1C24D40E88AD2109833B90038?method=download&shareKey=ccd059132aa5e67d5a399edeb186b40d">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/D4F7E5B7273C4C81AEC52C7FEB4D5EDF?method=download&shareKey=2e03138cb5214aee6ad70184459da4bc">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/5482BD8B722C411A865AA7AEA49A1558?method=download&shareKey=e37fb783b439dac093112355eee3ce56">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/19E5F87CF39B444F9E728C91A7E0492C?method=download&shareKey=5d4e12758b51713cb7a6c8737144f956">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/666C571810184178A755CC7371F9F420?method=download&shareKey=9857cd57b80aeb96b98c3b71447d148f">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/035C9AAAE21346EF9161539A3F8FFAAE?method=download&shareKey=ef2f1985acc47018d69f07f03f5a1f17">
+<meta property="og:updated_time" content="2019-06-15T08:07:09.817Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTPS详解">
-<meta name="twitter:description" content="HTTP的bug通信使用明文可能会被窃听TCP/IP是可能被窃听的网络按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视。   窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。">
-<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46">
+<meta name="twitter:title" content="HTTP协议（三）之报文">
+<meta name="twitter:description" content="HTTP首部HTTP协议的请求和响应报文必定包含HTTP首部，首部内容为客户端和服务器分别处理请求和响应提供的所需要信息。对于客户端用户来说，这些信息中的大部分内容都无需亲自查看。在报文的众多字段中，HTTP首部字段包含的信心最为丰富。">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/D4F7E5B7273C4C81AEC52C7FEB4D5EDF?method=download&shareKey=2e03138cb5214aee6ad70184459da4bc">
 
 
 
@@ -123,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/06/14/HTTPS详解/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/15/HTTP协议（三）/">
 
 
 
 
 
-  <title>HTTPS详解 | 天生的努力家</title>
+  <title>HTTP协议（三）之报文 | 天生的努力家</title>
   
 
 
@@ -299,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/14/HTTPS详解/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/HTTP协议（三）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -316,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HTTPS详解</h1>
+          <h1 class="post-title" itemprop="name headline">HTTP协议（三）之报文</h1>
         
 
         <div class="post-meta">
@@ -328,8 +334,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-14T21:24:56+08:00">
-                2019-06-14
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:04:55+08:00">
+                2019-06-15
               </time>
             
 
@@ -388,28 +394,101 @@
       
 
       
-        <h1 id="HTTP的bug"><a href="#HTTP的bug" class="headerlink" title="HTTP的bug"></a>HTTP的bug</h1><h2 id="通信使用明文可能会被窃听"><a href="#通信使用明文可能会被窃听" class="headerlink" title="通信使用明文可能会被窃听"></a>通信使用明文可能会被窃听</h2><h3 id="TCP-IP是可能被窃听的网络"><a href="#TCP-IP是可能被窃听的网络" class="headerlink" title="TCP/IP是可能被窃听的网络"></a>TCP/IP是可能被窃听的网络</h3><p><strong>按 TCP/IP 协议族的工作机制， 通信内容在所有的通信线路上都有可能遭到窥视</strong>。  
-窃听相同段上的通信并非难事。 只需要收集在互联网上流动的数据包（帧） 就行了。 对于收集来的数据包的解析工作， 可交给那些抓包（Packet Capture） 或嗅探器（Sniffer） 工具。  </p>
+        <h1 id="HTTP首部"><a href="#HTTP首部" class="headerlink" title="HTTP首部"></a>HTTP首部</h1><p>HTTP协议的请求和响应报文必定包含HTTP首部，<strong>首部内容为客户端和服务器分别处理请求和响应提供的所需要信息</strong>。对于客户端用户来说，这些信息中的大部分内容都无需亲自查看。<br>在报文的众多字段中，HTTP首部字段包含的信心最为丰富。  </p>
 <a id="more"></a>
-<h3 id="加密处理防止被窃听"><a href="#加密处理防止被窃听" class="headerlink" title="加密处理防止被窃听"></a>加密处理防止被窃听</h3><p>加密的对象可以有：  </p>
-<h4 id="通信的加密"><a href="#通信的加密" class="headerlink" title="通信的加密"></a>通信的加密</h4><p>HTTP协议中没有加密机制，但可以通过和SSL或者TLS的组合使用，加密HTTP的通信内容。<br><strong>就是用SSL建立安全通信线路之后，就可以在这条线路上进行HTTP通信了</strong>。与SSL组合使用的HTTP被称为HTTPS。  </p>
-<h4 id="内容的加密"><a href="#内容的加密" class="headerlink" title="内容的加密"></a>内容的加密</h4><p>这个是<strong>将参与通信的内容本身加密</strong>的方式。由于HTTP协议中没有加密机制，那么就对HTTP协议传输的内容本身加密。即把HTTP报文里包含的内容进行加密处理。<br>即对于报文主体进行加密处理。<br>但是，由于该方式不同于 SSL 或 TLS 将整个通信线路加密处理， 所以内容仍有被篡改的风险。  </p>
-<h3 id="不验证通信方的身份就可能遭遇伪装"><a href="#不验证通信方的身份就可能遭遇伪装" class="headerlink" title="不验证通信方的身份就可能遭遇伪装"></a>不验证通信方的身份就可能遭遇伪装</h3><h4 id="任何人都可发起请求"><a href="#任何人都可发起请求" class="headerlink" title="任何人都可发起请求"></a>任何人都可发起请求</h4><h4 id="查明对手的证书"><a href="#查明对手的证书" class="headerlink" title="查明对手的证书"></a>查明对手的证书</h4><p>虽然使用 HTTP 协议无法确定通信方，但如果使用SSL则可以。<strong>SSL不仅提供加密处理，而且还使用了一种被称为证书的手段， 可用于确定方</strong>。  
-证书很难伪造。<br><strong>客户端持有证书即可完成个人身份的确认，也可用于对web网站的认证环节</strong>。  </p>
-<h3 id="无法证明报文的完整性，可能已经遭到篡改"><a href="#无法证明报文的完整性，可能已经遭到篡改" class="headerlink" title="无法证明报文的完整性，可能已经遭到篡改"></a>无法证明报文的完整性，可能已经遭到篡改</h3><h4 id="接收的内容可能有误"><a href="#接收的内容可能有误" class="headerlink" title="接收的内容可能有误"></a>接收的内容可能有误</h4><h4 id="如何防止篡改"><a href="#如何防止篡改" class="headerlink" title="如何防止篡改"></a>如何防止篡改</h4><p>虽然有使用 HTTP 协议确定报文完整性的方法， 但事实上并不便捷、 可靠。 其中常用的是 MD5 和 SHA-1 等散列值校验的方法， 以及用来确认文件的数字签名方法。<br>事实上甚至大多数需要客户端的用户亲自验证，浏览器无法自动帮用户检查。<br>SSL 提供认证和加密处理及摘要功能。 仅靠 HTTP确保完整性是非常困难的，因此通过和其他协议组合使用来实现这个目标。  </p>
-<h2 id="HTTP-加密-认证-完整性保护-HTTPS"><a href="#HTTP-加密-认证-完整性保护-HTTPS" class="headerlink" title="HTTP+加密+认证+完整性保护=HTTPS"></a>HTTP+加密+认证+完整性保护=HTTPS</h2><h3 id="HTTPS是表面为SSL的HTTP"><a href="#HTTPS是表面为SSL的HTTP" class="headerlink" title="HTTPS是表面为SSL的HTTP"></a>HTTPS是表面为SSL的HTTP</h3><p><img src="https://note.youdao.com/yws/api/personal/file/88335A032D024ABB9F1997D57C7364C9?method=download&shareKey=f919510cb9c5418f0420634ab1126b46" alt="image">  </p>
-<h3 id="相互交换秘钥的公开密钥加密方式"><a href="#相互交换秘钥的公开密钥加密方式" class="headerlink" title="相互交换秘钥的公开密钥加密方式"></a>相互交换秘钥的公开密钥加密方式</h3><p>SSL采用一种叫<strong>公开密钥加密</strong>的加密处理方式。  </p>
-<h4 id="共享密钥加密的困境"><a href="#共享密钥加密的困境" class="headerlink" title="共享密钥加密的困境"></a>共享密钥加密的困境</h4><p>加密和解密<strong>同用一个密钥</strong>的方式称为共享密钥加密（Common key crypto system） ， 也被叫做<strong>对称密钥加密</strong>。  
-这样一旦秘钥在客户端与服务器端进行交换的时候，被监听获取，就很尴尬了。  </p>
-<h3 id="使用两把秘钥的公开密钥加密"><a href="#使用两把秘钥的公开密钥加密" class="headerlink" title="使用两把秘钥的公开密钥加密"></a>使用两把秘钥的公开密钥加密</h3><p>公开密钥加密使用一对非对称的密钥。 一把叫做私有密钥（private key） ， 另一把叫做公开密钥（public key） 。顾名思义， <strong>私有密钥不能让其他任何人知道， 而公开密钥则可以随意发布</strong>， 任何人都可以获得。<br>这个就是公钥用于加密，私钥用于解密，反正公钥是共享的谁都可以得到。所以互送一下秘钥也是可以的。  </p>
-<h4 id="HTTPS采用混合加密机制"><a href="#HTTPS采用混合加密机制" class="headerlink" title="HTTPS采用混合加密机制"></a>HTTPS采用混合加密机制</h4><p>这么做主要是考虑到公开密钥加密的处理速度很慢。所以就可以通过公开密钥加密的来确保共享密钥加密的秘钥只有客户端与服务器端拥有，然后直接使用共享加密来对于通信内容进行加密。  </p>
-<h3 id="证明公开密钥正确性的证书"><a href="#证明公开密钥正确性的证书" class="headerlink" title="证明公开密钥正确性的证书"></a>证明公开密钥正确性的证书</h3><p>还有一个个问题就是在于无法确认公开密钥在交换的时候的安全性，那么咋搞。就使用由数字证书认证机构（CA）和其相关机关颁发的公开密钥证书。<br>数字证书认证机构在判明提出申请者的身份之后， 会对已申请的公开密钥做数字签名， 然后分配这个已签名的公开密钥， 并将该公开密钥放入公钥证书后绑定在一起。<br>接到证书的客户端可使用数字证书认证机构的公开密钥，对那张证书上的数字签名进行验证，一旦验证通过，客户端便可明确两件事： 一， 认证服务器的公开密钥的是真实有效的数字证书认证机构。 二， 服务器的公开密钥是值得信赖的。<br><img src="https://note.youdao.com/yws/api/personal/file/69B5155913704248B013D2FF44F4A796?method=download&shareKey=10e91fb8ea6b12344d8f9ff76ae07e63" alt="image">  </p>
-<h4 id="可证明组织真实性的-EV-SSL-证书"><a href="#可证明组织真实性的-EV-SSL-证书" class="headerlink" title="可证明组织真实性的 EV SSL 证书"></a>可证明组织真实性的 EV SSL 证书</h4><h4 id="用以确认客户端的客户端证书"><a href="#用以确认客户端的客户端证书" class="headerlink" title="用以确认客户端的客户端证书"></a>用以确认客户端的客户端证书</h4><p>以客户端证书进行客户端认证， 证明服务器正在通信的对方始终是预料之内的客户端， 其作用跟服务器证书如出一辙。<br>安全性极高的认证机构可颁发客户端证书但仅用于特殊用途的业务。 比如那些可支撑客户端证书支出费用的业务。<br>事实上难点在于客户端并不是一定会拥有所谓的证书  </p>
-<h2 id="HTTPS的安全通信机制"><a href="#HTTPS的安全通信机制" class="headerlink" title="HTTPS的安全通信机制"></a>HTTPS的安全通信机制</h2><p><strong>步 骤1 :</strong>  <strong>客户端通过发送 Client Hello报文开始SSL通信</strong>。报文中包含客户端支持的SSL的指定版本、加密组件（Cipher Suite） 列表（所使用的加密算法及密钥长度等） 。<br><strong>步 骤2 :</strong>  <strong>服务器可进行SSL通信时，会以Server Hello报文作为应答</strong>。和客户端一样，在报文中包含SSL版本以及加密组件。服务器的加密组件内容是从接收到的客户端加密组件内筛选出来的<br><strong>步 骤3 :</strong> 之后服务器发送 Certificate 报文。 报文中包含<strong>公开密钥证书</strong>。
-<strong>步 骤4 :</strong> 最后服务器发送 Server Hello Done 报文通知客户端， 最初阶段的 <strong>SSL 握手协商</strong>部分结束。<br><strong>步 骤5 :</strong> SSL 第一次握手结束之后， 客户端以 Client Key Exchange 报文作为回应。报文中包含通信加密中使用的一种被称为 <strong>Pre-master secret 的随机密码串</strong>。 该报文已用步骤 3 中的公开密钥进行加密。<br><strong>步 骤6 :</strong> 接着客户端继续发送 Change Cipher Spec 报文。 该报文会提示服务器， <strong>在此报文之后的通信会采用 Pre-master secret 密钥加</strong>密。<br><strong>步 骤7 :</strong> <strong>客户端发送 Finished 报文</strong>。 该报文包含连接至今全部报文的整体校验值。 这次握手协商是否能够成功， 要以服务器是否能够正确解密该报文作为判定标准。<br><strong>步 骤8 :</strong> 服务器同样发送 Change Cipher Spec 报文。<br><strong>步 骤9 :</strong> 服务器同样发送 Finished 报文。<br><strong>步 骤10 :</strong> 服务器和客户端的 <strong>Finished 报文交换完毕之后， SSL 连接就算建立完成</strong>。 当然， 通信会受到 SSL的保护。 从此处开始进行应用层协议的通信， 即发送 HTTP 请求。<br><strong>步 骤11 :</strong> 应用层协议通信， 即发送 HTTP 响应。<br><strong>步 骤12 :</strong> 最后由客户端断开连接。 断开连接时， 发送 close_notify 报文。 上图做了一些省略， 这步之后再发送 TCP FIN 报文来关闭与 TCP 的通信。</p>
-<p>事实上可以认为整个https是分为四个阶段：<br>① 客户端发起请求，协商好要用的SSL版本等，服务器端再通过回复报文，将公开密钥证书给客户端，这就是SSL握手协商；<br>② 接着客户端就通过拿到的公开密钥将随机密码串加密给到服务器端，然后客户端使用那个密码串加密的Finished报文给服务器，服务器解密成功，再回复Finished加密报文，客户端解密成功，那就哦了；<br>③ 开始使用那个密码串进行HTTP层的传输。所以上面就可以认为是SSL层的。<br>④ 结束后，就是使用TCP FIN那一套结束通信。<br>在以上流程中， 应用层发送数据时会附加一种叫做 MAC（Message Authentication Code） 的报文摘要。MAC 能够查知报文是否遭到篡改， 从而保护报文的完整性。  </p>
-<h4 id="SSl和TLS"><a href="#SSl和TLS" class="headerlink" title="SSl和TLS"></a>SSl和TLS</h4><p>HTTPS 比 HTTP 要慢 2 到 100 倍。<br>SSL 的慢分两种。 一种是指<strong>通信慢</strong>。 另一种是指由于<strong>大量消耗 CPU 及内存等资源</strong>， 导致处理速度变慢。  </p>
+<h2 id="HTTP首部字段"><a href="#HTTP首部字段" class="headerlink" title="HTTP首部字段"></a>HTTP首部字段</h2><p>HTTP首部字段是构成HTTP报文的要素之一，在客户端与服务器之间以HTTP协议进行通信的过程中，无论是请求还是响应都会使用首部字段，它能起到传递额外重要信息的作用。<br><strong>使用首部字段是为了给浏览器和服务器提供==报文主体大小、所使用的语言、认证信息==等内容</strong>。  </p>
+<h3 id="HTTP首部字段-1"><a href="#HTTP首部字段-1" class="headerlink" title="HTTP首部字段"></a>HTTP首部字段</h3><p>HTTP首部字段是由首部字段名和字段值构成的，中间使用冒号”:”分隔。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">首部字段名：字段值</span><br></pre></td></tr></table></figure>
 
+<p>例如，在HTTP首部中以Content-Type这个字段来表示报文主体的对象类型。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type：text/html</span><br></pre></td></tr></table></figure>
+
+<p>另外，字段值对应单个HTTP首部字段可以有多个值，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Keep-Alive：timeout=15，max=100</span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP首部字段类型"><a href="#HTTP首部字段类型" class="headerlink" title="HTTP首部字段类型"></a>HTTP首部字段类型</h3><p><strong>通用首部字段</strong>：请求报文和响应报文两房都会使用的首部<br><strong>请求首部字段</strong>：从客户端向服务器端发送请求报文时使用的首部。补充了请求的附加内容、客户端信息、响应内容相关优先级等信息。<br><strong>响应首部字段</strong>：从服务器端向客户端返回响应报文时使用的首部。补充了响应的附加内容，也会要求客户端附加额外的内容信息。<br><strong>实体首部字段</strong>：针对请求报文和响应报文的实体部分使用的首部。补充了资源内容更新时间等与实体有关的信息。  </p>
+<h3 id="HTTP-1-1首部字段"><a href="#HTTP-1-1首部字段" class="headerlink" title="HTTP/1.1首部字段"></a>HTTP/1.1首部字段</h3><h4 id="通用首部字段"><a href="#通用首部字段" class="headerlink" title="通用首部字段"></a>通用首部字段</h4><table>
+<thead>
+<tr>
+<th>首部字段名</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cache-Control</td>
+<td>控制缓存的行为</td>
+</tr>
+<tr>
+<td>Connection</td>
+<td>逐跳首部、连接的管理</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>创建报文的日期时间</td>
+</tr>
+<tr>
+<td>Pragma</td>
+<td>报文指令</td>
+</tr>
+<tr>
+<td>Trailer</td>
+<td>报文末端的首部一览</td>
+</tr>
+<tr>
+<td>Transfer-Encoding</td>
+<td>指定报文主体的传输编码方式</td>
+</tr>
+<tr>
+<td>Upgrade</td>
+<td>升级为其他协议</td>
+</tr>
+<tr>
+<td>Via</td>
+<td>代理服务器的相关信息</td>
+</tr>
+<tr>
+<td>Waring</td>
+<td>错误通知</td>
+</tr>
+</tbody></table>
+<h4 id="请求首部字段"><a href="#请求首部字段" class="headerlink" title="请求首部字段"></a>请求首部字段</h4><p><img src="https://note.youdao.com/yws/api/personal/file/D4F7E5B7273C4C81AEC52C7FEB4D5EDF?method=download&shareKey=2e03138cb5214aee6ad70184459da4bc" alt="image"><br><img src="https://note.youdao.com/yws/api/personal/file/D501FB8532034B028A7E180C36B13F45?method=download&shareKey=d2b6014f0e93bf35cc4bc75858b23186" alt="image">  </p>
+<h4 id="响应首部字段"><a href="#响应首部字段" class="headerlink" title="响应首部字段"></a>响应首部字段</h4><p><img src="https://note.youdao.com/yws/api/personal/file/693A7BE1C24D40E88AD2109833B90038?method=download&shareKey=ccd059132aa5e67d5a399edeb186b40d" alt="image">  </p>
+<h4 id="实体首部字段"><a href="#实体首部字段" class="headerlink" title="实体首部字段"></a>实体首部字段</h4><p><img src="https://note.youdao.com/yws/api/personal/file/D4F7E5B7273C4C81AEC52C7FEB4D5EDF?method=download&shareKey=2e03138cb5214aee6ad70184459da4bc" alt="image">  </p>
+<h3 id="非HTTP-1-1首部字段"><a href="#非HTTP-1-1首部字段" class="headerlink" title="非HTTP/1.1首部字段"></a>非HTTP/1.1首部字段</h3><p>就不止以上字段，还有==Cookie、Set-Cookie和Content-Disposition等==在其他RFC中定义的首部字段。  </p>
+<h3 id="End-to-End首部和Hop-by-hop首部"><a href="#End-to-End首部和Hop-by-hop首部" class="headerlink" title="End-to-End首部和Hop-by-hop首部"></a>End-to-End首部和Hop-by-hop首部</h3><p>HTTP首部字段将定义成缓存代理和费缓存代理的行为分为：<br><strong>端到端首部（End-to-End Header）</strong>：分在此类别中的首部会转发给请求/响应对应的最终接受目标，且必须保存在由缓存生成的响应中，另外规定它必须被转发。<br><strong>逐跳首部（Hop-by-Hop Header）</strong>：分在此类别中的首部只对单次转发有效，会因通过缓存或代理而不再转发。<br>下面是8个逐跳首部字段，剩下的就是端到端首部：<br>Connection、Keep-Alive、Proxy-Authenticate、Proxy-Authorization、Trailer、TE、Transfer-Encoding、Upgrade。  </p>
+<h2 id="HTTP-1-1通用首部字段"><a href="#HTTP-1-1通用首部字段" class="headerlink" title="HTTP/1.1通用首部字段"></a>HTTP/1.1通用首部字段</h2><h3 id="Cache-Control"><a href="#Cache-Control" class="headerlink" title="Cache-Control"></a>Cache-Control</h3><p>就客户端与服务器端都可以通过指定首部字段 Cache-Control 的指令，<strong>操作缓存的工作机制</strong>。  
+指令的参数是可选的， 多个指令之间通过“,”分隔。 首部字段 Cache-Control 的指令可用于请求及响应时。<br><img src="https://note.youdao.com/yws/api/personal/file/5482BD8B722C411A865AA7AEA49A1558?method=download&shareKey=e37fb783b439dac093112355eee3ce56" alt="image"><br><img src="https://note.youdao.com/yws/api/personal/file/19E5F87CF39B444F9E728C91A7E0492C?method=download&shareKey=5d4e12758b51713cb7a6c8737144f956" alt="image">  </p>
+<h3 id="Connection"><a href="#Connection" class="headerlink" title="Connection"></a>Connection</h3><p>Connection首部字段具备如下作用：<br>① 控制不再转发给代理的首部字段  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection：不再转发的首部字段名</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://note.youdao.com/yws/api/personal/file/666C571810184178A755CC7371F9F420?method=download&shareKey=9857cd57b80aeb96b98c3b71447d148f" alt="image"><br>② 管理持久连接<br>断开客户端与服务器端的连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection：close</span><br></pre></td></tr></table></figure>
+
+<p>维持客户端与服务器的持久连接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connection：Keep-Alive</span><br></pre></td></tr></table></figure>
+
+<h3 id="Pragma"><a href="#Pragma" class="headerlink" title="Pragma"></a>Pragma</h3><p>该首部字段属于通用首部字段， 但只用在客户端发送的请求中。 客户端会要求所有的中间服务器不返回缓存的资源。  </p>
+<h3 id="Warning"><a href="#Warning" class="headerlink" title="Warning"></a>Warning</h3><p>该首部通常会告知用户一些<strong>与缓存相关的问题的警告</strong>。  
+<img src="https://note.youdao.com/yws/api/personal/file/035C9AAAE21346EF9161539A3F8FFAAE?method=download&shareKey=ef2f1985acc47018d69f07f03f5a1f17" alt="image">  </p>
+<h2 id="请求首部字段-1"><a href="#请求首部字段-1" class="headerlink" title="请求首部字段"></a>请求首部字段</h2><h3 id="Accept"><a href="#Accept" class="headerlink" title="Accept"></a>Accept</h3><p>Accept 首部字段可通知服务器， 用户代理能够处理的媒体类型及媒体类型的相对优先级。 可使用type/subtype 这种形式， 一次指定多种媒体类型。  </p>
+<h3 id="Accept-Charset"><a href="#Accept-Charset" class="headerlink" title="Accept-Charset"></a>Accept-Charset</h3><p>Accept-Charset 首部字段可用来通知服务器用户代理支持的字符集及字符集的相对优先顺序。 另外， 可一次性指定多种字符集。 与首部字段 Accept 相同的是可用权重 q 值来表示相对优先级。  </p>
+<h3 id="Accept-Encoding"><a href="#Accept-Encoding" class="headerlink" title="Accept-Encoding"></a>Accept-Encoding</h3><p>Accept-Encoding 首部字段用来告知服务器用户代理支持的内容编码及内容编码的优先级顺序。可一次性指定多种内容编码。  </p>
+<h3 id="Accept-Language"><a href="#Accept-Language" class="headerlink" title="Accept-Language"></a>Accept-Language</h3><p>首部字段 Accept-Language 用来告知服务器用户代理能够处理的自然语言集（指中文或英文等） ，以及自然语言集的相对优先级。 可一次指定多种自然语言集。  </p>
+<h3 id="Authorization"><a href="#Authorization" class="headerlink" title="Authorization"></a>Authorization</h3><p>首部字段 Authorization 是用来告知服务器， 用户代理的认证信息（证书值） 。 通常， 想要通过服务器认证的用户代理会在接收到返回的 401 状态码响应后， 把首部字段 Authorization 加入请求中。 共用缓存在接收到含有 Authorization 首部字段的请求时的操作处理会略有差异。  </p>
+<h3 id="Expect"><a href="#Expect" class="headerlink" title="Expect"></a>Expect</h3><p>客户端使用首部字段 Expect 来告知服务器， 期望出现的某种特定行为。 因服务器无法理解客户端的期望作出回应而发生错误时， 会返回状态码 417 Expectation Failed。  </p>
+<h3 id="From"><a href="#From" class="headerlink" title="From"></a>From</h3><p>首部字段 From 用来告知服务器使用用户代理的用户的电子邮件地址。 通常， 其使用目的就是==为了显示搜索引擎等用户代理的负责人的电子邮件联系方式==。 使用代理时， 应尽可能包含 From 首部字段（但可能会因代理不同， 将电子邮件地址记录在 User-Agent 首部字段内） 。  </p>
+<h3 id="Host"><a href="#Host" class="headerlink" title="Host"></a>Host</h3><p>==虚拟主机运行在同一个 IP 上， 因此使用首部字段 Host 加以区分==。<br>首部字段 Host 会告知服务器， 请求的资源所处的互联网主机名和端口号。 Host 首部字段在 HTTP/1.1 规范内是唯一一个必须被包含在请求内的首部字段。  </p>
+<h3 id="If-Match"><a href="#If-Match" class="headerlink" title="If-Match"></a>If-Match</h3><p>形如 If-xxx 这种样式的请求首部字段， 都可称为条件请求。 服务器接收到附带条件的请求后， <strong>只有判断指定条件为真时， 才会执行请求</strong>。  </p>
+<h3 id="If-Modified-Since"><a href="#If-Modified-Since" class="headerlink" title="If-Modified-Since"></a>If-Modified-Since</h3><p>如果在 If-Modified-Since 字段指定的日期时间后， 资源发生了更新， 服务器会接受请求。<br>首部字段 If-Modified-Since， 属附带条件之一， 它会告知服务器若 If-Modified-Since 字段值早于资源的更新时间， 则希望能处理该请求。 而在指定 If-Modified-Since 字段值的日期时间之后， 如果请求的资源都没有过更新， 则返回状态码 304 Not Modified 的响应。<br><strong>If-Modified-Since 用于确认代理或客户端拥有的本地资源的有效性</strong>。 获取资源的更新日期时间， 可通过确认首部字段 Last-Modified 来确定。  </p>
+<h3 id="If-None-match"><a href="#If-None-match" class="headerlink" title="If-None-match"></a>If-None-match</h3><p>只有在 If-None-Match 的字段值与 ETag 值不一致时， 可处理该请求。 与 If-Match 首部字段的作用相反.<br>首部字段 If-None-Match 属于附带条件之一。 它和首部字段 If-Match 作用相反。 用于指定 If-None-Match 字段值的实体标记（ETag） 值与请求资源的 ETag 不一致时， 它就告知服务器处理该请求。<br><strong>在 GET 或 HEAD 方法中使用首部字段 If-None-Match 可获取最新的资源</strong>。 因此， 这与使用首部字段 IfModified-Since 时有些类似。  </p>
+<h3 id="If-Range"><a href="#If-Range" class="headerlink" title="If-Range"></a>If-Range</h3><p>首部字段 If-Range 属于附带条件之一。 <strong>它告知服务器若指定的 If-Range 字段值（ETag 值或者时间） 和请求资源的 ETag 值或时间相一致时， 则作为范围请求处理。 反之， 则返回全体资源</strong>。  </p>
+<h3 id="If-Unmodified-Since"><a href="#If-Unmodified-Since" class="headerlink" title="If-Unmodified-Since"></a>If-Unmodified-Since</h3><p>首部字段 If-Unmodified-Since 和首部字段 If-Modified-Since 的作用相反。 <strong>它的作用的是告知服务器， 指定的请求资源只有在字段值内指定的日期时间之后， 未发生更新的情况下， 才能处理请求</strong>。 如果在指定日期时间后发生了更新， 则以状态码 412 Precondition Failed 作为响应返回。  </p>
+<h3 id="Max-Forwards"><a href="#Max-Forwards" class="headerlink" title="Max-Forwards"></a>Max-Forwards</h3><p><strong>每次转发数值减 1。 当数值变 0 时返回响应</strong>。  
+通过 TRACE 方法或 OPTIONS 方法， 发送包含首部字段 Max-Forwards 的请求时， 该字段以十进制整数形式指定可经过的服务器最大数目。 服务器在往下一个服务器转发请求之前， Max-Forwards 的值减 1 后重新赋值。 当服务器接收到 Max-Forwards 值为 0 的请求时， 则不再进行转发， 而是直接返回响应。<br>使用 HTTP 协议通信时， 请求可能会经过代理等多台服务器。 途中， 如果代理服务器由于某些原因导致请求转发失败， 客户端也就等不到服务器返回的响应了。 对此， 我们无从可知。<br>可以灵活使用首部字段 Max-Forwards， 针对以上问题产生的原因展开调查。   </p>
+<h3 id="Proxy-Authorization"><a href="#Proxy-Authorization" class="headerlink" title="Proxy-Authorization"></a>Proxy-Authorization</h3><p>接收到<strong>从代理服务器发来的认证质询时</strong>， 客户端会发送包含首部字段 Proxy-Authorization 的请求， 以告知服务器认证所需要的信息。<br>这个关键点就是认证是发生在客户端与代理之间。  </p>
+<h3 id="User-Agent"><a href="#User-Agent" class="headerlink" title="User-Agent"></a>User-Agent</h3><p><strong>首部字段 User-Agent 会将创建请求的浏览器和用户代理名称等信息传达给服务器</strong>。  
+由网络爬虫发起请求时， 有可能会在字段内添加爬虫作者的电子邮件地址。 此外， 如果请求经过代理， 那么中间也很可能被添加上代理服务器的名称。  </p>
+<h2 id="响应首部字段-1"><a href="#响应首部字段-1" class="headerlink" title="响应首部字段"></a>响应首部字段</h2><h2 id="实体首部字段-1"><a href="#实体首部字段-1" class="headerlink" title="实体首部字段"></a>实体首部字段</h2><h2 id="为Cookie服务的首部字段"><a href="#为Cookie服务的首部字段" class="headerlink" title="为Cookie服务的首部字段"></a>为Cookie服务的首部字段</h2>
       
     </div>
     
@@ -439,8 +518,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/06/14/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2019/06/15/HTTP协议（二）/" rel="next" title="HTTP协议（二）之报文">
+                <i class="fa fa-chevron-left"></i> HTTP协议（二）之报文
               </a>
             
           </div>
@@ -449,8 +528,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/06/15/hexo-添加标签分类/" rel="prev" title="hexo 添加标签分类">
-                hexo 添加标签分类 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/15/HTTP之用户认证以及功能追加/" rel="prev" title="HTTP之用户认证以及功能追加">
+                HTTP之用户认证以及功能追加 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -585,7 +664,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP的bug"><span class="nav-number">1.</span> <span class="nav-text">HTTP的bug</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通信使用明文可能会被窃听"><span class="nav-number">1.1.</span> <span class="nav-text">通信使用明文可能会被窃听</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-IP是可能被窃听的网络"><span class="nav-number">1.1.1.</span> <span class="nav-text">TCP/IP是可能被窃听的网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#加密处理防止被窃听"><span class="nav-number">1.1.2.</span> <span class="nav-text">加密处理防止被窃听</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通信的加密"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">通信的加密</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内容的加密"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">内容的加密</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#不验证通信方的身份就可能遭遇伪装"><span class="nav-number">1.1.3.</span> <span class="nav-text">不验证通信方的身份就可能遭遇伪装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#任何人都可发起请求"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">任何人都可发起请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查明对手的证书"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">查明对手的证书</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无法证明报文的完整性，可能已经遭到篡改"><span class="nav-number">1.1.4.</span> <span class="nav-text">无法证明报文的完整性，可能已经遭到篡改</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接收的内容可能有误"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">接收的内容可能有误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何防止篡改"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">如何防止篡改</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-加密-认证-完整性保护-HTTPS"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP+加密+认证+完整性保护=HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS是表面为SSL的HTTP"><span class="nav-number">1.2.1.</span> <span class="nav-text">HTTPS是表面为SSL的HTTP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相互交换秘钥的公开密钥加密方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">相互交换秘钥的公开密钥加密方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共享密钥加密的困境"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">共享密钥加密的困境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用两把秘钥的公开密钥加密"><span class="nav-number">1.2.3.</span> <span class="nav-text">使用两把秘钥的公开密钥加密</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTPS采用混合加密机制"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">HTTPS采用混合加密机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#证明公开密钥正确性的证书"><span class="nav-number">1.2.4.</span> <span class="nav-text">证明公开密钥正确性的证书</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可证明组织真实性的-EV-SSL-证书"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">可证明组织真实性的 EV SSL 证书</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用以确认客户端的客户端证书"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">用以确认客户端的客户端证书</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS的安全通信机制"><span class="nav-number">1.3.</span> <span class="nav-text">HTTPS的安全通信机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SSl和TLS"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">SSl和TLS</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP首部"><span class="nav-number">1.</span> <span class="nav-text">HTTP首部</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP首部字段"><span class="nav-number">1.1.</span> <span class="nav-text">HTTP首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP首部字段-1"><span class="nav-number">1.1.1.</span> <span class="nav-text">HTTP首部字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP首部字段类型"><span class="nav-number">1.1.2.</span> <span class="nav-text">HTTP首部字段类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-1首部字段"><span class="nav-number">1.1.3.</span> <span class="nav-text">HTTP/1.1首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#通用首部字段"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">通用首部字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#请求首部字段"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">请求首部字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#响应首部字段"><span class="nav-number">1.1.3.3.</span> <span class="nav-text">响应首部字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实体首部字段"><span class="nav-number">1.1.3.4.</span> <span class="nav-text">实体首部字段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非HTTP-1-1首部字段"><span class="nav-number">1.1.4.</span> <span class="nav-text">非HTTP/1.1首部字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#End-to-End首部和Hop-by-hop首部"><span class="nav-number">1.1.5.</span> <span class="nav-text">End-to-End首部和Hop-by-hop首部</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-1-1通用首部字段"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP/1.1通用首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cache-Control"><span class="nav-number">1.2.1.</span> <span class="nav-text">Cache-Control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Connection"><span class="nav-number">1.2.2.</span> <span class="nav-text">Connection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pragma"><span class="nav-number">1.2.3.</span> <span class="nav-text">Pragma</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Warning"><span class="nav-number">1.2.4.</span> <span class="nav-text">Warning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求首部字段-1"><span class="nav-number">1.3.</span> <span class="nav-text">请求首部字段</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Accept"><span class="nav-number">1.3.1.</span> <span class="nav-text">Accept</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Accept-Charset"><span class="nav-number">1.3.2.</span> <span class="nav-text">Accept-Charset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Accept-Encoding"><span class="nav-number">1.3.3.</span> <span class="nav-text">Accept-Encoding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Accept-Language"><span class="nav-number">1.3.4.</span> <span class="nav-text">Accept-Language</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Authorization"><span class="nav-number">1.3.5.</span> <span class="nav-text">Authorization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Expect"><span class="nav-number">1.3.6.</span> <span class="nav-text">Expect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#From"><span class="nav-number">1.3.7.</span> <span class="nav-text">From</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Host"><span class="nav-number">1.3.8.</span> <span class="nav-text">Host</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#If-Match"><span class="nav-number">1.3.9.</span> <span class="nav-text">If-Match</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#If-Modified-Since"><span class="nav-number">1.3.10.</span> <span class="nav-text">If-Modified-Since</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#If-None-match"><span class="nav-number">1.3.11.</span> <span class="nav-text">If-None-match</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#If-Range"><span class="nav-number">1.3.12.</span> <span class="nav-text">If-Range</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#If-Unmodified-Since"><span class="nav-number">1.3.13.</span> <span class="nav-text">If-Unmodified-Since</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Max-Forwards"><span class="nav-number">1.3.14.</span> <span class="nav-text">Max-Forwards</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Proxy-Authorization"><span class="nav-number">1.3.15.</span> <span class="nav-text">Proxy-Authorization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#User-Agent"><span class="nav-number">1.3.16.</span> <span class="nav-text">User-Agent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#响应首部字段-1"><span class="nav-number">1.4.</span> <span class="nav-text">响应首部字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实体首部字段-1"><span class="nav-number">1.5.</span> <span class="nav-text">实体首部字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为Cookie服务的首部字段"><span class="nav-number">1.6.</span> <span class="nav-text">为Cookie服务的首部字段</span></a></li></ol></li></ol></div>
             
 
           </div>
