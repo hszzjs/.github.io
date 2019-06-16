@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="mysql,">
 
 
 
@@ -79,16 +79,20 @@
 
 
 
-<meta name="description" content="稳住，能赢。猥琐，别浪。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="天生的努力家">
-<meta property="og:url" content="http://yoursite.com/tags/高并发/index.html">
+<meta name="description" content="分区表&amp;ensp;&amp;ensp; 分区表是一个独立的逻辑表，但是底层是由多个物理子表组成的。实现分区的代码实际上是对一组底层表的句柄对象（Header Object）的封装。对于分区表的请求，都会通过句柄对象转化成对存储引擎的接口调用。因为mysql实现分区表的方式是对底层表的发呢过妆，这就意味着索引也是按照分区的子表定义的，而没有全局索引。&amp;ensp;&amp;ensp; 就mysql在创建表的时候使用P">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql的高级特性">
+<meta property="og:url" content="http://yoursite.com/2019/06/16/mysql的高级特性/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="稳住，能赢。猥琐，别浪。">
+<meta property="og:description" content="分区表&amp;ensp;&amp;ensp; 分区表是一个独立的逻辑表，但是底层是由多个物理子表组成的。实现分区的代码实际上是对一组底层表的句柄对象（Header Object）的封装。对于分区表的请求，都会通过句柄对象转化成对存储引擎的接口调用。因为mysql实现分区表的方式是对底层表的发呢过妆，这就意味着索引也是按照分区的子表定义的，而没有全局索引。&amp;ensp;&amp;ensp; 就mysql在创建表的时候使用P">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/61B25FB7764140C6B618FF01A5766640?method=download&shareKey=56351e590b851dc50d0de64e33a7611c">
+<meta property="og:updated_time" content="2019-06-16T12:08:24.490Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="天生的努力家">
-<meta name="twitter:description" content="稳住，能赢。猥琐，别浪。">
+<meta name="twitter:title" content="mysql的高级特性">
+<meta name="twitter:description" content="分区表&amp;ensp;&amp;ensp; 分区表是一个独立的逻辑表，但是底层是由多个物理子表组成的。实现分区的代码实际上是对一组底层表的句柄对象（Header Object）的封装。对于分区表的请求，都会通过句柄对象转化成对存储引擎的接口调用。因为mysql实现分区表的方式是对底层表的发呢过妆，这就意味着索引也是按照分区的子表定义的，而没有全局索引。&amp;ensp;&amp;ensp; 就mysql在创建表的时候使用P">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/61B25FB7764140C6B618FF01A5766640?method=download&shareKey=56351e590b851dc50d0de64e33a7611c">
 
 
 
@@ -118,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/tags/高并发/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/16/mysql的高级特性/">
 
 
 
 
 
-  <title>Tag: 高并发 | 天生的努力家</title>
+  <title>mysql的高级特性 | 天生的努力家</title>
   
 
 
@@ -143,7 +147,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 	<a href="https://github.com/hszzjs" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 	
@@ -280,52 +284,202 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>高并发<small>Tag</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/mysql的高级特性/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/06/15/操作系统——并发/" itemprop="url">
-              
-                <span itemprop="name">操作系统——并发</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">mysql的高级特性</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-06-15T16:27:12+08:00" content="2019-06-15">
-          06-15
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T15:50:34+08:00">
+                2019-06-16
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h1><p>&ensp;&ensp; <font color="red">分区表是一个独立的逻辑表，但是底层是由多个物理子表组成的。</font>实现分区的代码实际上是对一组底层表的句柄对象（Header Object）的封装。对于分区表的请求，都会通过句柄对象转化成对存储引擎的接口调用。因为mysql实现分区表的方式是对底层表的发呢过妆，这就意味着<font color="red">索引也是按照分区的子表定义的，而没有全局索引。</font><br>&ensp;&ensp; 就mysql在创建表的时候使用PARTITION BY语句定义每个分区存放的数据，执行查询的时候优化器就会根据分区定义过滤哪些无用的分区。分区的一个主要目的是<strong>将数据按照一个较粗的粒度分在不同的表中</strong>。就可以将相关的数据存放在一起，然后如果一次像删除真个分区数据也很方便。  </p>
+<a id="more"></a>
+<p>&ensp;&ensp;  对于以下场景，分区作用很大：  </p>
+<ul>
+<li>表非常大以至于无法全部都放在内存中，或者只在表的最后部分有热点数据，其他都是历史数据；  </li>
+<li>分区表的数据更容易维护。就比如，想批量删除大量数据可以使用清除整个分区的方式，另外，还可以对一个独立分区进行优化、检查、修复等操作；</li>
+<li>分区表的数据可以分布在不同的物理设备上，进而高效地利用多个硬件设备；</li>
+<li>可以使用分区表来避免某些特殊的瓶颈，比如InnoDB的单个索引的互斥访问、ext3文件系统的inode锁竞争’</li>
+<li>如果需要，还可以备份和恢复独立的分区，这在非常大的数据集的场景下效果非常好。</li>
+</ul>
+<p>&ensp;&ensp; 也是有限制的，比如：  </p>
+<ul>
+<li>一个表最多只能有1024个分区；</li>
+<li>如果分区字段中有主见或者唯一索引到的列，那么所有主键列和唯一索引列都必须包含进来；</li>
+<li>分区表中无法使用外键约束。  <h2 id="分区表的原理"><a href="#分区表的原理" class="headerlink" title="分区表的原理"></a>分区表的原理</h2>&ensp;&ensp; 分区表的索引只是在各个底层表上各自加上一个完全相同的索引。从存储引擎将角度来看，就是底层表和一个普通表是没有区别的，存储引擎也无需知道这是一个普通表还是一个分区表的一部分。<br>&ensp;&ensp; 分区表上的操作逻辑如下：<br>&ensp;&ensp; <strong>SELECT查询</strong>：当查询一个分区表的时候，分区层会先打开并锁住所有的底层表，优化器先判断是否可以过滤部分分区，然后再调用对应的存储引擎接口来访问各个分区的数据。<br>&ensp;&ensp; <strong>INSERT操作</strong>：写入的时候，分区层会先打开并锁住所有的底层表，然后确定哪个分区接收这条记录，再将记录写入对应底层表。<br>&ensp;&ensp; <strong>UPDATE操作</strong>：更新的时候一样，先锁，再找出更新，但是还需要判断更新后的数据应该放在哪个分区，最后对底层进行写入操作，并对原数据所在的底层表进行删除。  <h2 id="分区表的类型"><a href="#分区表的类型" class="headerlink" title="分区表的类型"></a>分区表的类型</h2>&ensp;&ensp; mysql支持多种分区表，最多的是根据范围分区，每个分区存储落在某个范围的记录，分区表达式可以是列，也可以是包含列的表达式。mysql还支持键值、哈希和列表分区。还有一些分区技术包括：  </li>
+<li>根据<strong>键值</strong>进行分区，可以<strong>减少InnoDB的互斥量竞争</strong>；</li>
+<li>使用数学模函数进行分区，然后将数据轮询放入不同的分区；</li>
+<li>假设表有一个自增的主键列id，希望根据时间将最近的热点数据集中存放。  <h2 id="如何使用分区表"><a href="#如何使用分区表" class="headerlink" title="如何使用分区表"></a>如何使用分区表</h2>&ensp;&ensp; 情境说明：就是大约10亿条记录如果查询最近几个月的数据，如何实现高效？<br>&ensp;&ensp; 需要说明的是，数据量超大的时候，B-Tree索引是无法起到作用的，数据量巨大，就会产生大量的随机I/O，然后索引维护代价也很高。所以就选择一些更粗粒度的但消耗更少的方式检索数据，比如在大量数据上之索引对应的一小块元数据。<br>&ensp;&ensp; 那就是分区，分区是不需要精确定位每条数据的位置，也无需额外的数据结构记录每个分区有哪些数据，只需要根据分区表达式就可以知道每个分区放的什么数据。<br>&ensp;&ensp; 为了保证大数据量的可扩展性，一般两个策略有：<br>&ensp;&ensp; ① <strong>全量扫描数据，不需要任何索引</strong>：就根据分区规则定位需要的数据的位置，这里需要注意的是<font color="red">必须将查询所需要的扫描的分区个数限制在一个很小的数量。</font><br>&ensp;&ensp; ② <strong>索引数据，并分离热点</strong>：就是说如果数据有明显的热点，而且除了这部分数据，其他数据很少被访问，就可以将这部分热点数据单独放在一个分区中，让这个分区的数据能够有机会都缓存在内存中，这样查询就可以只访问一个很小的分区表，能够使用索引，也能够有效地使用缓存。  <h2 id="出现问题的情况"><a href="#出现问题的情况" class="headerlink" title="出现问题的情况"></a>出现问题的情况</h2></li>
+<li><strong>NULL值会使分区过滤无效</strong>：<font color="red">分区的表达式的值可以是NULL</font>，所以就是在查询的时候如果使用了函数，由于函数在接收到非法值的时候可能会返回NULL值，所以哪怕查询的时候不会说得到NULL，它都会去检查那个NULL分区。  </li>
+<li><strong>分区列和索引列不匹配</strong>：就是如果定义的索引列和分区列不匹配，就会导致查询无法进行分区过滤。那就是自动根据索引列进行查询，那必然就是分区无关了。  </li>
+<li><strong>选择分区的成本可能很高</strong>：这个就是如果说按行写入大量数据，每写入一行数据到范围分区的表时，都会需要扫描分区定义列表来找到合适的目标分区。  </li>
+<li><strong>打开并锁住所有底层表的成本可能很高</strong>：当查询访问分区表的时候，mysql需要打开并锁住所有的底层表，这个发生于分区过滤前，并且就是它的消耗也与分区类型无关的。  </li>
+<li><strong>维护分区的成本可能很高</strong>：某些分区维护操作的速度非常快，例如新增和删除分区，但是如果是重组分区，那就很麻烦。  <h2 id="查询优化"><a href="#查询优化" class="headerlink" title="查询优化"></a>查询优化</h2>&ensp;&ensp; 分区最大的优点就是优化器可以根据分区函数来过滤一些分区。根据粗粒度索引的优势，通过分区过滤通常可以让查询扫描更少的数据。对于访问分区表，很重要的一点就是要在where条件中带入分区列，即使看起来多余也要带上，如果没有就会让存储引擎访问这个表的所有分区。  <h1 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h1>&ensp;&ensp; 视图本身是一个虚拟表，不存放任何数据，在使用SQL语句访问视图的时候，返回的数据时mysql从其他表上生成的。视图和表是在同一个命名空间，mysql在很多地方对于视图和表是同样对待的。但是也有不同，比如不能对视图创建触发器，也不能删除视图。<br>&ensp;&ensp; 通过视图，可以展现基表的部分数据，视图数据来自定义视图的查询中使用的表，使用视图动态生成。用来创建视图的表叫做基表base table。视图有以下优点：<br>&ensp;&ensp; ① 简单：使用视图的用户完全不需要关心后面对应的表的结构、关联条件和筛选条件，对用户来说已经是过滤好的复合条件的结果集。<br>&ensp;&ensp; ② 安全：<font color="red">使用视图的用户只能访问它们被允许查询得到结果集，对表的权限管理并不能限制到某个行某个列，但是通过视图就可以简单实现。</font><br>&ensp;&ensp; ③ 数据独立：一旦视图的结构确定了，可以屏蔽表结构变化对用户的影响，源表增加列对视图没有影响，源表修改列名，则可以通过修改视图来解决，不会造成对访问者的影响。<br>总之，使用视图的大部分情况是为了<strong>保障数据安全性，提高查询效率</strong>。  
+&ensp;&ensp; 实现视图有两种算法，一种是合并算法，一种是临时表算法，<strong>如果可能，尽可能使用合并算法</strong>。两种实现细节如图：<br><img src="https://note.youdao.com/yws/api/personal/file/61B25FB7764140C6B618FF01A5766640?method=download&shareKey=56351e590b851dc50d0de64e33a7611c" alt="image"><br>&ensp;&ensp; 如果视图中包含GROUP BY、DISTINCT、任何聚合函数、UNION、子查询等，<strong>只要无法在原表记录和视图记录汇总建立一一映射的场景中，mysql都将使用临时表算法</strong>实现视图。视图的实现算法是视图本身的属性，和作用在视图上的查询语句无关。<br>P.S.就是视图主要是为了重用SQL语句。  <h2 id="可更新视图"><a href="#可更新视图" class="headerlink" title="可更新视图"></a>可更新视图</h2>&ensp;&ensp; 这个是指可以通过更新这个视图来更新视图涉及的相关表。只要指定了合适的条件，就可以更新、删除甚至向视图中写入数据。当然如果视图定义中包含GROUP BY、UNION、聚合函数，以及其他一些特殊情况，就不能被更新了。更新视图的查询也可以是一个关联语句，但是有一个限制，被更新的列必须来自同一个表中，再有就是所有使用临时表算法实现的视图都无法被更新。  <h2 id="视图对性能的影响"><a href="#视图对性能的影响" class="headerlink" title="视图对性能的影响"></a>视图对性能的影响</h2>#外键约束<br>&ensp;&ensp; InnoDB是目前mysql中唯一支持外键的内置存储引擎。使用外键是有成本的，就比如说外键通常都要求每次在修改数据时都要在另外一张表中多执行一次查找操作。虽然InnoDB强制外键使用索引，但是还是无法消除这种约束检查的开销。但是某些场景下，比如说希望确保两个相关表始终有一致的数据，那么使用外键比在应用程序中检查一致性的性能要高很多。不过<strong>外键维护操作是逐行进行的</strong>，所以这样的操作就会慢。<br>&ensp;&ensp; 外键约束使得查询需要额外访问一些别的表，这也就意味着需要额外的锁。这就会导致额外的锁等待，甚至会导致一些死锁。<br>&ensp;&ensp; 有时候，可以使用触发器代替外键，对于相关数据的同时更新，外键更合适，但如果外键只是用来做数值约束，那么触发器或者显示地限制取值会更好一些。  <h1 id="在mysql内部存储代码"><a href="#在mysql内部存储代码" class="headerlink" title="在mysql内部存储代码"></a>在mysql内部存储代码</h1>&ensp;&ensp; mysql是允许通过触发器、存储过程、函数的形式来存储代码。然后还可以在定时任务中存放代码，这个定时任务也被称为“事件”，存储过程和存储函数都被统称为“存储程序”。  <h2 id="存储过程和函数"><a href="#存储过程和函数" class="headerlink" title="存储过程和函数"></a>存储过程和函数</h2>&ensp;&ensp; mysql的架构本身和优化器的特性使得存储代码有一些天然的限制，就使得有一些性能局限。  <h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2>&ensp;&ensp; 触发器可以让在执行INSERT、UPDATE或者DELETE的时候，执行一些特定的操作。可以在mysql中指定是在SQL语句执行前触发还是在执行后触发。触发器本身是没有返回值的，不过可以读取或者改变触发SQL语句所影响的数据。触发器可以减少客户端和服务器之间的通信，所以触发器可以就简化应用逻辑，还可以提高应用技能。需要注意以下几点：  </li>
+<li>对每个表的每一个事件，最多只能定义一个触发器；  </li>
+<li>mysql只支持<font color="red">“基于行的触发”</font>——也就是说，触发器始终是针对一条记录的，而不是针对整个SQL语句，如果变更的数据集非常大，效率会很低。  </li>
+</ul>
+<p>&ensp;&ensp; <strong>在InnoDB表上的触发器是在同一个事务中完成的</strong>，所以它们执行的操作是原子的，源操作和触发器操作会同时失败或者成功。如果在InnoDB表上建触发器去检查数据的一致性，需要特别小心MVCC。  </p>
+<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><p>&ensp;&ensp; 事件是类似于Linux的定时任务，可以创建时间，指定mysql在某个时候执行一段SQL代码，或者每隔一个时间间隔执行一段SQL代码。通常，<strong>会把复杂的SQL都封装到一个存储过程中，这样事件在执行的时候只需要做一个简单的CALL调用</strong>。事件在一个独立时间调度线程中被初始化，这个线程和处理连接的线程没有任何关系，他不接受任何参数，也没有任何返回值。<br>&ensp;&ensp; 事件实现机制本身开销并不大，但是必然对于性能有影响，事件的一些典型应用包括定期维护任务、重建缓存、构建汇总表来模拟物化视图，或者存储用于监控和诊断的状态值。执行事件的线程在执行完毕后会自动被销毁。  </p>
+<h2 id="在存储过程中保留注释"><a href="#在存储过程中保留注释" class="headerlink" title="在存储过程中保留注释"></a>在存储过程中保留注释</h2><p>&ensp;&ensp; mysql的命令行客户端会自动过滤注释，一个将注释存储到存储程序中的技巧就是使用版本相关的注释，因为这样的注释可能被mysql服务器执行。服务器和客户端才会保留它们。  </p>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/16/mysql查询性能优化/" rel="next" title="mysql查询性能优化">
+                <i class="fa fa-chevron-left"></i> mysql查询性能优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/16/mysql的高级特性（二）/" rel="prev" title="mysql的高级特性（二）">
+                mysql的高级特性（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -333,6 +487,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -353,8 +511,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -416,6 +583,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#分区表"><span class="nav-number">1.</span> <span class="nav-text">分区表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#分区表的原理"><span class="nav-number">1.1.</span> <span class="nav-text">分区表的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分区表的类型"><span class="nav-number">1.2.</span> <span class="nav-text">分区表的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用分区表"><span class="nav-number">1.3.</span> <span class="nav-text">如何使用分区表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#出现问题的情况"><span class="nav-number">1.4.</span> <span class="nav-text">出现问题的情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询优化"><span class="nav-number">1.5.</span> <span class="nav-text">查询优化</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#视图"><span class="nav-number">2.</span> <span class="nav-text">视图</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可更新视图"><span class="nav-number">2.1.</span> <span class="nav-text">可更新视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#视图对性能的影响"><span class="nav-number">2.2.</span> <span class="nav-text">视图对性能的影响</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在mysql内部存储代码"><span class="nav-number">3.</span> <span class="nav-text">在mysql内部存储代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#存储过程和函数"><span class="nav-number">3.1.</span> <span class="nav-text">存储过程和函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触发器"><span class="nav-number">3.2.</span> <span class="nav-text">触发器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事件"><span class="nav-number">3.3.</span> <span class="nav-text">事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在存储过程中保留注释"><span class="nav-number">3.4.</span> <span class="nav-text">在存储过程中保留注释</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -560,6 +743,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
