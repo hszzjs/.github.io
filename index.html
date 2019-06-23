@@ -98,7 +98,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -295,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/mysql的高级特性（二）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/多线程一二三/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -314,7 +314,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/16/mysql的高级特性（二）/" itemprop="url">mysql的高级特性（二）</a></h1>
+                <a class="post-title-link" href="/2019/06/23/多线程一二三/" itemprop="url">多线程一二三</a></h1>
         
 
         <div class="post-meta">
@@ -326,127 +326,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T20:10:08+08:00">
-                2019-06-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/mysql的高级特性/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hszzjs">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="天生的努力家">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/16/mysql的高级特性/" itemprop="url">mysql的高级特性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T15:50:34+08:00">
-                2019-06-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T15:20:19+08:00">
+                2019-06-23
               </time>
             
 
@@ -506,10 +387,11 @@
 
       
         
-          <h1 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h1><p>&ensp;&ensp; <font color="red">分区表是一个独立的逻辑表，但是底层是由多个物理子表组成的。</font>实现分区的代码实际上是对一组底层表的句柄对象（Header Object）的封装。对于分区表的请求，都会通过句柄对象转化成对存储引擎的接口调用。因为mysql实现分区表的方式是对底层表的发呢过妆，这就意味着<font color="red">索引也是按照分区的子表定义的，而没有全局索引。</font><br>&ensp;&ensp; 就mysql在创建表的时候使用PARTITION BY语句定义每个分区存放的数据，执行查询的时候优化器就会根据分区定义过滤哪些无用的分区。分区的一个主要目的是<strong>将数据按照一个较粗的粒度分在不同的表中</strong>。就可以将相关的数据存放在一起，然后如果一次像删除真个分区数据也很方便。  </p>
+          <h1 id="创建多线程的方法"><a href="#创建多线程的方法" class="headerlink" title="创建多线程的方法"></a>创建多线程的方法</h1><p>&ensp;&ensp; 共计4种，<strong>继承Thread类，实现Runnable接口，实现Callable接口以及使用Executor狂阿基来创建线程池</strong>。</p>
+<h2 id="继承Thread类"><a href="#继承Thread类" class="headerlink" title="继承Thread类"></a>继承Thread类</h2><p>&ensp;&ensp; Thread本质上是实现Runnable接口的一个实例，代表一个线程的实例。启动线程的唯一方法就是通过Thread类的start实例方法。start()是一个native方法，它将启动一个新线程，并执行run()方法。这种方式实现多线程很简单，<strong>通过自己的类直接extend Thread，并复写run()方法</strong>，就可以启动新线程并执行自己定义的run()方法。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/mysql的高级特性/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/多线程一二三/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -560,7 +442,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/mysql查询性能优化/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/线程池的分析和使用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -579,7 +461,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/16/mysql查询性能优化/" itemprop="url">mysql查询性能优化</a></h1>
+                <a class="post-title-link" href="/2019/06/23/线程池的分析和使用/" itemprop="url">线程池的分析和使用</a></h1>
         
 
         <div class="post-meta">
@@ -591,8 +473,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T13:28:52+08:00">
-                2019-06-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T15:18:02+08:00">
+                2019-06-23
               </time>
             
 
@@ -652,17 +534,21 @@
 
       
         
-          <p>&ensp; &ensp; 首先对于mysql的查询过程进行介绍，顺序来看就是：从客户端，到服务器，然后在服务器上进行解析，生成执行计划，执行，并将返回结果给客户端，其中执行就包括了大量为了检索数据到存储引擎的调用以及调用后的数据处理，包括排序、分组等。<br>&ensp; &ensp; 就在这个过程，查询是需要在不同的地方花费时间，包括网络，CPU计算，生成统计信息和执行计划、锁等待（互斥等待）等操作，尤其是向底层存储引擎检索数据的调用操作，这些调用需要在内存操作、CPU操作和内存不足时导致的I/O操作上消耗时间。<font color="red">根据存储引擎的不同，可能还会产生大量的上下文切换以及系统调用。</font><br>&ensp; &ensp; 接下看下SQL在数据库中到底是怎样执行的？  </p>
+          <h1 id="为何需要使用线程池？"><a href="#为何需要使用线程池？" class="headerlink" title="为何需要使用线程池？"></a>为何需要使用线程池？</h1><p>合理使用线程池有三个好处：  </p>
+<ul>
+<li>降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗；</li>
+<li>提高响应速度。就是当任务到达时，任务可以不需要等待线程的创建就可以立即执行；</li>
+<li>提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线城池可以进行<strong>统一的分配、调优和监控</strong>。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/mysql查询性能优化/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/线程池的分析和使用/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
-    </div>
+    </li></ul></div>
     
     
     
@@ -706,7 +592,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/why-b树/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/基于并发AQS的重入锁（ReetrantLock）以及Condition原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -725,7 +611,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/16/why-b树/" itemprop="url">why b树</a></h1>
+                <a class="post-title-link" href="/2019/06/23/基于并发AQS的重入锁（ReetrantLock）以及Condition原理/" itemprop="url">基于并发AQS的重入锁（ReetrantLock）以及Condition原理</a></h1>
         
 
         <div class="post-meta">
@@ -737,8 +623,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T12:53:15+08:00">
-                2019-06-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T15:14:35+08:00">
+                2019-06-23
               </time>
             
 
@@ -798,10 +684,11 @@
 
       
         
-          <h1 id="简单说明"><a href="#简单说明" class="headerlink" title="简单说明"></a>简单说明</h1><p>b树与b+树应用在数据库索引，可以认为是<strong>m叉的多路平衡查找树</strong>，但是从理论上讲，二叉树查找速度和比较次数都是最小的，所以为什么不用二叉树呢？<br>==主要原因在于磁盘IO的影响，它相对于内存来说是比较慢的，数据库索引是存储在磁盘上的，当数据量大的时候就不能将整个索引全部加载到内存了，就只能逐一加载每一个磁盘页（对应索引树的结点）。所以需要减少IO次数，对于树来说，IO次数就是树的高度==，“矮胖”就是b树的特征之一，它的每个结点最多包含m个孩子，m称为b树的阶，m的大小取决于磁盘页的大小。<br><a href="https://blog.csdn.net/login_sonata/article/details/75268075" target="_blank" rel="noopener">https://blog.csdn.net/login_sonata/article/details/75268075</a>  </p>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>&ensp;&ensp; 前面说的就是<strong>synchronized，它是属于隐式锁，就是锁的持有与释放都是隐式的</strong>，那么接下来就是显示锁，即锁的持有以及释放都必须手动自己来。<strong>Lock接口，该接口中提供了lock()方法和unLock()方法对显式加锁和显式释放锁操作进行支持</strong>。如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">lock.lock();</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="comment">//临界区......</span></span><br><span class="line">&#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    lock.unlock();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/why-b树/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/基于并发AQS的重入锁（ReetrantLock）以及Condition原理/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -852,7 +739,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/java中的代理模式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/jdk8-队列同步器AQS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -871,7 +758,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/16/java中的代理模式/" itemprop="url">java中的代理模式</a></h1>
+                <a class="post-title-link" href="/2019/06/23/jdk8-队列同步器AQS/" itemprop="url">jdk8-队列同步器AQS</a></h1>
         
 
         <div class="post-meta">
@@ -883,8 +770,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T12:48:53+08:00">
-                2019-06-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T15:11:15+08:00">
+                2019-06-23
               </time>
             
 
@@ -944,10 +831,11 @@
 
       
         
-          <p>必然首先解释嘛是代理模式？就是为其他对象提供一种代理来控制对这个对象的访问。所以基本的就分为三个：一个是代理类一个是被代理类，还有一个是这两个类的公用接口。<br>使用代理模式就可以在目标对象实现的基础上，增加额外的功能操作。  </p>
+          <p>直接看源码吧。</p>
+<h1 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Node head;<span class="comment">//同步队列的头</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">volatile</span> Node tail;<span class="comment">//同步队列的尾</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> state;<span class="comment">//同步状态，0表示锁未被占用，1代表锁被占用，重入状态+1</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/java中的代理模式/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/jdk8-队列同步器AQS/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -998,7 +886,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/单例模式的几种实现/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/jdk8-ReetrantLock源码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -1017,7 +905,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/16/单例模式的几种实现/" itemprop="url">单例模式的几种实现</a></h1>
+                <a class="post-title-link" href="/2019/06/23/jdk8-ReetrantLock源码/" itemprop="url">jdk8-ReetrantLock源码</a></h1>
         
 
         <div class="post-meta">
@@ -1029,8 +917,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T12:06:28+08:00">
-                2019-06-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T15:09:06+08:00">
+                2019-06-23
               </time>
             
 
@@ -1090,10 +978,13 @@
 
       
         
-          <p>首先依旧是解释什么是单例模式：属于创建型模式，这种模式涉及到一个单一的类，该类负责创建自己的对象，同时确保只有单个对象被创建，提供了一种访问其唯一对象的方式，可以直接访问，不需要实例化该类的对象。<br>关键点：① 单例类只能有一个实例；② 单例类必须自己创建自己的唯一实例；③ 单例类必须给所有其他对象提供这一实例。  </p>
+          <p>就直接上源码看吧：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ReentrantLock</span> <span class="keyword">implements</span> <span class="title">Lock</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;&#125;<span class="comment">//就可以看出实现LOCK接口</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="类成员变量"><a href="#类成员变量" class="headerlink" title="类成员变量"></a>类成员变量</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Sync sync;<span class="comment">//没有错，只有它一个，那么去看接下来它究竟是什么</span></span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/单例模式的几种实现/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/jdk8-ReetrantLock源码/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1144,7 +1035,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/redis持久化方式与独立功能/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/CAS详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -1163,7 +1054,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/16/redis持久化方式与独立功能/" itemprop="url">redis持久化方式与独立功能</a></h1>
+                <a class="post-title-link" href="/2019/06/23/CAS详解/" itemprop="url">CAS详解</a></h1>
         
 
         <div class="post-meta">
@@ -1175,8 +1066,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T12:00:42+08:00">
-                2019-06-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T15:05:54+08:00">
+                2019-06-23
               </time>
             
 
@@ -1236,10 +1127,12 @@
 
       
         
-          <p>redis中的键值对是可以设置过期时间的，但是过期之后呢？是被自动删除掉的吗？并不是哦，<br>过期键的删除策略是有：<br><strong>定时删除</strong>：定时删除就是设置定时器去搞，但是这就有一个问题，每次删除都需要CPU时间去处理，所以如果过期键很多的时候就会出现，花费了大量的CPU时间，这明显就不理想；<br><strong>惰性删除</strong>：这个就是一直不管他，等到想要使用的时候发现过期了，就直接删除，但是这样就明细问题在于如果一直没有使用呢，那不是一直积压，浪费内存，如果过期键多那岂不是就是出现内存泄漏了；<br><strong>定期删除</strong>：这个就是结合定时和惰性，就是通过==设置删除操作的<strong>执行时长以及执行</strong>频率==来进行，就是执行时长解决的是定时删除一定要删除完，导致耗费大量时间的问题，而执行频率就是对于惰性可能出现一直不删除的情况。<br><strong>而redis就使用的是惰性和定期</strong>。  </p>
+          <h1 id="无锁base"><a href="#无锁base" class="headerlink" title="无锁base"></a>无锁base</h1><p>&ensp;&ensp; 在谈论无锁概念的时候，总会关联起乐观派与悲观派。<strong>加锁就是一种悲观策略，无锁是一种乐观策略</strong>。<font color="red">无锁策略采用的是一种称为CAS的技术来保证线程执行的安全性</font>，这项CAS技术就是无锁策略实现的关键。  </p>
+<h1 id="无锁的执行者-CAS"><a href="#无锁的执行者-CAS" class="headerlink" title="无锁的执行者-CAS"></a>无锁的执行者-CAS</h1><h2 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h2><p>&ensp;&ensp; 全称为Compare And Swap，即比较交换，算法核心为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">执行函数：CAS(V,E,N)</span><br><span class="line">V:表示更新的变量</span><br><span class="line">E:表示预期值</span><br><span class="line">N:表示新值</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/redis持久化方式与独立功能/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/CAS详解/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1290,7 +1183,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/redis数据类型/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/深入理解Synchronized/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -1309,7 +1202,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/16/redis数据类型/" itemprop="url">redis数据类型</a></h1>
+                <a class="post-title-link" href="/2019/06/23/深入理解Synchronized/" itemprop="url">深入理解Synchronized</a></h1>
         
 
         <div class="post-meta">
@@ -1321,8 +1214,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T11:58:20+08:00">
-                2019-06-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:59:50+08:00">
+                2019-06-23
               </time>
             
 
@@ -1382,10 +1275,10 @@
 
       
         
-          <h1 id="对象处理机制"><a href="#对象处理机制" class="headerlink" title="对象处理机制"></a>对象处理机制</h1><p>在 Redis 的命令中，用于对键（key）进行处理的命令占了很大一部分，而对于<strong>键所保存的值的类型</strong>（后简称“键的类型” ），键能执行的命令又各不相同。基于此，redis必须让==每个键都带有类型信息==，使得程序可以检查键的类型，并为它选择合适的处理方式。<br>正如前面所言，redis的每一种数据类型，比如字符串、列表、有序集，它们都是拥有不止一种底层实现（这里也就是redis内部说的编码，encoding），这就说明，每当对某种数据类型的键进行操作的时候，程序必须根据其编码，进行不同的操作。<br>操作数据类型的命令除了要对键的类型进行检查之外，还需要<strong>根据类型的不同编码进行多态处理</strong>。  </p>
+          <h1 id="Synchronized底层语义原理"><a href="#Synchronized底层语义原理" class="headerlink" title="Synchronized底层语义原理"></a>Synchronized底层语义原理</h1><p>&ensp;&ensp; <strong>JVM中的同步（Synchronization）是基于进入和退出管程（Monitor）对象实现</strong>。在Java语言中，同步用的最多的就是synchronized修饰的同步方法。同步方法不是由monitorenter 和 monitorexit 指令来实现同步的，而是由方法调用指令读取运行时常量池中方法的ACC_SYNCHRONIZED标志来隐式实现同步的。  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/redis数据类型/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/深入理解Synchronized/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1436,7 +1329,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/redis内部数据结构/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/jdk8-TreeSet源码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -1455,7 +1348,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/16/redis内部数据结构/" itemprop="url">redis内部数据结构</a></h1>
+                <a class="post-title-link" href="/2019/06/23/jdk8-TreeSet源码/" itemprop="url">jdk8-TreeSet源码</a></h1>
         
 
         <div class="post-meta">
@@ -1467,8 +1360,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T11:54:27+08:00">
-                2019-06-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:56:43+08:00">
+                2019-06-23
               </time>
             
 
@@ -1528,14 +1421,10 @@
 
       
         
-          <p>redis和其他很多key-value数据库的不同之处在于，redis不仅支持简单的字符串键值对，它还提供了一系列数据结构类型值，比如列表、哈希、集合和有序集，并在这些数据结构类型上定义一系列强大的API。  </p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/redis内部数据结构/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <p>关于TreeSet明显可以看到是与HashSet是相同的，所以是基于TreeMap实现的。所以基本上就没有什么大不了的。</p>
+
+          
         
       
     </div>
@@ -1582,7 +1471,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/查找算法/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/jdk8-TreeMap源码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -1601,7 +1490,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/16/查找算法/" itemprop="url">查找算法</a></h1>
+                <a class="post-title-link" href="/2019/06/23/jdk8-TreeMap源码/" itemprop="url">jdk8-TreeMap源码</a></h1>
         
 
         <div class="post-meta">
@@ -1613,8 +1502,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T11:47:40+08:00">
-                2019-06-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:54:18+08:00">
+                2019-06-23
               </time>
             
 
@@ -1674,20 +1563,165 @@
 
       
         
-          <h2 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h2><font size="4">  
-1. 符号表   
-
-<p>符号表被用来描述一张抽象的表格，里面存储着信息（值），然后按照指定的键来搜索并获取这些信息。符号表也别成为字典、索引等。主要目的就是将一个键和一个值连接起来，是一种存储键值对的数据结构，支持两种操作：插入（put）和查找（get）。符号表的API如下：</p>
+          <p>&ensp;&ensp; 类图如下：<br><img src="https://note.youdao.com/yws/api/personal/file/90598B7E754842ABA1C14EF5DD816E8C?method=download&shareKey=6e359ee456c815f72d305a28a99ff635" alt="image"><br>&ensp;&ensp; TreeMap 底层<strong>基于红黑树实现</strong>，可保证在log(n)时间复杂度内完成 containsKey、get、put 和 remove 操作，效率很高。另一方面，由于 TreeMap 基于红黑树实现，这为 <strong>TreeMap 保持键的有序性</strong>打下了基础。总的来说，TreeMap 的核心是红黑树，其很多方法也是对红黑树增删查基础操作的一个包装。所以只要弄懂了红黑树，TreeMap 就没什么秘密了。  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/16/查找算法/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/jdk8-TreeMap源码/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
           <!--/noindex-->
         
       
-    </font></div>
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/jdk8-分析Collections-sort原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/23/jdk8-分析Collections-sort原理/" itemprop="url">jdk8-分析Collections.sort原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:52:59+08:00">
+                2019-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>&ensp;&ensp; 我们可以看到就是找到Collections.sort()里面是接口方法，并没有具体实现，代码如下：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T extends Comparable&lt;? <span class="keyword">super</span> T&gt;&gt; <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(List&lt;T&gt; list)</span> </span>&#123;</span><br><span class="line">    list.sort(<span class="keyword">null</span>);<span class="comment">//使用默认的比较器</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(List&lt;T&gt; list, Comparator&lt;? <span class="keyword">super</span> T&gt; c)</span> </span>&#123;</span><br><span class="line">    list.sort(c);<span class="comment">//使用自己创建的比较器</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 我们可以看到，毕竟是能排序的集合所以基本上都是实现了List接口，所以这里就是使用List自带的排序方法。<br>&ensp;&ensp; 所以在List中，sort方法代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SuppressWarnings</span>(&#123;<span class="string">"unchecked"</span>, <span class="string">"rawtypes"</span>&#125;)</span><br><span class="line"><span class="function"><span class="keyword">default</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> E&gt; c)</span> </span>&#123;</span><br><span class="line">    Object[] a = <span class="keyword">this</span>.toArray();</span><br><span class="line">    Arrays.sort(a, (Comparator) c);<span class="comment">//明显是使用了Arrays里面的sort</span></span><br><span class="line">    ListIterator&lt;E&gt; i = <span class="keyword">this</span>.listIterator();</span><br><span class="line">    <span class="keyword">for</span> (Object e : a) &#123;</span><br><span class="line">        i.next();</span><br><span class="line">        i.set((E) e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 在Arrays里面sort方法实现针对各种参数实现有很多，但是这些方法里面主要调用了两个方法，<strong>一个是快速排序（sort(int)），一个是归并排序（sort(Object)）</strong>。</p>
+
+          
+        
+      
+    </div>
     
     
     
@@ -1722,7 +1756,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1770,7 +1804,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1818,6 +1852,11 @@
       
 
       
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
 
     </div>
   </aside>
@@ -1864,11 +1903,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
@@ -2338,8 +2372,6 @@
 
   
 
-  
-  undefined
 
   <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

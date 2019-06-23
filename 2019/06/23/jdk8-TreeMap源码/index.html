@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,集合源码,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="&amp;ensp;&amp;ensp; 类图如下：&amp;ensp;&amp;ensp; TreeMap 底层基于红黑树实现，可保证在log(n)时间复杂度内完成 containsKey、get、put 和 remove 操作，效率很高。另一方面，由于 TreeMap 基于红黑树实现，这为 TreeMap 保持键的有序性打下了基础。总的来说，TreeMap 的核心是红黑树，其很多方法也是对红黑树增删查基础操作的一个包装。所以">
+<meta name="keywords" content="Java,集合源码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jdk8-TreeMap源码">
+<meta property="og:url" content="http://yoursite.com/2019/06/23/jdk8-TreeMap源码/index.html">
+<meta property="og:site_name" content="天生的努力家">
+<meta property="og:description" content="&amp;ensp;&amp;ensp; 类图如下：&amp;ensp;&amp;ensp; TreeMap 底层基于红黑树实现，可保证在log(n)时间复杂度内完成 containsKey、get、put 和 remove 操作，效率很高。另一方面，由于 TreeMap 基于红黑树实现，这为 TreeMap 保持键的有序性打下了基础。总的来说，TreeMap 的核心是红黑树，其很多方法也是对红黑树增删查基础操作的一个包装。所以">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/90598B7E754842ABA1C14EF5DD816E8C?method=download&shareKey=6e359ee456c815f72d305a28a99ff635">
+<meta property="og:updated_time" content="2019-06-23T06:55:48.677Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="jdk8-TreeMap源码">
+<meta name="twitter:description" content="&amp;ensp;&amp;ensp; 类图如下：&amp;ensp;&amp;ensp; TreeMap 底层基于红黑树实现，可保证在log(n)时间复杂度内完成 containsKey、get、put 和 remove 操作，效率很高。另一方面，由于 TreeMap 基于红黑树实现，这为 TreeMap 保持键的有序性打下了基础。总的来说，TreeMap 的核心是红黑树，其很多方法也是对红黑树增删查基础操作的一个包装。所以">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/90598B7E754842ABA1C14EF5DD816E8C?method=download&shareKey=6e359ee456c815f72d305a28a99ff635">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/23/jdk8-TreeMap源码/">
+
+
+
+
+
+  <title>jdk8-TreeMap源码 | 天生的努力家</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/hszzjs" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天生的努力家</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">只有努力才会带来幸运^_^</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/jdk8-TreeMap源码/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">jdk8-TreeMap源码</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:54:18+08:00">
+                2019-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&ensp;&ensp; 类图如下：<br><img src="https://note.youdao.com/yws/api/personal/file/90598B7E754842ABA1C14EF5DD816E8C?method=download&shareKey=6e359ee456c815f72d305a28a99ff635" alt="image"><br>&ensp;&ensp; TreeMap 底层<strong>基于红黑树实现</strong>，可保证在log(n)时间复杂度内完成 containsKey、get、put 和 remove 操作，效率很高。另一方面，由于 TreeMap 基于红黑树实现，这为 <strong>TreeMap 保持键的有序性</strong>打下了基础。总的来说，TreeMap 的核心是红黑树，其很多方法也是对红黑树增删查基础操作的一个包装。所以只要弄懂了红黑树，TreeMap 就没什么秘密了。  </p>
+<a id="more"></a>
+<h1 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Comparator&lt;? <span class="keyword">super</span> K&gt; comparator;<span class="comment">//key的比较器，用作排序</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> Entry&lt;K,V&gt; root;<span class="comment">//树的根节点</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">int</span> size = <span class="number">0</span>;<span class="comment">//树的大小</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">int</span> modCount = <span class="number">0</span>;<span class="comment">//修改计数器</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="基本数据结构"><a href="#基本数据结构" class="headerlink" title="基本数据结构"></a>基本数据结构</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">Map</span>.<span class="title">Entry</span>&lt;<span class="title">K</span>,<span class="title">V</span>&gt; </span>&#123;</span><br><span class="line">        K key;</span><br><span class="line">        V value;</span><br><span class="line">        Entry&lt;K,V&gt; left;<span class="comment">//左子树</span></span><br><span class="line">        Entry&lt;K,V&gt; right;<span class="comment">//右子树</span></span><br><span class="line">        Entry&lt;K,V&gt; parent;<span class="comment">//父节点</span></span><br><span class="line">        <span class="keyword">boolean</span> color = BLACK;<span class="comment">//结点颜色</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Make a new cell with given key, value, and parent, and with</span></span><br><span class="line"><span class="comment">         * &#123;<span class="doctag">@code</span> null&#125; child links, and BLACK color.</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        Entry(K key, V value, Entry&lt;K,V&gt; parent) &#123;</span><br><span class="line">            <span class="keyword">this</span>.key = key;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">            <span class="keyword">this</span>.parent = parent;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Returns the key.</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> the key</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> K <span class="title">getKey</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> key;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Returns the value associated with the key.</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> the value associated with the key</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> V <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> value;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * Replaces the value currently associated with the key with the given</span></span><br><span class="line"><span class="comment">         * value.</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@return</span> the value associated with the key before this method was</span></span><br><span class="line"><span class="comment">         *         called</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> V <span class="title">setValue</span><span class="params">(V value)</span> </span>&#123;</span><br><span class="line">            V oldValue = <span class="keyword">this</span>.value;</span><br><span class="line">            <span class="keyword">this</span>.value = value;</span><br><span class="line">            <span class="keyword">return</span> oldValue;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;<span class="comment">//先判断类对不对，对了就比较key以及value</span></span><br><span class="line">            <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> Map.Entry))</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            Map.Entry&lt;?,?&gt; e = (Map.Entry&lt;?,?&gt;)o;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> valEquals(key,e.getKey()) &amp;&amp; valEquals(value,e.getValue());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span><span class="params">()</span> </span>&#123;<span class="comment">//重写了结点的哈希算法，从代码中可以看出是可以为null的</span></span><br><span class="line">            <span class="keyword">int</span> keyHash = (key==<span class="keyword">null</span> ? <span class="number">0</span> : key.hashCode());<span class="comment">//key是null，就为0，否则就是key自己的hashCode</span></span><br><span class="line">            <span class="keyword">int</span> valueHash = (value==<span class="keyword">null</span> ? <span class="number">0</span> : value.hashCode());<span class="comment">//取value的哈希值</span></span><br><span class="line">            <span class="keyword">return</span> keyHash ^ valueHash;<span class="comment">//key的hash值异或value的hash值作为结点的哈希值</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> key + <span class="string">"="</span> + value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="构造方法"><a href="#构造方法" class="headerlink" title="构造方法"></a>构造方法</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeMap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    comparator = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeMap</span><span class="params">(Comparator&lt;? <span class="keyword">super</span> K&gt; comparator)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.comparator = comparator;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeMap</span><span class="params">(Map&lt;? extends K, ? extends V&gt; m)</span> </span>&#123;<span class="comment">//这个就是放元素的时候使用默认比较器比较下，所以是Map类</span></span><br><span class="line">    comparator = <span class="keyword">null</span>;</span><br><span class="line">    putAll(m);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">putAll</span><span class="params">(Map&lt;? extends K, ? extends V&gt; map)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mapSize = map.size();</span><br><span class="line">    <span class="keyword">if</span> (size==<span class="number">0</span> &amp;&amp; mapSize!=<span class="number">0</span> &amp;&amp; map <span class="keyword">instanceof</span> SortedMap) &#123;<span class="comment">//有序map就递归构建红黑树</span></span><br><span class="line">        Comparator&lt;?&gt; c = ((SortedMap&lt;?,?&gt;)map).comparator();</span><br><span class="line">        <span class="keyword">if</span> (c == comparator || (c != <span class="keyword">null</span> &amp;&amp; c.equals(comparator))) &#123;</span><br><span class="line">            ++modCount;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                buildFromSorted(mapSize, map.entrySet().iterator(),</span><br><span class="line">                                <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (java.io.IOException cannotHappen) &#123;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (ClassNotFoundException cannotHappen) &#123;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//否则就调用父类中的putAll方法</span></span><br><span class="line">    <span class="keyword">super</span>.putAll(map);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TreeMap</span><span class="params">(SortedMap&lt;K, ? extends V&gt; m)</span> </span>&#123;<span class="comment">//这个输入的是一个SortedMap，所以采用它的比较器</span></span><br><span class="line">    comparator = m.comparator();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        buildFromSorted(m.size(), m.entrySet().iterator(), <span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (java.io.IOException cannotHappen) &#123;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ClassNotFoundException cannotHappen) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//从sortedMap中构建红黑树</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">buildFromSorted</span><span class="params">(<span class="keyword">int</span> size, Iterator&lt;?&gt; it,</span></span></span><br><span class="line"><span class="function"><span class="params">                             java.io.ObjectInputStream str,</span></span></span><br><span class="line"><span class="function"><span class="params">                             V defaultVal)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span>  java.io.IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.size = size;</span><br><span class="line">    root = buildFromSorted(<span class="number">0</span>, <span class="number">0</span>, size-<span class="number">1</span>, computeRedLevel(size),</span><br><span class="line">                           it, str, defaultVal);<span class="comment">//递归构建红黑树</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 递归构建红黑树</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> level 当前树的高度，初始为0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> lo 树中第一个元素的下标，初始为0</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> hi 树中最后一个元素的下标，初始为size-1</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> redLevel 红色节点的高度</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> it 迭代器，如果不为空，则从迭代器中读取元素</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> str 对象输入流，如果不为空，则从流中读取键值对</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> defaultVal value默认值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> java.io.IOException</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> ClassNotFoundException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">final</span> Entry&lt;K,V&gt; <span class="title">buildFromSorted</span><span class="params">(<span class="keyword">int</span> level, <span class="keyword">int</span> lo, <span class="keyword">int</span> hi,</span></span></span><br><span class="line"><span class="function"><span class="params">                                         <span class="keyword">int</span> redLevel,</span></span></span><br><span class="line"><span class="function"><span class="params">                                         Iterator&lt;?&gt; it,</span></span></span><br><span class="line"><span class="function"><span class="params">                                         java.io.ObjectInputStream str,</span></span></span><br><span class="line"><span class="function"><span class="params">                                         V defaultVal)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span>  java.io.IOException, ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Strategy: The root is the middlemost element. To get to it, we</span></span><br><span class="line"><span class="comment">     * have to first recursively construct the entire left subtree,</span></span><br><span class="line"><span class="comment">     * so as to grab all of its elements. We can then proceed with right</span></span><br><span class="line"><span class="comment">     * subtree.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * The lo and hi arguments are the minimum and maximum</span></span><br><span class="line"><span class="comment">     * indices to pull out of the iterator or stream for current subtree.</span></span><br><span class="line"><span class="comment">     * They are not actually indexed, we just proceed sequentially,</span></span><br><span class="line"><span class="comment">     * ensuring that items are extracted in corresponding order.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (hi &lt; lo) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">//获取中间元素的下标</span></span><br><span class="line">    <span class="keyword">int</span> mid = (lo + hi) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    Entry&lt;K,V&gt; left  = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (lo &lt; mid)</span><br><span class="line">        <span class="comment">//递归构建左子树</span></span><br><span class="line">        left = buildFromSorted(level+<span class="number">1</span>, lo, mid - <span class="number">1</span>, redLevel,</span><br><span class="line">                               it, str, defaultVal);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// extract key and/or value from iterator or stream</span></span><br><span class="line">    K key;</span><br><span class="line">    V value;</span><br><span class="line">    <span class="comment">//迭代器不为空，从迭代器中获取结点</span></span><br><span class="line">    <span class="keyword">if</span> (it != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (defaultVal==<span class="keyword">null</span>) &#123;</span><br><span class="line">            Map.Entry&lt;?,?&gt; entry = (Map.Entry&lt;?,?&gt;)it.next();</span><br><span class="line">            key = (K)entry.getKey();</span><br><span class="line">            value = (V)entry.getValue();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            key = (K)it.next();</span><br><span class="line">            value = defaultVal;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// use stream，迭代器为空，对象流不为空，从对象流中读取</span></span><br><span class="line">        key = (K) str.readObject();</span><br><span class="line">        value = (defaultVal != <span class="keyword">null</span> ? defaultVal : (V) str.readObject());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Entry&lt;K,V&gt; middle =  <span class="keyword">new</span> Entry&lt;&gt;(key, value, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// color nodes in non-full bottommost level red</span></span><br><span class="line">    <span class="keyword">if</span> (level == redLevel)</span><br><span class="line">        middle.color = RED;<span class="comment">//只要当前高度到了最后一层，那就是红色的。</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (left != <span class="keyword">null</span>) &#123;</span><br><span class="line">        middle.left = left;</span><br><span class="line">        left.parent = middle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mid &lt; hi) &#123;</span><br><span class="line">        <span class="comment">//递归构建右子树</span></span><br><span class="line">        Entry&lt;K,V&gt; right = buildFromSorted(level+<span class="number">1</span>, mid+<span class="number">1</span>, hi, redLevel,</span><br><span class="line">                                           it, str, defaultVal);</span><br><span class="line">        middle.right = right;</span><br><span class="line">        right.parent = middle;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> middle;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//根据树中结点的个数，计算红色结点的高度</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">computeRedLevel</span><span class="params">(<span class="keyword">int</span> sz)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> level = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> m = sz - <span class="number">1</span>; m &gt;= <span class="number">0</span>; m = m / <span class="number">2</span> - <span class="number">1</span>)</span><br><span class="line">        level++;</span><br><span class="line">    <span class="keyword">return</span> level;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="关于computeRedLevel方法的解释"><a href="#关于computeRedLevel方法的解释" class="headerlink" title="关于computeRedLevel方法的解释"></a>关于computeRedLevel方法的解释</h2><p>&ensp;&ensp; 是这样的，这里计算红色结点高度是基于，<strong>这里的红黑树是直接将该树的最后一层全部染成红色，上面的全是黑色</strong>，那么构建完毕，必然是满足红黑树的那五个条件。所以实现的时候是在根据结点树计算树的高度，而红色结点在最后一层，那就是树的高度。<br>&ensp;&ensp; 由于本身就是有序图，所以直接二分去递归构建，然后最后一层染上红色，就是一个红黑树了。  </p>
+<h1 id="get"><a href="#get" class="headerlink" title="get"></a>get</h1><p>&ensp;&ensp; 红黑树最大的特点就是它有序且查找快速。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">get</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    Entry&lt;K,V&gt; p = getEntry(key);</span><br><span class="line">    <span class="keyword">return</span> (p==<span class="keyword">null</span> ? <span class="keyword">null</span> : p.value);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">final</span> Entry&lt;K,V&gt; <span class="title">getEntry</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Offload comparator-based version for sake of performance</span></span><br><span class="line">    <span class="keyword">if</span> (comparator != <span class="keyword">null</span>)<span class="comment">//如果有特定的比较器，就需要根据比较器来查找</span></span><br><span class="line">        <span class="keyword">return</span> getEntryUsingComparator(key);</span><br><span class="line">    <span class="keyword">if</span> (key == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)<span class="comment">//获取key的Comparable接口</span></span><br><span class="line">    Comparable&lt;? <span class="keyword">super</span> K&gt; k = (Comparable&lt;? <span class="keyword">super</span> K&gt;) key;</span><br><span class="line">    Entry&lt;K,V&gt; p = root;<span class="comment">//从root开始查找，小的向左，大的向右</span></span><br><span class="line">    <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">int</span> cmp = k.compareTo(p.key);</span><br><span class="line">        <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>)</span><br><span class="line">            p = p.left;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (cmp &gt; <span class="number">0</span>)</span><br><span class="line">            p = p.right;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">return</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">final</span> Entry&lt;K,V&gt; <span class="title">getEntryUsingComparator</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">        K k = (K) key;</span><br><span class="line">    Comparator&lt;? <span class="keyword">super</span> K&gt; cpr = comparator;<span class="comment">//获取比较器</span></span><br><span class="line">    <span class="keyword">if</span> (cpr != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Entry&lt;K,V&gt; p = root;</span><br><span class="line">        <span class="keyword">while</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> cmp = cpr.compare(k, p.key);</span><br><span class="line">            <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>)</span><br><span class="line">                p = p.left;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (cmp &gt; <span class="number">0</span>)</span><br><span class="line">                p = p.right;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> p;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 对于<code>Comparable&lt;? super K&gt; k = (Comparable&lt;? super K&gt;) key;</code>，为什么用<code>&lt;? super K&gt;</code>，用<code>&lt;? extends K&gt;</code>不行吗，不是根据PECS（Producer Extends, Consumer Super）原则，取出来的时候用extends吗。后来发现太傻了 T^T，这一原则是用来针对list的。这里肯定是用super，用K或者K的父类的compareTo方法。如果用extends的话，K的子类加了其他属性进行比较，那就根本没法进行比较了。  </p>
+<h1 id="put"><a href="#put" class="headerlink" title="put"></a>put</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>&#123;</span><br><span class="line">    Entry&lt;K,V&gt; t = root;</span><br><span class="line">    <span class="keyword">if</span> (t == <span class="keyword">null</span>) &#123;<span class="comment">//根节点为空，将现在这个结点设置为根节点，并初始化参数</span></span><br><span class="line">        compare(key, key); <span class="comment">// type (and possibly null) check，进行类型检查</span></span><br><span class="line"></span><br><span class="line">        root = <span class="keyword">new</span> Entry&lt;&gt;(key, value, <span class="keyword">null</span>);</span><br><span class="line">        size = <span class="number">1</span>;</span><br><span class="line">        modCount++;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> cmp;</span><br><span class="line">    Entry&lt;K,V&gt; parent;</span><br><span class="line">    <span class="comment">// split comparator and comparable paths</span></span><br><span class="line">    Comparator&lt;? <span class="keyword">super</span> K&gt; cpr = comparator;<span class="comment">//与get类型，分离comparator与comparable的比较</span></span><br><span class="line">    <span class="keyword">if</span> (cpr != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">do</span> &#123;<span class="comment">//循环查找key找到以后进行更新，没有则记录其parent，后面进行插入</span></span><br><span class="line">            parent = t;</span><br><span class="line">            cmp = cpr.compare(key, t.key);</span><br><span class="line">            <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>)</span><br><span class="line">                t = t.left;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (cmp &gt; <span class="number">0</span>)</span><br><span class="line">                t = t.right;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> t.setValue(value);</span><br><span class="line">        &#125; <span class="keyword">while</span> (t != <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (key == <span class="keyword">null</span>)<span class="comment">//key是空的</span></span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</span><br><span class="line">        <span class="meta">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</span><br><span class="line">            Comparable&lt;? <span class="keyword">super</span> K&gt; k = (Comparable&lt;? <span class="keyword">super</span> K&gt;) key;</span><br><span class="line">        <span class="keyword">do</span> &#123;<span class="comment">//循环查找key找到以后进行更新，没有则记录其parent，后面进行插入</span></span><br><span class="line">            parent = t;</span><br><span class="line">            cmp = k.compareTo(t.key);</span><br><span class="line">            <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>)</span><br><span class="line">                t = t.left;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (cmp &gt; <span class="number">0</span>)</span><br><span class="line">                t = t.right;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                <span class="keyword">return</span> t.setValue(value);</span><br><span class="line">        &#125; <span class="keyword">while</span> (t != <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    Entry&lt;K,V&gt; e = <span class="keyword">new</span> Entry&lt;&gt;(key, value, parent);<span class="comment">//在最后创建结点</span></span><br><span class="line">    <span class="keyword">if</span> (cmp &lt; <span class="number">0</span>)<span class="comment">//根据与parent的大小比较，决定是作为左孩子还是右孩子</span></span><br><span class="line">        parent.left = e;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        parent.right = e;</span><br><span class="line">    fixAfterInsertion(e);<span class="comment">//插入后维护调整保持平衡</span></span><br><span class="line">    size++;</span><br><span class="line">    modCount++;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fixAfterInsertion</span><span class="params">(Entry&lt;K,V&gt; x)</span> </span>&#123;</span><br><span class="line">    x.color = RED;<span class="comment">//默认新插入的结点是红色的</span></span><br><span class="line">    <span class="comment">//如果它的父节点也是红色的，就需要进行维护</span></span><br><span class="line">    <span class="comment">//就根据红黑树的情况，如果父节点也是红色，同时还需要注意叔叔结点的颜色情况</span></span><br><span class="line">    <span class="keyword">while</span> (x != <span class="keyword">null</span> &amp;&amp; x != root &amp;&amp; x.parent.color == RED) &#123;</span><br><span class="line">        <span class="keyword">if</span> (parentOf(x) == leftOf(parentOf(parentOf(x)))) &#123;<span class="comment">//如果父节点是作为左孩子</span></span><br><span class="line">            Entry&lt;K,V&gt; y = rightOf(parentOf(parentOf(x)));<span class="comment">//获取到叔叔结点也就是右孩子</span></span><br><span class="line">            <span class="keyword">if</span> (colorOf(y) == RED) &#123;<span class="comment">//叔叔结点是红色的</span></span><br><span class="line">            <span class="comment">//所以此时父节点与叔叔结点都是红色了，只需要将它们都变成黑色，爷爷变为红色就可以平衡</span></span><br><span class="line">                setColor(parentOf(x), BLACK);</span><br><span class="line">                setColor(y, BLACK);</span><br><span class="line">                setColor(parentOf(parentOf(x)), RED);</span><br><span class="line">                x = parentOf(parentOf(x));<span class="comment">//x指向爷爷</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;<span class="comment">//如果x是作为右孩子插入的，叔叔是黑色的，父亲是红色的</span></span><br><span class="line">                <span class="keyword">if</span> (x == rightOf(parentOf(x))) &#123;</span><br><span class="line">                    x = parentOf(x);</span><br><span class="line">                    rotateLeft(x);<span class="comment">//左旋，然后按照下来处理</span></span><br><span class="line">                &#125;</span><br><span class="line">                setColor(parentOf(x), BLACK);<span class="comment">//变色，右旋</span></span><br><span class="line">                setColor(parentOf(parentOf(x)), RED);</span><br><span class="line">                rotateRight(parentOf(parentOf(x)));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;<span class="comment">//父节点做为右孩子</span></span><br><span class="line">            Entry&lt;K,V&gt; y = leftOf(parentOf(parentOf(x)));<span class="comment">//拿到叔叔结点</span></span><br><span class="line">            <span class="keyword">if</span> (colorOf(y) == RED) &#123;<span class="comment">//叔叔结点是红色的，变色即可</span></span><br><span class="line">                setColor(parentOf(x), BLACK);</span><br><span class="line">                setColor(y, BLACK);</span><br><span class="line">                setColor(parentOf(parentOf(x)), RED);</span><br><span class="line">                x = parentOf(parentOf(x));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (x == leftOf(parentOf(x))) &#123;</span><br><span class="line">                    x = parentOf(x);</span><br><span class="line">                    rotateRight(x);</span><br><span class="line">                &#125;</span><br><span class="line">                setColor(parentOf(x), BLACK);</span><br><span class="line">                setColor(parentOf(parentOf(x)), RED);</span><br><span class="line">                rotateLeft(parentOf(parentOf(x)));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    root.color = BLACK;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rotateLeft</span><span class="params">(Entry&lt;K,V&gt; p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Entry&lt;K,V&gt; r = p.right;</span><br><span class="line">        p.right = r.left;</span><br><span class="line">        <span class="keyword">if</span> (r.left != <span class="keyword">null</span>)</span><br><span class="line">            r.left.parent = p;</span><br><span class="line">        r.parent = p.parent;</span><br><span class="line">        <span class="keyword">if</span> (p.parent == <span class="keyword">null</span>)</span><br><span class="line">            root = r;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (p.parent.left == p)</span><br><span class="line">            p.parent.left = r;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            p.parent.right = r;</span><br><span class="line">        r.left = p;</span><br><span class="line">        p.parent = r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">rotateRight</span><span class="params">(Entry&lt;K,V&gt; p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p != <span class="keyword">null</span>) &#123;</span><br><span class="line">        Entry&lt;K,V&gt; l = p.left;</span><br><span class="line">        p.left = l.right;</span><br><span class="line">        <span class="keyword">if</span> (l.right != <span class="keyword">null</span>) l.right.parent = p;</span><br><span class="line">        l.parent = p.parent;</span><br><span class="line">        <span class="keyword">if</span> (p.parent == <span class="keyword">null</span>)</span><br><span class="line">            root = l;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (p.parent.right == p)</span><br><span class="line">            p.parent.right = l;</span><br><span class="line">        <span class="keyword">else</span> p.parent.left = l;</span><br><span class="line">        l.right = p;</span><br><span class="line">        p.parent = l;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;K,V&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">colorOf</span><span class="params">(Entry&lt;K,V&gt; p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (p == <span class="keyword">null</span> ? BLACK : p.color);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;K,V&gt; <span class="function">Entry&lt;K,V&gt; <span class="title">parentOf</span><span class="params">(Entry&lt;K,V&gt; p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (p == <span class="keyword">null</span> ? <span class="keyword">null</span>: p.parent);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;K,V&gt; <span class="function"><span class="keyword">void</span> <span class="title">setColor</span><span class="params">(Entry&lt;K,V&gt; p, <span class="keyword">boolean</span> c)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (p != <span class="keyword">null</span>)</span><br><span class="line">        p.color = c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;K,V&gt; <span class="function">Entry&lt;K,V&gt; <span class="title">leftOf</span><span class="params">(Entry&lt;K,V&gt; p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (p == <span class="keyword">null</span>) ? <span class="keyword">null</span>: p.left;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> &lt;K,V&gt; <span class="function">Entry&lt;K,V&gt; <span class="title">rightOf</span><span class="params">(Entry&lt;K,V&gt; p)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (p == <span class="keyword">null</span>) ? <span class="keyword">null</span>: p.right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 情况主要是以下几种：<br>① 由于p为红，则x没有兄弟结点（原则4），要想插入后维持红黑树平衡，必须从p，pp以及p的兄弟结点y中找到对应的处理情况来平衡。<br>② 首先，插入的结点x，颜色肯定是红色，插入位置两种情况——左结点或者右结点。<br>③ 其次，父结点p肯定为红色，因为父节点p为黑色的话，那就不用调整了（插入红节点对原则五并没有印象），所以只有父结点p是左结点和右结点的两种情况。<br>④ 既然父结点p为红色，那么父父结点pp肯定为黑色（根据原则四），那么p的兄弟节点y，存在两种情况，颜色为红或者黑。</p>
+<h1 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> V <span class="title">remove</span><span class="params">(Object key)</span> </span>&#123;</span><br><span class="line">    Entry&lt;K,V&gt; p = getEntry(key);</span><br><span class="line">    <span class="keyword">if</span> (p == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    V oldValue = p.value;</span><br><span class="line">    deleteEntry(p);</span><br><span class="line">    <span class="keyword">return</span> oldValue;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">deleteEntry</span><span class="params">(Entry&lt;K,V&gt; p)</span> </span>&#123;</span><br><span class="line">    modCount++;</span><br><span class="line">    size--;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If strictly internal, copy successor's element to p and then make p</span></span><br><span class="line">    <span class="comment">// point to successor.</span></span><br><span class="line">    <span class="keyword">if</span> (p.left != <span class="keyword">null</span> &amp;&amp; p.right != <span class="keyword">null</span>) &#123;<span class="comment">//左右都有孩子</span></span><br><span class="line">        Entry&lt;K,V&gt; s = successor(p);<span class="comment">//知道后继的结点，进行替换</span></span><br><span class="line">        p.key = s.key;</span><br><span class="line">        p.value = s.value;</span><br><span class="line">        p = s;<span class="comment">//替换完毕，就指向后继结点，然后删除后继结点就可以</span></span><br><span class="line">    &#125; <span class="comment">// p has 2 children</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取p中不为空的结点，也可能两个都是空的</span></span><br><span class="line">    <span class="comment">// Start fixup at replacement node, if it exists.</span></span><br><span class="line">    Entry&lt;K,V&gt; replacement = (p.left != <span class="keyword">null</span> ? p.left : p.right);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (replacement != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// Link replacement to parent</span></span><br><span class="line">        replacement.parent = p.parent;</span><br><span class="line">        <span class="keyword">if</span> (p.parent == <span class="keyword">null</span>)</span><br><span class="line">            root = replacement;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span> (p == p.parent.left)</span><br><span class="line">            p.parent.left  = replacement;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            p.parent.right = replacement;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//清空链接，以便可以使用fixAfterDeletion和内存回收</span></span><br><span class="line">        <span class="comment">// Null out links so they are OK to use by fixAfterDeletion.</span></span><br><span class="line">        p.left = p.right = p.parent = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Fix replacement</span></span><br><span class="line">        <span class="keyword">if</span> (p.color == BLACK)</span><br><span class="line">            fixAfterDeletion(replacement);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (p.parent == <span class="keyword">null</span>) &#123; <span class="comment">// return if we are the only node.</span></span><br><span class="line">        root = <span class="keyword">null</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">//  No children. Use self as phantom replacement and unlink.</span></span><br><span class="line">        <span class="keyword">if</span> (p.color == BLACK)</span><br><span class="line">            fixAfterDeletion(p);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (p.parent != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (p == p.parent.left)<span class="comment">//清空连接，方便GC</span></span><br><span class="line">                p.parent.left = <span class="keyword">null</span>;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (p == p.parent.right)<span class="comment">//清空连接方便GC</span></span><br><span class="line">                p.parent.right = <span class="keyword">null</span>;</span><br><span class="line">            p.parent = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//找后继结点</span></span><br><span class="line"><span class="keyword">static</span> &lt;K,V&gt; TreeMap.<span class="function">Entry&lt;K,V&gt; <span class="title">successor</span><span class="params">(Entry&lt;K,V&gt; t)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (t == <span class="keyword">null</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (t.right != <span class="keyword">null</span>) &#123;<span class="comment">//从右子树中找到最小的</span></span><br><span class="line">        Entry&lt;K,V&gt; p = t.right;</span><br><span class="line">        <span class="keyword">while</span> (p.left != <span class="keyword">null</span>)</span><br><span class="line">            p = p.left;</span><br><span class="line">        <span class="keyword">return</span> p;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;<span class="comment">//当右子树为空，那就向上找到第一个左父节点</span></span><br><span class="line">        Entry&lt;K,V&gt; p = t.parent;</span><br><span class="line">        Entry&lt;K,V&gt; ch = t;</span><br><span class="line">        <span class="keyword">while</span> (p != <span class="keyword">null</span> &amp;&amp; ch == p.right) &#123;</span><br><span class="line">            ch = p;</span><br><span class="line">            p = p.parent;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> p;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">fixAfterDeletion</span><span class="params">(Entry&lt;K,V&gt; x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (x != root &amp;&amp; colorOf(x) == BLACK) &#123;</span><br><span class="line">        <span class="comment">//x是左结点且为黑色</span></span><br><span class="line">        <span class="keyword">if</span> (x == leftOf(parentOf(x))) &#123;</span><br><span class="line">            Entry&lt;K,V&gt; sib = rightOf(parentOf(x));</span><br><span class="line">            <span class="comment">//① 兄弟右结点sib颜色是红色</span></span><br><span class="line">            <span class="keyword">if</span> (colorOf(sib) == RED) &#123;</span><br><span class="line">                setColor(sib, BLACK);</span><br><span class="line">                setColor(parentOf(x), RED);</span><br><span class="line">                rotateLeft(parentOf(x));</span><br><span class="line">                sib = rightOf(parentOf(x));</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">//② sib的子节点都是黑色</span></span><br><span class="line">            <span class="keyword">if</span> (colorOf(leftOf(sib))  == BLACK &amp;&amp;</span><br><span class="line">                colorOf(rightOf(sib)) == BLACK) &#123;</span><br><span class="line">                setColor(sib, RED);</span><br><span class="line">                x = parentOf(x);</span><br><span class="line">            <span class="comment">//sib子节点不全为黑</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//② sib右子节点为黑色</span></span><br><span class="line">                <span class="keyword">if</span> (colorOf(rightOf(sib)) == BLACK) &#123;</span><br><span class="line">                    setColor(leftOf(sib), BLACK);</span><br><span class="line">                    setColor(sib, RED);</span><br><span class="line">                    rotateRight(sib);</span><br><span class="line">                    sib = rightOf(parentOf(x));</span><br><span class="line">                &#125;</span><br><span class="line">                setColor(sib, colorOf(parentOf(x)));</span><br><span class="line">                setColor(parentOf(x), BLACK);</span><br><span class="line">                setColor(rightOf(sib), BLACK);</span><br><span class="line">                rotateLeft(parentOf(x));</span><br><span class="line">                x = root;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// symmetric，对称</span></span><br><span class="line">            Entry&lt;K,V&gt; sib = leftOf(parentOf(x));</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (colorOf(sib) == RED) &#123;</span><br><span class="line">                setColor(sib, BLACK);</span><br><span class="line">                setColor(parentOf(x), RED);</span><br><span class="line">                rotateRight(parentOf(x));</span><br><span class="line">                sib = leftOf(parentOf(x));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (colorOf(rightOf(sib)) == BLACK &amp;&amp;</span><br><span class="line">                colorOf(leftOf(sib)) == BLACK) &#123;</span><br><span class="line">                setColor(sib, RED);</span><br><span class="line">                x = parentOf(x);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (colorOf(leftOf(sib)) == BLACK) &#123;</span><br><span class="line">                    setColor(rightOf(sib), BLACK);</span><br><span class="line">                    setColor(sib, RED);</span><br><span class="line">                    rotateLeft(sib);</span><br><span class="line">                    sib = leftOf(parentOf(x));</span><br><span class="line">                &#125;</span><br><span class="line">                setColor(sib, colorOf(parentOf(x)));</span><br><span class="line">                setColor(parentOf(x), BLACK);</span><br><span class="line">                setColor(leftOf(sib), BLACK);</span><br><span class="line">                rotateRight(parentOf(x));</span><br><span class="line">                x = root;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    setColor(x, BLACK);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>fixAfterDeletion总体思路是：由于删除的结点x是黑色，所以在该结点的树上做调整没法使红黑树恢复平衡，所以要依靠x的兄弟结点sib做文章，依靠p结点以及sib和其子结点，将x的黑色结点+1，这里具体就不展开了。<br>删除操作：（<a href="https://www.cnblogs.com/tongy0/p/5460623.html）" target="_blank" rel="noopener">https://www.cnblogs.com/tongy0/p/5460623.html）</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/集合源码/" rel="tag"># 集合源码</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/23/jdk8-分析Collections-sort原理/" rel="next" title="jdk8-分析Collections.sort原理">
+                <i class="fa fa-chevron-left"></i> jdk8-分析Collections.sort原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/23/jdk8-TreeSet源码/" rel="prev" title="jdk8-TreeSet源码">
+                jdk8-TreeSet源码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a" alt="hszzjs">
+            
+              <p class="site-author-name" itemprop="name">hszzjs</p>
+              <p class="site-description motion-element" itemprop="description">稳住，能赢。猥琐，别浪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#全局变量"><span class="nav-number">1.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基本数据结构"><span class="nav-number">2.</span> <span class="nav-text">基本数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构造方法"><span class="nav-number">3.</span> <span class="nav-text">构造方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于computeRedLevel方法的解释"><span class="nav-number">3.1.</span> <span class="nav-text">关于computeRedLevel方法的解释</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#get"><span class="nav-number">4.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#put"><span class="nav-number">5.</span> <span class="nav-text">put</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#remove"><span class="nav-number">6.</span> <span class="nav-text">remove</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hszzjs</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!--添加动态背景-->
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

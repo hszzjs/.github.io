@@ -98,7 +98,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -295,7 +295,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/垃圾处理/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/jdk8-HashSet源码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -314,7 +314,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/15/垃圾处理/" itemprop="url">垃圾处理</a></h1>
+                <a class="post-title-link" href="/2019/06/23/jdk8-HashSet源码/" itemprop="url">jdk8-HashSet源码</a></h1>
         
 
         <div class="post-meta">
@@ -326,8 +326,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T21:55:31+08:00">
-                2019-06-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:50:40+08:00">
+                2019-06-23
               </time>
             
 
@@ -387,11 +387,10 @@
 
       
         
-          <p>前面内存，我们也知道有线程私有的（程序计数器、虚拟机栈、本地方法栈），这些都是随着线程的结束而结束，所以不用管他的内存垃圾收集。那么问题就聚焦在了线程共享那里（堆以及方法区）。  </p>
-<h1 id="对象狗带判定"><a href="#对象狗带判定" class="headerlink" title="对象狗带判定"></a>对象狗带判定</h1><p>就是堆里面放的是对象实例，方法区里面就是类的引用以及常量池等，那么整个就是理解为对象。所以你什么时候要对他进行清理呢？那必然就是在该对象已经没用了也就是需要判定他死去了。判定他死去的算法有：  </p>
+          <p>&ensp;&ensp; 类图如下：<br><img src="https://note.youdao.com/yws/api/personal/file/2194F8CC133243C795E897ECA924987D?method=download&shareKey=a19ed6b7686664b5ad51b8322abab1ab" alt="image">  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/垃圾处理/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/jdk8-HashSet源码/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -442,7 +441,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/JVM内存/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/jdk8-LinkedHashMap源码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -461,7 +460,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/15/JVM内存/" itemprop="url">JVM内存</a></h1>
+                <a class="post-title-link" href="/2019/06/23/jdk8-LinkedHashMap源码/" itemprop="url">jdk8-LinkedHashMap源码</a></h1>
         
 
         <div class="post-meta">
@@ -473,8 +472,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T21:48:11+08:00">
-                2019-06-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:47:21+08:00">
+                2019-06-23
               </time>
             
 
@@ -534,10 +533,10 @@
 
       
         
-          <h1 id="JVM运行时区域"><a href="#JVM运行时区域" class="headerlink" title="JVM运行时区域"></a>JVM运行时区域</h1><p><img src="https://note.youdao.com/yws/api/personal/file/3FB54645FA5C43C78951BD2505C06526?method=download&shareKey=dbac180e5e21ffbd64831a1a20d0f40d" alt="image"><br>如图，先说非线程共享的：  </p>
+          <p>类图如下：<br><img src="https://note.youdao.com/yws/api/personal/file/C0EDEBA5292B4733BED9BCAD5B0502A8?method=download&shareKey=b3651b2f0e1bc0fdaeb6d44d73570b6d" alt="image"><br>明显可以看到LinkedHashMap是继承自HashMap，所以它的底层也是采用HashMap一样的基于拉链式散列结构，也就是数组、链表或者红黑树组成。他是<strong>在HashMap的基础上增加了一个双向链表，使得它可以保持键值对插入顺序</strong>。结构如图：<br><img src="https://note.youdao.com/yws/api/personal/file/B51311E9E1294631989D2DA25B9B6978?method=download&shareKey=a2c21e78262e8818addf53af38c6b7b6" alt="image"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/JVM内存/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/jdk8-LinkedHashMap源码/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -588,7 +587,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/Schema与数据类型优化/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/jdk8-HashTable源码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -607,7 +606,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/15/Schema与数据类型优化/" itemprop="url">Schema与数据类型优化</a></h1>
+                <a class="post-title-link" href="/2019/06/23/jdk8-HashTable源码/" itemprop="url">jdk8-HashTable源码</a></h1>
         
 
         <div class="post-meta">
@@ -619,8 +618,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:41:22+08:00">
-                2019-06-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:44:16+08:00">
+                2019-06-23
               </time>
             
 
@@ -680,10 +679,10 @@
 
       
         
-          <p>前言：良好的逻辑设计与物理设计时高性能的基石，应该根据系统将要执行的查询语句来设计Schema，比如反范式的设计可以加快某些类型的查询，但是可能导致另一些类型的查询变慢。Mysql独有的特性和实现细节对性能的影响也很大。  </p>
+          <p>&ensp;&ensp; HashTable的类图如下：<br><img src="https://note.youdao.com/yws/api/personal/file/E34CD638E70F496AAD43CFBC7AE7BF96?method=download&shareKey=cdb48a2447b8f1cd36270753253e711f" alt="image"><br>Hashtable继承于Dictionary类（Dictionary类声明了操作键值对的接口方法），实现Map接口（定义键值对接口）。HashTable的结构图如下（桶加链表）：<br><img src="https://note.youdao.com/yws/api/personal/file/F9F52A2BD6474C85B06E27BBA9A2CBA1?method=download&shareKey=82f33e40b24bbf6d66b083b258704ae9" alt="image"></p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/Schema与数据类型优化/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/jdk8-HashTable源码/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -734,7 +733,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/mysql索引/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/关于快速失败（fail-fast）与安全失败（fail-safe）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -753,7 +752,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/15/mysql索引/" itemprop="url">mysql索引</a></h1>
+                <a class="post-title-link" href="/2019/06/23/关于快速失败（fail-fast）与安全失败（fail-safe）/" itemprop="url">关于快速失败（fail-fast）与安全失败（fail-safe）</a></h1>
         
 
         <div class="post-meta">
@@ -765,8 +764,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:39:22+08:00">
-                2019-06-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:35:24+08:00">
+                2019-06-23
               </time>
             
 
@@ -826,17 +825,17 @@
 
       
         
-          <h1 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h1><h2 id="索引基础"><a href="#索引基础" class="headerlink" title="索引基础"></a>索引基础</h2><p>  索引可以包含一个或多个列的值，如果索引包含多个列，那么列的顺序也十分重要，因为mysql只能高效地使用<br>  索引的最左前缀列。创建一个包含两列的索引，和创建两个只包含一列的索引是大不相同的。<br>  如果使用ORM（对象关系映射工具），依旧是需要索引的。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/mysql索引/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <h1 id="关于fail-fast"><a href="#关于fail-fast" class="headerlink" title="关于fail-fast"></a>关于fail-fast</h1><p>&ensp;&ensp; <strong>在用迭代器遍历一个集合对象时，如果遍历过程中对集合对象的内容进行了修改（增加、删除、修改），则会抛出Concurrent Modification Exception</strong>。  
+&ensp;&ensp; 原理：迭代器在遍历时直接访问集合中的内容，并且在遍历过程中使用一个 <strong>modCount</strong> 变量。集合在被遍历期间如果内容发生变化，就会改变modCount的值。每当迭代器使用hashNext()/next()遍历下一个元素之前，都会检测modCount变量是否为expectedmodCount值，是的话就返回遍历；否则抛出异常，终止遍历。<br>&ensp;&ensp; 注意：这里异常的抛出条件是检测到 modCount！=expectedmodCount 这个条件。如果集合发生变化时修改modCount值刚好又设置为了expectedmodCount值，则异常不会抛出。因此，<strong>不能依赖于这个异常是否抛出而进行并发操作的编程，这个异常只建议用于检测并发修改的bug</strong>。  
+&ensp;&ensp; 场景：java.util包下的集合类都是快速失败的，不能在多线程下发生并发修改（迭代过程中被修改）。    </p>
+<h1 id="关于fail-safe"><a href="#关于fail-safe" class="headerlink" title="关于fail-safe"></a>关于fail-safe</h1><p>&ensp;&ensp; <strong>采用安全失败机制的集合容器，在遍历时不是直接在集合内容上访问的，而是先复制原有集合内容，在拷贝的集合上进行遍历</strong>。  
+&ensp;&ensp; 原理：由于迭代时是对原集合的拷贝进行遍历，所以在遍历过程中对原集合所作的修改并不能被迭代器检测到，所以不会触发Concurrent Modification Exception。<br>&ensp;&ensp; 缺点：基于拷贝内容的优点是避免了Concurrent Modification Exception，但同样地，迭代器并不能访问到修改后的内容，即：迭代器遍历的是开始遍历那一刻拿到的集合拷贝，在遍历期间原集合发生的修改迭代器是不知道的。<br>&ensp;&ensp; 场景：java.util.concurrent包下的容器都是安全失败，可以在多线程下并发使用，并发修改。  </p>
+
+          
         
       
-    </p></div>
+    </div>
     
     
     
@@ -880,7 +879,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/Spring的设计模式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/红黑树Red-Black-Tree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -899,7 +898,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/15/Spring的设计模式/" itemprop="url">Spring的设计模式</a></h1>
+                <a class="post-title-link" href="/2019/06/23/红黑树Red-Black-Tree/" itemprop="url">红黑树Red-Black-Tree</a></h1>
         
 
         <div class="post-meta">
@@ -911,8 +910,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:30:27+08:00">
-                2019-06-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T14:33:06+08:00">
+                2019-06-23
               </time>
             
 
@@ -972,10 +971,11 @@
 
       
         
-          <h1 id="IoC（控制反转）与DI（依赖注入）"><a href="#IoC（控制反转）与DI（依赖注入）" class="headerlink" title="IoC（控制反转）与DI（依赖注入）"></a>IoC（控制反转）与DI（依赖注入）</h1><p>首先就是IoC是一个原则（解耦），而不是一个模式，以下模式实现了IoC原则。<br><img src="https://note.youdao.com/yws/api/personal/file/3B646B9E9E454FB094389ED9FEF7022E?method=download&shareKey=394cf713dd2fc357e07dafad27264542" alt="image">  </p>
+          <h1 id="base"><a href="#base" class="headerlink" title="base"></a>base</h1><p>&ensp;&ensp; 红黑树是一种高效的自平衡的二叉查找树，，可以<strong>在O(logN)时间内完成查找、增加、删除等操作</strong>。  
+&ensp;&ensp; 基本性质：<br>① 结点是红色或黑色；<br>② 根是黑色；<br>③ 所有叶子都是黑色（叶子是NIL（NULL）结点）；<br>④ 每个红色结点必须有两个黑色的子节点。（从每个叶子到根的所有路径上不能有两个连续的红色结点）<br>⑤ 从任一结点到其每个叶子结点的所有简单路径都包含相同数目的黑色结点。  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/Spring的设计模式/#more" rel="contents">
+            <a class="btn" href="/2019/06/23/红黑树Red-Black-Tree/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1026,7 +1026,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/操作系统——并发/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/mysql的高级特性（二）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -1045,7 +1045,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/15/操作系统——并发/" itemprop="url">操作系统——并发</a></h1>
+                <a class="post-title-link" href="/2019/06/16/mysql的高级特性（二）/" itemprop="url">mysql的高级特性（二）</a></h1>
         
 
         <div class="post-meta">
@@ -1057,8 +1057,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:27:12+08:00">
-                2019-06-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T20:10:08+08:00">
+                2019-06-16
               </time>
             
 
@@ -1118,10 +1118,10 @@
 
       
         
-          <h1 id="关于进程与线程"><a href="#关于进程与线程" class="headerlink" title="关于进程与线程"></a>关于进程与线程</h1><p>计算机的核心是CPU，承担了所有的计算任务，<strong>单个CPU一次只能运行一个任务，而进程就是CPU所能处理的单个任务。任一时刻，CPU总是运行一个进程，其他进程处于非运行状态</strong>。  </p>
+          <h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><p>&ensp;&ensp; mysql在服务器端提供<strong>只读的、单向的游标</strong>，而且只能在存储过程或者更底层的客户端API中使用。因为mysql游标中执行的对象都是存储在临时表中而不是实际查询到的数据。所以<strong>mysql游标总是只读的，它可以逐行指向查询结果，然后让程序做进一步处理</strong>。在一个存储过程中，可以有多个游标，也可以在循环中“嵌套”地使用游标。请记住：<font color="red">当打开一个游标的时候需要执行整个查询。</font><br>&ensp;&ensp; 如果在关闭游标的时候只是扫描一个大结果集的一小部分，那么存储过程可能不仅没有减少开销，相反还带来了大量的额外开销。  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/操作系统——并发/#more" rel="contents">
+            <a class="btn" href="/2019/06/16/mysql的高级特性（二）/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1172,7 +1172,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/java-socket编程/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/mysql的高级特性/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -1191,7 +1191,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/15/java-socket编程/" itemprop="url">java socket编程</a></h1>
+                <a class="post-title-link" href="/2019/06/16/mysql的高级特性/" itemprop="url">mysql的高级特性</a></h1>
         
 
         <div class="post-meta">
@@ -1203,8 +1203,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:22:12+08:00">
-                2019-06-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T15:50:34+08:00">
+                2019-06-16
               </time>
             
 
@@ -1264,10 +1264,10 @@
 
       
         
-          <p>网络上的两个程序是通过一个双向的通信连接实现数据的交换，这个<strong>双向链路的一端称为一个Socket</strong>，Socket也称为套接字，可以用来实现不同虚拟机或不同计算机之间的通信。Socket可以分为两种类型，一个是<strong>面向连接的Socket通信协议——TCP，一个是面向无连接的Socket通信协议——UDP</strong>。  </p>
+          <h1 id="分区表"><a href="#分区表" class="headerlink" title="分区表"></a>分区表</h1><p>&ensp;&ensp; <font color="red">分区表是一个独立的逻辑表，但是底层是由多个物理子表组成的。</font>实现分区的代码实际上是对一组底层表的句柄对象（Header Object）的封装。对于分区表的请求，都会通过句柄对象转化成对存储引擎的接口调用。因为mysql实现分区表的方式是对底层表的发呢过妆，这就意味着<font color="red">索引也是按照分区的子表定义的，而没有全局索引。</font><br>&ensp;&ensp; 就mysql在创建表的时候使用PARTITION BY语句定义每个分区存放的数据，执行查询的时候优化器就会根据分区定义过滤哪些无用的分区。分区的一个主要目的是<strong>将数据按照一个较粗的粒度分在不同的表中</strong>。就可以将相关的数据存放在一起，然后如果一次像删除真个分区数据也很方便。  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/java-socket编程/#more" rel="contents">
+            <a class="btn" href="/2019/06/16/mysql的高级特性/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1318,7 +1318,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/深入分析java-IO工作机制/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/mysql查询性能优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -1337,7 +1337,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/15/深入分析java-IO工作机制/" itemprop="url">深入分析java IO工作机制</a></h1>
+                <a class="post-title-link" href="/2019/06/16/mysql查询性能优化/" itemprop="url">mysql查询性能优化</a></h1>
         
 
         <div class="post-meta">
@@ -1349,8 +1349,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:17:26+08:00">
-                2019-06-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T13:28:52+08:00">
+                2019-06-16
               </time>
             
 
@@ -1410,11 +1410,10 @@
 
       
         
-          <p>java的I/O大概有80多个类，大概率上是可以分为四组：<br>按照传输数据的数据格式：字节流与字符流，按照<strong>传输数据的传输方式：分为File（磁盘）与Socket（网络）</strong>。  
-所以影响IO的核心问题要么是数据格式影响要么就是传输方式影响。<br>基于流的操作，前面已经介绍，有一点要注意的就是流最终卸载哪里必须要指定，要么是写到磁盘中要么是写到网络中，写网络事实上也是在写文件，只不过网络进一步处理就是底层操作系统再将数据传送到其他地方而不是本地磁盘。  </p>
+          <p>&ensp; &ensp; 首先对于mysql的查询过程进行介绍，顺序来看就是：从客户端，到服务器，然后在服务器上进行解析，生成执行计划，执行，并将返回结果给客户端，其中执行就包括了大量为了检索数据到存储引擎的调用以及调用后的数据处理，包括排序、分组等。<br>&ensp; &ensp; 就在这个过程，查询是需要在不同的地方花费时间，包括网络，CPU计算，生成统计信息和执行计划、锁等待（互斥等待）等操作，尤其是向底层存储引擎检索数据的调用操作，这些调用需要在内存操作、CPU操作和内存不足时导致的I/O操作上消耗时间。<font color="red">根据存储引擎的不同，可能还会产生大量的上下文切换以及系统调用。</font><br>&ensp; &ensp; 接下看下SQL在数据库中到底是怎样执行的？  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/深入分析java-IO工作机制/#more" rel="contents">
+            <a class="btn" href="/2019/06/16/mysql查询性能优化/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1465,7 +1464,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/HTTP之用户认证以及功能追加/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/why-b树/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="hszzjs">
@@ -1484,7 +1483,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/06/15/HTTP之用户认证以及功能追加/" itemprop="url">HTTP之用户认证以及功能追加</a></h1>
+                <a class="post-title-link" href="/2019/06/16/why-b树/" itemprop="url">why b树</a></h1>
         
 
         <div class="post-meta">
@@ -1496,132 +1495,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:08:49+08:00">
-                2019-06-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="确认访问用户身份的认证"><a href="#确认访问用户身份的认证" class="headerlink" title="确认访问用户身份的认证"></a>确认访问用户身份的认证</h1><h2 id="BASIC认证"><a href="#BASIC认证" class="headerlink" title="BASIC认证"></a>BASIC认证</h2><p> <strong>步骤1</strong>: 当请求的资源需要 BASIC 认证时， 服务器会随状态码 ==401 Authorization Required==， 返回带 WWWAuthenticate首部字段的响应。 该字段内包含认证的方式（BASIC） 及 Request-URI 安全域字符串（realm） 。<br> <strong>步骤2</strong>: 接收到状态码 401 的客户端为了通过 BASIC 认证， 需要将==用户 ID及密码==发送给服务器。发送的字符串内容是由用户 ID 和密码构成， 两者中间以冒号（:） 连接后， 再经过 ==Base64 编码==处理。<br> <strong>步骤3</strong>: 接收到包含首部字段 Authorization 请求的服务器， 会对认证信息的正确性进行验证。 如==验证通过，则返回一条包含 Request-URI 资源的响应==。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/HTTP之用户认证以及功能追加/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/15/HTTP协议（三）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="hszzjs">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="天生的努力家">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/06/15/HTTP协议（三）/" itemprop="url">HTTP协议（三）之报文</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-15T16:04:55+08:00">
-                2019-06-15
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T12:53:15+08:00">
+                2019-06-16
               </time>
             
 
@@ -1681,10 +1556,156 @@
 
       
         
-          <h1 id="HTTP首部"><a href="#HTTP首部" class="headerlink" title="HTTP首部"></a>HTTP首部</h1><p>HTTP协议的请求和响应报文必定包含HTTP首部，<strong>首部内容为客户端和服务器分别处理请求和响应提供的所需要信息</strong>。对于客户端用户来说，这些信息中的大部分内容都无需亲自查看。<br>在报文的众多字段中，HTTP首部字段包含的信心最为丰富。  </p>
+          <h1 id="简单说明"><a href="#简单说明" class="headerlink" title="简单说明"></a>简单说明</h1><p>b树与b+树应用在数据库索引，可以认为是<strong>m叉的多路平衡查找树</strong>，但是从理论上讲，二叉树查找速度和比较次数都是最小的，所以为什么不用二叉树呢？<br>==主要原因在于磁盘IO的影响，它相对于内存来说是比较慢的，数据库索引是存储在磁盘上的，当数据量大的时候就不能将整个索引全部加载到内存了，就只能逐一加载每一个磁盘页（对应索引树的结点）。所以需要减少IO次数，对于树来说，IO次数就是树的高度==，“矮胖”就是b树的特征之一，它的每个结点最多包含m个孩子，m称为b树的阶，m的大小取决于磁盘页的大小。<br><a href="https://blog.csdn.net/login_sonata/article/details/75268075" target="_blank" rel="noopener">https://blog.csdn.net/login_sonata/article/details/75268075</a>  </p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/06/15/HTTP协议（三）/#more" rel="contents">
+            <a class="btn" href="/2019/06/16/why-b树/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/16/java中的代理模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/16/java中的代理模式/" itemprop="url">java中的代理模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-16T12:48:53+08:00">
+                2019-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>必然首先解释嘛是代理模式？就是为其他对象提供一种代理来控制对这个对象的访问。所以基本的就分为三个：一个是代理类一个是被代理类，还有一个是这两个类的公用接口。<br>使用代理模式就可以在目标对象实现的基础上，增加额外的功能操作。  </p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/06/16/java中的代理模式/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1726,7 +1747,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1774,7 +1795,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1822,6 +1843,11 @@
       
 
       
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
 
     </div>
   </aside>
@@ -1868,11 +1894,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
@@ -2342,8 +2363,6 @@
 
   
 
-  
-  undefined
 
   <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>

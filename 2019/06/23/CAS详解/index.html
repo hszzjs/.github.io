@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,高并发,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="无锁base&amp;ensp;&amp;ensp; 在谈论无锁概念的时候，总会关联起乐观派与悲观派。加锁就是一种悲观策略，无锁是一种乐观策略。无锁策略采用的是一种称为CAS的技术来保证线程执行的安全性，这项CAS技术就是无锁策略实现的关键。   无锁的执行者-CASCAS&amp;ensp;&amp;ensp; 全称为Compare And Swap，即比较交换，算法核心为： 1234执行函数：CAS(V,E,N)V:表示更新">
+<meta name="keywords" content="Java,高并发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CAS详解">
+<meta property="og:url" content="http://yoursite.com/2019/06/23/CAS详解/index.html">
+<meta property="og:site_name" content="天生的努力家">
+<meta property="og:description" content="无锁base&amp;ensp;&amp;ensp; 在谈论无锁概念的时候，总会关联起乐观派与悲观派。加锁就是一种悲观策略，无锁是一种乐观策略。无锁策略采用的是一种称为CAS的技术来保证线程执行的安全性，这项CAS技术就是无锁策略实现的关键。   无锁的执行者-CASCAS&amp;ensp;&amp;ensp; 全称为Compare And Swap，即比较交换，算法核心为： 1234执行函数：CAS(V,E,N)V:表示更新">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://img-blog.csdn.net/20170701155737036?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamF2YXplamlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:updated_time" content="2019-06-23T07:08:23.578Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CAS详解">
+<meta name="twitter:description" content="无锁base&amp;ensp;&amp;ensp; 在谈论无锁概念的时候，总会关联起乐观派与悲观派。加锁就是一种悲观策略，无锁是一种乐观策略。无锁策略采用的是一种称为CAS的技术来保证线程执行的安全性，这项CAS技术就是无锁策略实现的关键。   无锁的执行者-CASCAS&amp;ensp;&amp;ensp; 全称为Compare And Swap，即比较交换，算法核心为： 1234执行函数：CAS(V,E,N)V:表示更新">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20170701155737036?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamF2YXplamlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/06/23/CAS详解/">
+
+
+
+
+
+  <title>CAS详解 | 天生的努力家</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/hszzjs" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天生的努力家</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">只有努力才会带来幸运^_^</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/23/CAS详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">CAS详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-23T15:05:54+08:00">
+                2019-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="无锁base"><a href="#无锁base" class="headerlink" title="无锁base"></a>无锁base</h1><p>&ensp;&ensp; 在谈论无锁概念的时候，总会关联起乐观派与悲观派。<strong>加锁就是一种悲观策略，无锁是一种乐观策略</strong>。<font color="red">无锁策略采用的是一种称为CAS的技术来保证线程执行的安全性</font>，这项CAS技术就是无锁策略实现的关键。  </p>
+<h1 id="无锁的执行者-CAS"><a href="#无锁的执行者-CAS" class="headerlink" title="无锁的执行者-CAS"></a>无锁的执行者-CAS</h1><h2 id="CAS"><a href="#CAS" class="headerlink" title="CAS"></a>CAS</h2><p>&ensp;&ensp; 全称为Compare And Swap，即比较交换，算法核心为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">执行函数：CAS(V,E,N)</span><br><span class="line">V:表示更新的变量</span><br><span class="line">E:表示预期值</span><br><span class="line">N:表示新值</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+<p>&ensp;&ensp; 如果V等于E，就将V设置为N，若V和E不同，则说明已经有其他线程做了更新，那么当前线程什么都不用做。但是<strong>可以选择重新读取该变量再尝试再次修改该变量</strong>，也可以放弃操作，原理图如下：<br><img src="https://img-blog.csdn.net/20170701155737036?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamF2YXplamlhbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image"><br>&ensp;&ensp; 由于CAS操作属于乐观操作，它总认为自己可以成功完成操作，当多个线程同时使用CAS操作一个变量时，只有一个会胜出，并成功更新，其余均会失败，但失败的线程并不会被挂起，仅是被告知失败，并且允许再次尝试，当然也允许失败的线程放弃操作，这点从图中也可以看出来。基于这样的原理，CAS操作即使没有锁，同样知道其他线程对共享资源操作影响，并执行相应的处理措施。同时从这点也可以看出，<strong>由于无锁操作中没有锁的存在，因此不可能出现死锁的情况</strong>，也就是说无锁操作天生免疫死锁。  </p>
+<h2 id="CPU对CAS的支持"><a href="#CPU对CAS的支持" class="headerlink" title="CPU对CAS的支持"></a>CPU对CAS的支持</h2><p>&ensp;&ensp; 或许我们可能会有这样的疑问，假设存在多个线程执行CAS操作并且CAS的步骤很多，有没有可能在判断V和E相同后，正要赋值时，切换了线程，更改了值。造成了数据不一致呢？答案是否定的，因为<strong>CAS是一种系统原语</strong>，原语属于操作系统用语范畴，是由若干条指令组成的，用于完成某个功能的一个过程，并且原语的执行必须是连续的，在执行过程中不允许被中断，也就是说<font color="red">CAS是一条CPU的原子指令，不会造成所谓的数据不一致问题</font>。  </p>
+<h2 id="Unsafe类"><a href="#Unsafe类" class="headerlink" title="Unsafe类"></a>Unsafe类</h2><p>&ensp;&ensp; <strong>Java中CAS操作的执行依赖于Unsafe类的方法</strong>，注意Unsafe类中的所有方法都是native修饰的，也就是说<strong>Unsafe类中的方法都直接调用操作系统底层资源执行相应任务</strong>，关于Unsafe类的主要功能点如下（这里说明下，能叫这个Unsafe类，意思就是它是不安全的）：  </p>
+<ul>
+<li><p><strong>内存管理，Unsafe类中存在直接操作内存的方法</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//分配内存指定大小的内存</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">allocateMemory</span><span class="params">(<span class="keyword">long</span> bytes)</span></span>;</span><br><span class="line"><span class="comment">//根据给定的内存地址address设置重新分配指定大小的内存</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">reallocateMemory</span><span class="params">(<span class="keyword">long</span> address, <span class="keyword">long</span> bytes)</span></span>;</span><br><span class="line"><span class="comment">//用于释放allocateMemory和reallocateMemory申请的内存</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">freeMemory</span><span class="params">(<span class="keyword">long</span> address)</span></span>;</span><br><span class="line"><span class="comment">//将指定对象的给定offset偏移量内存块中的所有字节设置为固定值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">setMemory</span><span class="params">(Object o, <span class="keyword">long</span> offset, <span class="keyword">long</span> bytes, <span class="keyword">byte</span> value)</span></span>;</span><br><span class="line"><span class="comment">//设置给定内存地址的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">putAddress</span><span class="params">(<span class="keyword">long</span> address, <span class="keyword">long</span> x)</span></span>;</span><br><span class="line"><span class="comment">//获取指定内存地址的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">getAddress</span><span class="params">(<span class="keyword">long</span> address)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置给定内存地址的long值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">putLong</span><span class="params">(<span class="keyword">long</span> address, <span class="keyword">long</span> x)</span></span>;</span><br><span class="line"><span class="comment">//获取指定内存地址的long值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">getLong</span><span class="params">(<span class="keyword">long</span> address)</span></span>;</span><br><span class="line"><span class="comment">//设置或获取指定内存的byte值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">byte</span>  <span class="title">getByte</span><span class="params">(<span class="keyword">long</span> address)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span>  <span class="title">putByte</span><span class="params">(<span class="keyword">long</span> address, <span class="keyword">byte</span> x)</span></span>;</span><br><span class="line"><span class="comment">//其他基本数据类型(long,char,float,double,short等)的操作与putByte及getByte相同</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//操作系统的内存页大小</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">pageSize</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>提供实例对象新途径</strong>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//传入一个对象的class并创建该实例对象，但不会调用构造方法</span><br><span class="line">public native Object allocateInstance(Class cls) throws InstantiationException;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>类和实例对象以及变量的操作</strong>，主要方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取字段f在实例对象中的偏移量</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">objectFieldOffset</span><span class="params">(Field f)</span></span>;</span><br><span class="line"><span class="comment">//静态属性的偏移量，用于在对应的Class对象中读写静态属性</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">long</span> <span class="title">staticFieldOffset</span><span class="params">(Field f)</span></span>;</span><br><span class="line"><span class="comment">//返回值就是f.getDeclaringClass()</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> Object <span class="title">staticFieldBase</span><span class="params">(Field f)</span></span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//获得给定对象偏移量上的int值，所谓的偏移量可以简单理解为指针指向该变量的内存地址，</span></span><br><span class="line"><span class="comment">//通过偏移量便可得到该对象的变量，进行各种操作</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">getInt</span><span class="params">(Object o, <span class="keyword">long</span> offset)</span></span>;</span><br><span class="line"><span class="comment">//设置给定对象上偏移量的int值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">putInt</span><span class="params">(Object o, <span class="keyword">long</span> offset, <span class="keyword">int</span> x)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获得给定对象偏移量上的引用类型的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> Object <span class="title">getObject</span><span class="params">(Object o, <span class="keyword">long</span> offset)</span></span>;</span><br><span class="line"><span class="comment">//设置给定对象偏移量上的引用类型的值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">putObject</span><span class="params">(Object o, <span class="keyword">long</span> offset, Object x)</span></span>;</span><br><span class="line"><span class="comment">//其他基本数据类型(long,char,byte,float,double)的操作与getInthe及putInt相同</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//设置给定对象的int值，使用volatile语义，即设置后立马更新到内存对其他线程可见</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span>  <span class="title">putIntVolatile</span><span class="params">(Object o, <span class="keyword">long</span> offset, <span class="keyword">int</span> x)</span></span>;</span><br><span class="line"><span class="comment">//获得给定对象的指定偏移量offset的int值，使用volatile语义，总能获取到最新的int值。</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">getIntVolatile</span><span class="params">(Object o, <span class="keyword">long</span> offset)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//其他基本数据类型(long,char,byte,float,double)的操作与putIntVolatile及getIntVolatile相同，</span></span><br><span class="line"><span class="comment">//引用类型putObjectVolatile也一样。</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//与putIntVolatile一样，但要求被操作字段必须有volatile修饰</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">putOrderedInt</span><span class="params">(Object o,<span class="keyword">long</span> offset,<span class="keyword">int</span> x)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>CAS操作相关</strong>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//第一个参数o为给定对象，offset为对象内存的偏移量，通过这个偏移量迅速定位字段并设置或获取该字段的值，</span></span><br><span class="line"><span class="comment">//expected表示期望值，x表示要设置的值，下面3个方法都通过CAS原子指令执行操作。</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">compareAndSwapObject</span><span class="params">(Object o, <span class="keyword">long</span> offset,Object expected, Object x)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">compareAndSwapInt</span><span class="params">(Object o, <span class="keyword">long</span> offset,<span class="keyword">int</span> expected,<span class="keyword">int</span> x)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">compareAndSwapLong</span><span class="params">(Object o, <span class="keyword">long</span> offset,<span class="keyword">long</span> expected,<span class="keyword">long</span> x)</span></span>;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>还有几个就是Unsafe类中JDK1.8新增的几个方法，实现都是基于CAS方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">//1.8新增，给定对象o，根据获取内存偏移量指向的字段，将其增加delta，</span></span><br><span class="line"> <span class="comment">//这是一个CAS操作过程，直到设置成功方能退出循环，返回旧值</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAddInt</span><span class="params">(Object o, <span class="keyword">long</span> offset, <span class="keyword">int</span> delta)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> v;</span><br><span class="line">     <span class="keyword">do</span> &#123;</span><br><span class="line">         <span class="comment">//获取内存中最新值</span></span><br><span class="line">         v = getIntVolatile(o, offset);</span><br><span class="line">       <span class="comment">//通过CAS操作</span></span><br><span class="line">     &#125; <span class="keyword">while</span> (!compareAndSwapInt(o, offset, v, v + delta));</span><br><span class="line">     <span class="keyword">return</span> v;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//1.8新增，方法作用同上，只不过这里操作的long类型数据</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">long</span> <span class="title">getAndAddLong</span><span class="params">(Object o, <span class="keyword">long</span> offset, <span class="keyword">long</span> delta)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">long</span> v;</span><br><span class="line">     <span class="keyword">do</span> &#123;</span><br><span class="line">         v = getLongVolatile(o, offset);</span><br><span class="line">     &#125; <span class="keyword">while</span> (!compareAndSwapLong(o, offset, v, v + delta));</span><br><span class="line">     <span class="keyword">return</span> v;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//1.8新增，给定对象o，根据获取内存偏移量对于字段，将其 设置为新值newValue，</span></span><br><span class="line"> <span class="comment">//这是一个CAS操作过程，直到设置成功方能退出循环，返回旧值</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndSetInt</span><span class="params">(Object o, <span class="keyword">long</span> offset, <span class="keyword">int</span> newValue)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">int</span> v;</span><br><span class="line">     <span class="keyword">do</span> &#123;</span><br><span class="line">         v = getIntVolatile(o, offset);</span><br><span class="line">     &#125; <span class="keyword">while</span> (!compareAndSwapInt(o, offset, v, newValue));</span><br><span class="line">     <span class="keyword">return</span> v;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1.8新增，同上，操作的是long类型</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">long</span> <span class="title">getAndSetLong</span><span class="params">(Object o, <span class="keyword">long</span> offset, <span class="keyword">long</span> newValue)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">long</span> v;</span><br><span class="line">     <span class="keyword">do</span> &#123;</span><br><span class="line">         v = getLongVolatile(o, offset);</span><br><span class="line">     &#125; <span class="keyword">while</span> (!compareAndSwapLong(o, offset, v, newValue));</span><br><span class="line">     <span class="keyword">return</span> v;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">//1.8新增，同上，操作的是引用类型数据</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">getAndSetObject</span><span class="params">(Object o, <span class="keyword">long</span> offset, Object newValue)</span> </span>&#123;</span><br><span class="line">     Object v;</span><br><span class="line">     <span class="keyword">do</span> &#123;</span><br><span class="line">         v = getObjectVolatile(o, offset);</span><br><span class="line">     &#125; <span class="keyword">while</span> (!compareAndSwapObject(o, offset, v, newValue));</span><br><span class="line">     <span class="keyword">return</span> v;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>挂起与恢复</strong>：将一个线程进行挂起是通过park方法实现的，调用 park后，线程将一直阻塞直到超时或者中断等条件出现。unpark可以终止一个挂起的线程，使其恢复正常。Java对线程的挂起操作被封装在 LockSupport类中，LockSupport类中有各种版本pack方法，其底层实现最终还是使用Unsafe.park()方法和Unsafe.unpark()方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//线程调用该方法，线程将一直阻塞直到超时，或者是中断条件出现。  </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">park</span><span class="params">(<span class="keyword">boolean</span> isAbsolute, <span class="keyword">long</span> time)</span></span>;  </span><br><span class="line"></span><br><span class="line"><span class="comment">//终止挂起的线程，恢复正常.java.util.concurrent包中挂起操作都是在LockSupport类实现的，</span></span><br><span class="line"><span class="comment">//其底层正是使用这两个方法，  </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">unpark</span><span class="params">(Object thread)</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>内存屏障</strong>：这里主要包括了loadFence、storeFence、fullFence等方法，这些方法是在Java 8新引入的，用于定义内存屏障，避免代码重排序，与Java内存模型相关</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在该方法之前的所有读操作，一定在load屏障之前执行完成</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">loadFence</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//在该方法之前的所有写操作，一定在store屏障之前执行完成</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">storeFence</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//在该方法之前的所有读写操作，一定在full屏障之前执行完成，这个内存屏障相当于上面两个的合体功能</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">fullFence</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其他操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获取持有锁，已不建议使用</span></span><br><span class="line"><span class="meta">@Deprecated</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">monitorEnter</span><span class="params">(Object var1)</span></span>;</span><br><span class="line"><span class="comment">//释放锁，已不建议使用</span></span><br><span class="line"><span class="meta">@Deprecated</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">monitorExit</span><span class="params">(Object var1)</span></span>;</span><br><span class="line"><span class="comment">//尝试获取锁，已不建议使用</span></span><br><span class="line"><span class="meta">@Deprecated</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">tryMonitorEnter</span><span class="params">(Object var1)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取本机内存的页数，这个值永远都是2的幂次方  </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">pageSize</span><span class="params">()</span></span>;  </span><br><span class="line"></span><br><span class="line"><span class="comment">//告诉虚拟机定义了一个没有安全检查的类，默认情况下这个类加载器和保护域来着调用者类  </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> Class <span class="title">defineClass</span><span class="params">(String name, <span class="keyword">byte</span>[] b, <span class="keyword">int</span> off, <span class="keyword">int</span> len, ClassLoader loader, ProtectionDomain protectionDomain)</span></span>;  </span><br><span class="line"></span><br><span class="line"><span class="comment">//加载一个匿名类</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> Class <span class="title">defineAnonymousClass</span><span class="params">(Class hostClass, <span class="keyword">byte</span>[] data, Object[] cpPatches)</span></span>;</span><br><span class="line"><span class="comment">//判断是否需要加载一个类</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">shouldBeInitialized</span><span class="params">(Class&lt;?&gt; c)</span></span>;</span><br><span class="line"><span class="comment">//确保类一定被加载 </span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">native</span>  <span class="keyword">void</span> <span class="title">ensureClassInitialized</span><span class="params">(Class&lt;?&gt; c)</span></span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="并发包中的原子操作类（Atomic系列）"><a href="#并发包中的原子操作类（Atomic系列）" class="headerlink" title="并发包中的原子操作类（Atomic系列）"></a>并发包中的原子操作类（Atomic系列）</h2><p>&ensp;&ensp; 下面主要是CAS在Java中的应用，即并发包中的原子操作类（Atomic系列），从JDK1.5开始，就有了java.util.concurrent.atomic包，在该包中提供了许多基于CAS实现的原子操作类，主要分为四种类型：  </p>
+<h3 id="原子更新基本类型"><a href="#原子更新基本类型" class="headerlink" title="原子更新基本类型"></a>原子更新基本类型</h3><p>&ensp;&ensp; 主要包括3个类：① AtomicBoolean，即原子更新布尔类型；② AtomicInteger，即原子更新整型；③ AtomicLong，即原子更新长整型。<br>&ensp;&ensp; 这3个类的实现原理和使用方式几乎是一样的，这里我们以AtomicInteger为例进行分析，AtomicInteger主要是针对int类型的数据执行原子操作，它提供了原子自增方法、原子自减方法以及原子赋值方法等，鉴于AtomicInteger的源码不多，我们直接看源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AtomicInteger</span> <span class="keyword">extends</span> <span class="title">Number</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">6214790243416807050L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取指针类Unsafe</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe unsafe = Unsafe.getUnsafe();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//下述变量value在AtomicInteger实例对象内的内存偏移量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> valueOffset;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="comment">//通过unsafe类的objectFieldOffset()方法，获取value变量在对象内存中的偏移</span></span><br><span class="line">           <span class="comment">//通过该偏移量valueOffset，unsafe类的内部方法可以获取到变量value对其进行取值或赋值操作</span></span><br><span class="line">            valueOffset = unsafe.objectFieldOffset</span><br><span class="line">                (AtomicInteger.class.getDeclaredField(<span class="string">"value"</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> Error(ex); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="comment">//当前AtomicInteger封装的int变量value</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AtomicInteger</span><span class="params">(<span class="keyword">int</span> initialValue)</span> </span>&#123;</span><br><span class="line">        value = initialValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AtomicInteger</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="comment">//获取当前最新值，</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//设置当前值，具备volatile效果，方法用final修饰是为了更进一步的保证线程安全。</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">set</span><span class="params">(<span class="keyword">int</span> newValue)</span> </span>&#123;</span><br><span class="line">        value = newValue;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//最终会设置成newValue，使用该方法后可能导致其他线程在之后的一小段时间内可以获取到旧值，有点类似于延迟加载</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">lazySet</span><span class="params">(<span class="keyword">int</span> newValue)</span> </span>&#123;</span><br><span class="line">        unsafe.putOrderedInt(<span class="keyword">this</span>, valueOffset, newValue);</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="comment">//设置新值并获取旧值，底层调用的是CAS操作即unsafe.compareAndSwapInt()方法</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndSet</span><span class="params">(<span class="keyword">int</span> newValue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndSetInt(<span class="keyword">this</span>, valueOffset, newValue);</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="comment">//如果当前值为expect，则设置为update(当前值指的是value变量)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(<span class="keyword">int</span> expect, <span class="keyword">int</span> update)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.compareAndSwapInt(<span class="keyword">this</span>, valueOffset, expect, update);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当前值加1返回旧值，底层CAS操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndIncrement</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndAddInt(<span class="keyword">this</span>, valueOffset, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当前值减1，返回旧值，底层CAS操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndDecrement</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndAddInt(<span class="keyword">this</span>, valueOffset, -<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="comment">//当前值增加delta，返回旧值，底层CAS操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAdd</span><span class="params">(<span class="keyword">int</span> delta)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndAddInt(<span class="keyword">this</span>, valueOffset, delta);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当前值加1，返回新值，底层CAS操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">incrementAndGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndAddInt(<span class="keyword">this</span>, valueOffset, <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当前值减1，返回新值，底层CAS操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">decrementAndGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndAddInt(<span class="keyword">this</span>, valueOffset, -<span class="number">1</span>) - <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="comment">//当前值增加delta，返回新值，底层CAS操作</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">addAndGet</span><span class="params">(<span class="keyword">int</span> delta)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndAddInt(<span class="keyword">this</span>, valueOffset, delta) + delta;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="comment">//省略一些不常用的方法....</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 通过上述的分析，可以发现AtomicInteger原子类的内部几乎是基于前面分析过Unsafe类中的CAS相关操作的方法实现的，这也同时证明AtomicInteger是基于无锁实现的，这里重点分析自增操作实现过程，其他方法自增实现原理一样。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//当前值加1，返回新值，底层CAS操作</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">incrementAndGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     <span class="keyword">return</span> unsafe.getAndAddInt(<span class="keyword">this</span>, valueOffset, <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 我们发现AtomicInteger类中所有自增或自减的方法都间接调用Unsafe类中的getAndAddInt()方法实现了CAS操作，从而保证了线程安全，关于getAndAddInt其实前面已分析过，它是Unsafe类中1.8新增的方法，源码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Unsafe类中的getAndAddInt方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">getAndAddInt</span><span class="params">(Object o, <span class="keyword">long</span> offset, <span class="keyword">int</span> delta)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> v;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            v = getIntVolatile(o, offset);</span><br><span class="line">        &#125; <span class="keyword">while</span> (!compareAndSwapInt(o, offset, v, v + delta));</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 可看出getAndAddInt<strong>通过一个while循环不断的重试更新要设置的值</strong>，直到成功为止，调用的是Unsafe类中的compareAndSwapInt方法，是一个CAS操作方法。这里需要注意的是，上述源码分析是基于JDK1.8的，如果是1.8之前的方法，AtomicInteger源码实现有所不同，是基于for死循环的，如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//JDK 1.7的源码，由for的死循环实现，并且直接在AtomicInteger实现该方法，</span></span><br><span class="line"><span class="comment">//JDK1.8后，该方法实现已移动到Unsafe类中，直接调用getAndAddInt方法即可</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">int</span> <span class="title">incrementAndGet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="keyword">int</span> current = get();</span><br><span class="line">        <span class="keyword">int</span> next = current + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span> (compareAndSet(current, next))</span><br><span class="line">            <span class="keyword">return</span> next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="原子更新引用"><a href="#原子更新引用" class="headerlink" title="原子更新引用"></a>原子更新引用</h3><p>&ensp;&ensp; 原子更新引用类型可以同时更新引用类型，这里主要分析一下AtomicReference原子类，即原子更新引用类型。先看使用方式，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AtomicReferenceDemo2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> AtomicReference&lt;User&gt; atomicUserRef = <span class="keyword">new</span> AtomicReference&lt;User&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="string">"zejian"</span>, <span class="number">18</span>);</span><br><span class="line">        atomicUserRef.set(user);</span><br><span class="line">        User updateUser = <span class="keyword">new</span> User(<span class="string">"Shine"</span>, <span class="number">25</span>);</span><br><span class="line">        atomicUserRef.compareAndSet(user, updateUser);</span><br><span class="line">        <span class="comment">//执行结果:User&#123;name='Shine', age=25&#125;</span></span><br><span class="line">              System.out.println(atomicUserRef.get().toString());  </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> String name;</span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">User</span><span class="params">(String name, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.name = name;</span><br><span class="line">            <span class="keyword">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> name;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">"User&#123;"</span> +</span><br><span class="line">                    <span class="string">"name='"</span> + name + <span class="string">'\''</span> +</span><br><span class="line">                    <span class="string">", age="</span> + age +</span><br><span class="line">                    <span class="string">'&#125;'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 那么AtomicReference原子类内部是如何实现CAS操作的呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AtomicReference</span>&lt;<span class="title">V</span>&gt; <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Unsafe unsafe = Unsafe.getUnsafe();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> valueOffset;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            valueOffset = unsafe.objectFieldOffset</span><br><span class="line">                (AtomicReference.class.getDeclaredField(<span class="string">"value"</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> Error(ex); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//内部变量value，Unsafe类通过valueOffset内存偏移量即可获取该变量</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> V value;</span><br><span class="line"></span><br><span class="line"><span class="comment">//CAS方法，间接调用unsafe.compareAndSwapObject(),它是一个</span></span><br><span class="line"><span class="comment">//实现了CAS操作的native方法</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">compareAndSet</span><span class="params">(V expect, V update)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.compareAndSwapObject(<span class="keyword">this</span>, valueOffset, expect, update);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//设置并获取旧值</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> V <span class="title">getAndSet</span><span class="params">(V newValue)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (V)unsafe.getAndSetObject(<span class="keyword">this</span>, valueOffset, newValue);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//省略其他代码......</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Unsafe类中的getAndSetObject方法，实际调用还是CAS操作</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">getAndSetObject</span><span class="params">(Object o, <span class="keyword">long</span> offset, Object newValue)</span> </span>&#123;</span><br><span class="line">      Object v;</span><br><span class="line">      <span class="keyword">do</span> &#123;</span><br><span class="line">          v = getObjectVolatile(o, offset);</span><br><span class="line">      &#125; <span class="keyword">while</span> (!compareAndSwapObject(o, offset, v, newValue));</span><br><span class="line">      <span class="keyword">return</span> v;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 从源码看来，AtomicReference与AtomicInteger的实现原理基本是一样的，最终执行的还是Unsafe类，关于AtomicReference的其他方法也是一样的。</p>
+<h3 id="原子更新数组"><a href="#原子更新数组" class="headerlink" title="原子更新数组"></a>原子更新数组</h3><h2 id="CAS的ABA问题以及解决方案"><a href="#CAS的ABA问题以及解决方案" class="headerlink" title="CAS的ABA问题以及解决方案"></a>CAS的ABA问题以及解决方案</h2><p>&ensp;&ensp; java中解决ABA问题，可以使用下面两个原子类：  </p>
+<h3 id="AtomicStampedReference"><a href="#AtomicStampedReference" class="headerlink" title="AtomicStampedReference"></a>AtomicStampedReference</h3><p>&ensp;&ensp; <strong>AtomicStampedReference原子类是一个带有时间戳的对象引用</strong>，在每次修改后，<strong>AtomicStampedReference不仅会设置新值而且还会记录更改的时间</strong>。当AtomicStampedReference设置对象值时，对象值以及时间戳都必须满足期望值才能写入成功，这也就解决了反复读写时，无法预知值是否已被修改的窘境。</p>
+<h3 id="AtomicMarkableReference"><a href="#AtomicMarkableReference" class="headerlink" title="AtomicMarkableReference"></a>AtomicMarkableReference</h3><p>&ensp;&ensp; AtomicMarkableReference与AtomicStampedReference不同的是，AtomicMarkableReference维护的是一个boolean值的标识，也就是说至于true和false两种切换状态，经过博主测试，这种方式<strong>并不能完全防止ABA问题的发生，只能减少ABA问题发生的概率</strong>。  </p>
+<hr>
+<p>&ensp;&ensp; 自己总结下，就是CAS就是比较后交换，就是如果数据一致，可以进行操作，如果不一致就证明有其他线程干扰，那要么失败，要么重复获取新的状态直到可以操作。在java中的Unsafe类有几个简单的方法就是去做的CAS操作，它在里面是基于do while来实现的。然后java中的原子类事实上都是基于Unsafe中的CAS方法实现的。但是CAS不是有一个问题就是ABA问题，所以它就有一个类：AtomicStampedReference，里面是带有时间戳的引用，就可以解决这个问题了。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/高并发/" rel="tag"># 高并发</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/23/深入理解Synchronized/" rel="next" title="深入理解Synchronized">
+                <i class="fa fa-chevron-left"></i> 深入理解Synchronized
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/23/jdk8-ReetrantLock源码/" rel="prev" title="jdk8-ReetrantLock源码">
+                jdk8-ReetrantLock源码 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a" alt="hszzjs">
+            
+              <p class="site-author-name" itemprop="name">hszzjs</p>
+              <p class="site-description motion-element" itemprop="description">稳住，能赢。猥琐，别浪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#无锁base"><span class="nav-number">1.</span> <span class="nav-text">无锁base</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无锁的执行者-CAS"><span class="nav-number">2.</span> <span class="nav-text">无锁的执行者-CAS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CAS"><span class="nav-number">2.1.</span> <span class="nav-text">CAS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU对CAS的支持"><span class="nav-number">2.2.</span> <span class="nav-text">CPU对CAS的支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unsafe类"><span class="nav-number">2.3.</span> <span class="nav-text">Unsafe类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#并发包中的原子操作类（Atomic系列）"><span class="nav-number">2.4.</span> <span class="nav-text">并发包中的原子操作类（Atomic系列）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#原子更新基本类型"><span class="nav-number">2.4.1.</span> <span class="nav-text">原子更新基本类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原子更新引用"><span class="nav-number">2.4.2.</span> <span class="nav-text">原子更新引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原子更新数组"><span class="nav-number">2.4.3.</span> <span class="nav-text">原子更新数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CAS的ABA问题以及解决方案"><span class="nav-number">2.5.</span> <span class="nav-text">CAS的ABA问题以及解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AtomicStampedReference"><span class="nav-number">2.5.1.</span> <span class="nav-text">AtomicStampedReference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AtomicMarkableReference"><span class="nav-number">2.5.2.</span> <span class="nav-text">AtomicMarkableReference</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hszzjs</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!--添加动态背景-->
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>

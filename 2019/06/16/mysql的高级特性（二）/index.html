@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="Java,">
 
 
 
@@ -79,17 +79,22 @@
 
 
 
-<meta name="description" content="稳住，能赢。猥琐，别浪。">
+<meta name="description" content="游标&amp;ensp;&amp;ensp; mysql在服务器端提供只读的、单向的游标，而且只能在存储过程或者更底层的客户端API中使用。因为mysql游标中执行的对象都是存储在临时表中而不是实际查询到的数据。所以mysql游标总是只读的，它可以逐行指向查询结果，然后让程序做进一步处理。在一个存储过程中，可以有多个游标，也可以在循环中“嵌套”地使用游标。请记住：当打开一个游标的时候需要执行整个查询。&amp;ensp;">
+<meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql的高级特性（二）">
 <meta property="og:url" content="http://yoursite.com/2019/06/16/mysql的高级特性（二）/index.html">
 <meta property="og:site_name" content="天生的努力家">
-<meta property="og:description" content="稳住，能赢。猥琐，别浪。">
+<meta property="og:description" content="游标&amp;ensp;&amp;ensp; mysql在服务器端提供只读的、单向的游标，而且只能在存储过程或者更底层的客户端API中使用。因为mysql游标中执行的对象都是存储在临时表中而不是实际查询到的数据。所以mysql游标总是只读的，它可以逐行指向查询结果，然后让程序做进一步处理。在一个存储过程中，可以有多个游标，也可以在循环中“嵌套”地使用游标。请记住：当打开一个游标的时候需要执行整个查询。&amp;ensp;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-16T12:10:08.715Z">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/D7288FBC61744AB6A1CAB25FC18277B4?method=download&shareKey=cc566293448d7cbaffbd166ebc8febe9">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/2A32A92E75984FCA8AC33D65EDB67F87?method=download&shareKey=e678642eb39942281a8895b0cc626d3b">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/5FB01B77FDF744AF9ECE4ACED7E4BB35?method=download&shareKey=87ca0f784e81d2eaffe6c21ad25141c5">
+<meta property="og:updated_time" content="2019-06-17T06:20:49.196Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql的高级特性（二）">
-<meta name="twitter:description" content="稳住，能赢。猥琐，别浪。">
+<meta name="twitter:description" content="游标&amp;ensp;&amp;ensp; mysql在服务器端提供只读的、单向的游标，而且只能在存储过程或者更底层的客户端API中使用。因为mysql游标中执行的对象都是存储在临时表中而不是实际查询到的数据。所以mysql游标总是只读的，它可以逐行指向查询结果，然后让程序做进一步处理。在一个存储过程中，可以有多个游标，也可以在循环中“嵌套”地使用游标。请记住：当打开一个游标的时候需要执行整个查询。&amp;ensp;">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/D7288FBC61744AB6A1CAB25FC18277B4?method=download&shareKey=cc566293448d7cbaffbd166ebc8febe9">
 
 
 
@@ -99,7 +104,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -335,6 +340,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -362,7 +389,24 @@
       
 
       
-        
+        <h1 id="游标"><a href="#游标" class="headerlink" title="游标"></a>游标</h1><p>&ensp;&ensp; mysql在服务器端提供<strong>只读的、单向的游标</strong>，而且只能在存储过程或者更底层的客户端API中使用。因为mysql游标中执行的对象都是存储在临时表中而不是实际查询到的数据。所以<strong>mysql游标总是只读的，它可以逐行指向查询结果，然后让程序做进一步处理</strong>。在一个存储过程中，可以有多个游标，也可以在循环中“嵌套”地使用游标。请记住：<font color="red">当打开一个游标的时候需要执行整个查询。</font><br>&ensp;&ensp; 如果在关闭游标的时候只是扫描一个大结果集的一小部分，那么存储过程可能不仅没有减少开销，相反还带来了大量的额外开销。  </p>
+<a id="more"></a>
+<h1 id="绑定变量"><a href="#绑定变量" class="headerlink" title="绑定变量"></a>绑定变量</h1><p>&ensp;&ensp; 这个是指支持服务器端的绑定变量，可以极大地提高客户端和服务器端数据传输的速率。当创建一个绑定变量SQL时，客户端向服务器发送一个SQL语句的原型。服务器端收到这个SQL语句框架后，解析并存储这个SQL语句的部分执行计划，返回给客户端一个SQL语句处理句柄。以后每次执行这类查询，客户端都指定使用这个句柄。<br>&ensp;&ensp; 绑定变量的SQL，使用问好标记参数的位置，当真正需要执行具体查询的时候，则使用具体值代替这些问好。比如：  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> tb1(col1,col2,col3) <span class="keyword">VALUES</span> (?,?,?);</span><br></pre></td></tr></table></figure>
+
+<p>可以通过向服务器端发送各个问好的取值和这个SQL的句柄来执行一个具体查询。==》这不就是mybatis的特点。<br>&ensp;&ensp; 所以mysql在使用绑定变量的时候可以更高效地执行大量重复语句原因如下：  </p>
+<ul>
+<li>在服务器端只需要解析一次SQL语句；  </li>
+<li>在服务器端某些优化器的工作只需要执行一次，因为它会缓存一部分的执行计划；  </li>
+<li>使用<strong>二进制的方式只发送参数和句柄</strong>，要比每次都发送ASCII码文本效率更高；  </li>
+<li>只传递参数必然网络开销小；</li>
+<li>mysql在存储参数的时候，直接将其存放到缓存中，不再需要在内存中多次复制。<br>&ensp;&ensp; 绑定变量相对也更安全，就无需在应用程序中处理转义，这样做不仅更简单了，而且<strong>大大减少了SQL注入和攻击的风险</strong>。（任何时候都不要信任用户输入，即使是使用绑定变量的时候。）  <h2 id="绑定变量的优化"><a href="#绑定变量的优化" class="headerlink" title="绑定变量的优化"></a>绑定变量的优化</h2>&ensp;&ensp; 根据优化器什么时候工作，可以将优化分为：<br>① <strong>在准备阶段</strong>：服务器解析SQL语句，移除不可能的条件，并且重写子查询；<br>② <strong>在第一次执行的时候</strong>：如果可能的haul，服务器先简化嵌套循环的关联，并将外关联转化为内关联；<br>③ <strong>在每次SQL语句执行的时候</strong>：服务器会过滤分区、如果可能，尽量移除COUNT()、MIN()和MAX()、移除常数表达式、检测常量表、作必要的等值传播、分析和优化ref、range和索引优化等访问数据的方法、优化关联顺序。  <h2 id="SQL接口的绑定变量"><a href="#SQL接口的绑定变量" class="headerlink" title="SQL接口的绑定变量"></a>SQL接口的绑定变量</h2>&ensp;&ensp; MySQL支持SQL接口的绑定变量，不使用二进制传输协议也可以直接以SQL的方式使用绑定变量。这个最主要的用途是在<strong>存储过程中使用</strong>。这就意味着可以在存储过程中构建并执行“动态”的SQL语句，这里的<font color="red">“动态”是指可以通过灵活地拼接字符串等参数构建SQL语句。</font>  <h2 id="绑定变量的限制"><a href="#绑定变量的限制" class="headerlink" title="绑定变量的限制"></a>绑定变量的限制</h2>&ensp;&ensp; 限制以及注意事项如下：  </li>
+<li>绑定变量是会话级别的，所以连接之间不能共用绑定变量句柄，而且一旦断开，原来的句柄就不能再使用了。  </li>
+<li>绑定变量的SQL是不能使用查询缓存的；  </li>
+<li>并不是所有的时候使用绑定变量都能获得更好的性能，就意思如果只执行一次，就没有必要；  </li>
+<li>如果总是忘记释放绑定变量资源，那么服务器端很容易发生资源“泄漏”。  <h1 id="用户自定义函数"><a href="#用户自定义函数" class="headerlink" title="用户自定义函数"></a>用户自定义函数</h1><h1 id="全文索引"><a href="#全文索引" class="headerlink" title="全文索引"></a>全文索引</h1>&ensp;&ensp; <strong>如果需要通过关键字的匹配来进行查询过滤，那么就是基于相似度的查询，而不是原来的精确数值比较</strong>。全文索引就是适合这样的场景。全文索引支持各种字符内容的搜索，也支持自然语言搜索和布尔搜索。现在的mysql只有MyISAM支持全文索引。<br>&ensp;&ensp; MyISAM的全文索引是一类特殊的B-Tree索引，共有两层，第一层是所有的关键字，然后对于每一个关键字的第二层包含的是一组相关的“文档指针”。全文索引并不会索引文档对象中的所有词语，它会根据如下规则过滤一些词语：<br>① 停用词列表中的词都不会被索引。默认的停用词根据通用英语的使用来设置，可以使用参数来指定一组外部文件来使用自定义的停用词。<br>② 对于长度大于ft_min_word_len的词语和长度小于ft_max_word_len的词语，都不会被索引。<br>&ensp;&ensp; 全文索引并不会存储关键字具体匹配在哪一列，如果需要根据不同的列来进行组合查询，那么不需要针对每一列来多个这类索引。  <h2 id="自然语言的全文索引"><a href="#自然语言的全文索引" class="headerlink" title="自然语言的全文索引"></a>自然语言的全文索引</h2>&ensp;&ensp; 自然语言搜索引擎将计算每一个文档对象和查询的相关度。这里，相关度是基于匹配的关键词个数，以及关键词在文档中出现的次数。在整个索引中出现次数越少的词语，匹配时的相关度就越高。相反，非常常见的单词将不会搜索，即使不在停用词列表中出现，如果一个词语在超过50%的记录中都出现了，那么自然语言搜索将不会搜索这类词语。  <h2 id="布尔全文索引"><a href="#布尔全文索引" class="headerlink" title="布尔全文索引"></a>布尔全文索引</h2>&ensp;&ensp; 在布尔搜索中，用户可以在查询中自定义某个被搜索的词语的相关性。布尔搜索通过停用词列表过滤哪些“噪声”词，除此之外，布尔搜索还要求搜索关键词必须大于ft_min_word_len，同时小于ft_max_wor_len。搜索返回的结果是未经排序的。  <h1 id="分布式（XA）事务"><a href="#分布式（XA）事务" class="headerlink" title="分布式（XA）事务"></a>分布式（XA）事务</h1>&ensp;&ensp; 分布式事务让存储引擎级别的ACID可以扩展到数据库层面，设置可以扩展到多个数据库之间。<br>&ensp;&ensp; XA事务中需要有一个<strong>事务协调器</strong>来保证所有的事务参与者都完成了准备工作，如果协调器收到所有的参与者都准备好的消息，就会告诉所有事务可以提交了，第二阶段，mysql在这个事务过程中扮演一个参与者的角色，而不是协调者。<br>&ensp;&ensp; mysql中有两种XA事务，一方面，mysql可以参与到外部的分布式事务，另一方面，还可以通过XA事务来协调存储引擎和二进制日志。  <h2 id="内部XA事务"><a href="#内部XA事务" class="headerlink" title="内部XA事务"></a>内部XA事务</h2>&ensp;&ensp; mysql的存储引擎是完全独立的，所以<strong>一个跨存储引擎的事务就需要一个外部协调者</strong>。一个存储引擎参与的事务仍然需要XA事务，在存储引擎提交的同时，需要将“提交”的信息写入二进制日志，这就是一个分布式事务。<br>&ensp;&ensp; <font color="red">XA事务为mysql带来巨大的性能下降。</font>  <h2 id="外部XA事务"><a href="#外部XA事务" class="headerlink" title="外部XA事务"></a>外部XA事务</h2>&ensp;&ensp; 这个实数mysql是作为参与者完成一个外部的分布式事务。因为通信延迟和参与者本身可能失败，所以外部XA事务比内部消耗会更大。  <h1 id="查询缓存"><a href="#查询缓存" class="headerlink" title="查询缓存"></a>查询缓存</h1>&ensp;&ensp; mysql查询缓存保存查询返回的完整结果，当查询命中该缓存，mysql会立刻回结果，跳过解析、优化和执行阶段。查询缓存系统会跟踪查询中涉及的每个表，如果这些表发生变化，那么和这个表相关的所有缓存数据都将失效。  <h2 id="mysql如何判断缓存命中"><a href="#mysql如何判断缓存命中" class="headerlink" title="mysql如何判断缓存命中"></a>mysql如何判断缓存命中</h2><img src="https://note.youdao.com/yws/api/personal/file/D7288FBC61744AB6A1CAB25FC18277B4?method=download&shareKey=cc566293448d7cbaffbd166ebc8febe9" alt="image"><br><img src="https://note.youdao.com/yws/api/personal/file/2A32A92E75984FCA8AC33D65EDB67F87?method=download&shareKey=e678642eb39942281a8895b0cc626d3b" alt="image"><br><img src="https://note.youdao.com/yws/api/personal/file/5FB01B77FDF744AF9ECE4ACED7E4BB35?method=download&shareKey=87ca0f784e81d2eaffe6c21ad25141c5" alt="image"></li>
+</ul>
+
       
     </div>
     
@@ -376,6 +420,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
       
 
       
@@ -395,6 +445,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/06/23/红黑树Red-Black-Tree/" rel="prev" title="红黑树Red-Black-Tree">
+                红黑树Red-Black-Tree <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -446,8 +500,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -464,7 +527,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -510,7 +573,28 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
 
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#游标"><span class="nav-number">1.</span> <span class="nav-text">游标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#绑定变量"><span class="nav-number">2.</span> <span class="nav-text">绑定变量</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#绑定变量的优化"><span class="nav-number">2.1.</span> <span class="nav-text">绑定变量的优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL接口的绑定变量"><span class="nav-number">2.2.</span> <span class="nav-text">SQL接口的绑定变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绑定变量的限制"><span class="nav-number">2.3.</span> <span class="nav-text">绑定变量的限制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用户自定义函数"><span class="nav-number">3.</span> <span class="nav-text">用户自定义函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#全文索引"><span class="nav-number">4.</span> <span class="nav-text">全文索引</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#自然语言的全文索引"><span class="nav-number">4.1.</span> <span class="nav-text">自然语言的全文索引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布尔全文索引"><span class="nav-number">4.2.</span> <span class="nav-text">布尔全文索引</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分布式（XA）事务"><span class="nav-number">5.</span> <span class="nav-text">分布式（XA）事务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内部XA事务"><span class="nav-number">5.1.</span> <span class="nav-text">内部XA事务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#外部XA事务"><span class="nav-number">5.2.</span> <span class="nav-text">外部XA事务</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查询缓存"><span class="nav-number">6.</span> <span class="nav-text">查询缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mysql如何判断缓存命中"><span class="nav-number">6.1.</span> <span class="nav-text">mysql如何判断缓存命中</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
       
 
     </div>
@@ -558,11 +642,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
@@ -1036,8 +1115,6 @@
 
   
 
-  
-  undefined
 
   <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 </html>
