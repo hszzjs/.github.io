@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="网络IO,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="base&amp;ensp;&amp;ensp; 通道是 Java NIO 的核心内容之一，在使用上，通道需和缓存类（ByteBuffer）配合完成读写等操作。与传统的流式 IO 中数据单向流动不同，通道中的数据可以双向流动。通道既可以读，也可以写。通道的类型分为两种：一种是面向文件的，一种是面向网络的，具体类有：FileChannel、DatagramChannel、SocketChannel、ServerSo">
+<meta name="keywords" content="网络IO">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NIO之通道（文件与套接字）">
+<meta property="og:url" content="http://yoursite.com/2019/07/13/NIO之通道（文件与套接字）/index.html">
+<meta property="og:site_name" content="天生的努力家">
+<meta property="og:description" content="base&amp;ensp;&amp;ensp; 通道是 Java NIO 的核心内容之一，在使用上，通道需和缓存类（ByteBuffer）配合完成读写等操作。与传统的流式 IO 中数据单向流动不同，通道中的数据可以双向流动。通道既可以读，也可以写。通道的类型分为两种：一种是面向文件的，一种是面向网络的，具体类有：FileChannel、DatagramChannel、SocketChannel、ServerSo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/4494B7712E0C455FA1CCEC3D1C84DB68?method=download&shareKey=327a881af8e4b1816861f7730b9a1dda">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/2BA3AA116EB149D2BCD000F6E4C027C4?method=download&shareKey=b3ce81284b68e729865a4dc7f501fda7">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/C826164A18144B59A74D8A0A37DF07AF?method=download&shareKey=07d8322c963cdd4d5b48243f5ef9792c">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/B1713A717F274C96A0F60853AE3903FF?method=download&shareKey=3f7e1e00867267e4171c973117b8a1dc">
+<meta property="og:image" content="https://note.youdao.com/yws/api/personal/file/04F59E4A0D814FB4B621CECF7434593D?method=download&shareKey=b4a0d874f616cafca15943f548c404e8">
+<meta property="og:updated_time" content="2019-07-13T13:12:56.930Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NIO之通道（文件与套接字）">
+<meta name="twitter:description" content="base&amp;ensp;&amp;ensp; 通道是 Java NIO 的核心内容之一，在使用上，通道需和缓存类（ByteBuffer）配合完成读写等操作。与传统的流式 IO 中数据单向流动不同，通道中的数据可以双向流动。通道既可以读，也可以写。通道的类型分为两种：一种是面向文件的，一种是面向网络的，具体类有：FileChannel、DatagramChannel、SocketChannel、ServerSo">
+<meta name="twitter:image" content="https://note.youdao.com/yws/api/personal/file/4494B7712E0C455FA1CCEC3D1C84DB68?method=download&shareKey=327a881af8e4b1816861f7730b9a1dda">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/13/NIO之通道（文件与套接字）/">
+
+
+
+
+
+  <title>NIO之通道（文件与套接字） | 天生的努力家</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<a href="https://github.com/hszzjs" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+	
+	<header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">天生的努力家</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">只有努力才会带来幸运^_^</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/13/NIO之通道（文件与套接字）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="hszzjs">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="天生的努力家">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">NIO之通道（文件与套接字）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-13T21:10:32+08:00">
+                2019-07-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/学习/" itemprop="url" rel="index">
+                    <span itemprop="name">学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="base"><a href="#base" class="headerlink" title="base"></a>base</h1><p>&ensp;&ensp; 通道是 Java NIO 的核心内容之一，在使用上，通道需和缓存类（ByteBuffer）配合完成读写等操作。与传统的流式 IO 中数据单向流动不同，通道中的数据可以双向流动。通道既可以读，也可以写。<font color="red">通道的类型分为两种：一种是面向文件的，一种是面向网络的，具体类有：FileChannel、DatagramChannel、SocketChannel、ServerSocketChannel。所以就可以认为是，NIO通道涵盖了文件IO、TCP和UDP网络IO等通道类型</font>。  </p>
+<a id="more"></a>
+<h1 id="文件通道"><a href="#文件通道" class="headerlink" title="文件通道"></a>文件通道</h1><h2 id="创建通道"><a href="#创建通道" class="headerlink" title="创建通道"></a>创建通道</h2><p>&ensp;&ensp; FileChannel是一个用于连接文件的通道，通过该通道，既可以从文件中读取，也可以向文件中写入数据。与SocketChannel不同，<strong>FileChannel无法设置为非阻塞模式</strong>，这就意味着它只能运行在阻塞模式。在使用FileChannel之前，需要先打开它，<strong>由于FileChannel是一个抽象类，所以不能通过直接创建而来，必须通过InputStream、OutputStream或RandomAccessFile等实例来获取一个FileChannel实例</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FileInputStream fis = <span class="keyword">new</span> FileInputStream(FILE_PATH);</span><br><span class="line">FileChannel channel = fis.getChannel();</span><br><span class="line"></span><br><span class="line">FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(FILE_PATH);</span><br><span class="line">FileChannel channel = fis.getChannel();</span><br><span class="line"></span><br><span class="line">RandomAccessFile raf = <span class="keyword">new</span> RandomAccessFile(FILE_PATH , <span class="string">"rw"</span>);</span><br><span class="line">FileChannel channel = raf.getChannel();</span><br></pre></td></tr></table></figure>
+
+<h2 id="读写操作"><a href="#读写操作" class="headerlink" title="读写操作"></a>读写操作</h2><p>&ensp;&ensp; 读写操作比较简单，这里直接上代码了。下面的代码会先向文件中写入数据，然后再将写入的数据读出来并打印。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取管道</span></span><br><span class="line">RandomAccessFile raf = <span class="keyword">new</span> RandomAccessFile(FILE_PATH, <span class="string">"rw"</span>);</span><br><span class="line">FileChannel rafChannel = raf.getChannel();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 准备数据</span></span><br><span class="line">String data = <span class="string">"新数据，时间： "</span> + System.currentTimeMillis();</span><br><span class="line">System.out.println(<span class="string">"原数据：\n"</span> + <span class="string">"   "</span> + data);</span><br><span class="line">ByteBuffer buffer = ByteBuffer.allocate(<span class="number">128</span>);</span><br><span class="line">buffer.clear();</span><br><span class="line">buffer.put(data.getBytes());</span><br><span class="line">buffer.flip();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写入数据</span></span><br><span class="line">rafChannel.write(buffer);</span><br><span class="line"></span><br><span class="line">rafChannel.close();</span><br><span class="line">raf.close();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 重新打开管道</span></span><br><span class="line">raf = <span class="keyword">new</span> RandomAccessFile(FILE_PATH, <span class="string">"rw"</span>);</span><br><span class="line">rafChannel = raf.getChannel();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取刚刚写入的数据</span></span><br><span class="line">buffer.clear();</span><br><span class="line">rafChannel.read(buffer);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打印读取出的数据</span></span><br><span class="line">buffer.flip();</span><br><span class="line"><span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[buffer.limit()];</span><br><span class="line">buffer.get(bytes);</span><br><span class="line">System.out.println(<span class="string">"读取到的数据：\n"</span> + <span class="string">"   "</span> + <span class="keyword">new</span> String(bytes));</span><br><span class="line"></span><br><span class="line">rafChannel.close();</span><br><span class="line">raf.close();</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据转移操作"><a href="#数据转移操作" class="headerlink" title="数据转移操作"></a>数据转移操作</h2><p>&ensp;&ensp; 我们有时需要将一个文件中的内容复制到另一个文件中去，最容易想到的做法是利用传统的 IO 将源文件中的内容读取到内存中，然后再往目标文件中写入。现在，有了 NIO，我们可以利用更方便快捷的方式去完成复制操作。<strong>FileChannel 提供了一对数据转移方法 - transferFrom/transferTo，通过使用这两个方法，即可简化文件复制操作</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    RandomAccessFile fromFile = <span class="keyword">new</span> RandomAccessFile(<span class="string">"fromFile.txt"</span>, <span class="string">"rw"</span>);</span><br><span class="line">    FileChannel fromChannel = fromFile.getChannel();</span><br><span class="line">    </span><br><span class="line">    RandomAccessFile toFile = <span class="keyword">new</span> RandomAccessFile(<span class="string">"toFile.txt"</span>, <span class="string">"rw"</span>);</span><br><span class="line">    FileChannel toChannel = toFile.getChannel();</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">long</span> position = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">long</span> count = fromChannel.size();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 将 fromFile 文件找那个的数据转移到 toFile 中去</span></span><br><span class="line">    System.out.println(<span class="string">"before transfer: "</span> + readChannel(toChannel));</span><br><span class="line">    fromChannel.transferTo(position, count, toChannel);</span><br><span class="line">    System.out.println(<span class="string">"after transfer : "</span> + readChannel(toChannel));</span><br><span class="line">    </span><br><span class="line">    fromChannel.close();</span><br><span class="line">    fromFile.close();</span><br><span class="line">    toChannel.close();</span><br><span class="line">    toFile.close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">readChannel</span><span class="params">(FileChannel channel)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    ByteBuffer buffer = ByteBuffer.allocate(<span class="number">32</span>);</span><br><span class="line">    buffer.clear();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将 channel 读取位置设为 0，也就是文件开始位置</span></span><br><span class="line">    channel.position(<span class="number">0</span>);</span><br><span class="line">    channel.read(buffer);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 再次将文件位置归零</span></span><br><span class="line">    channel.position(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    buffer.flip();</span><br><span class="line">    <span class="keyword">byte</span>[] bytes = <span class="keyword">new</span> <span class="keyword">byte</span>[buffer.limit()];</span><br><span class="line">    buffer.get(bytes);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> String(bytes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 通过上面，可以明显感受到使用transferTo减少编码量，但是原因是为何，需要仔细研究程序读取数据以及写入文件的过程。<br>&ensp;&ensp; 我们现在所使用的 PC 操作系统，将内存分为了内核空间和用户空间。<strong>操作系统的内核和一些硬件的驱动程序就是运行在内核空间内，而用户空间就是我们自己写的程序所能运行的内存区域</strong>。这里，<font color="blue">当我们调用 read 从磁盘中读取数据时，内核会首先将数据读取到内核空间中，然后再将数据从内核空间复制到用户空间内</font>。也就是说，我们需要<strong>通过内核进行数据中转</strong>。同样，写入数据也是如此。系统先从用户空间将数据拷贝到内核空间中，然后再由内核空间向磁盘写入。相关示意图如下：<br><img src="https://note.youdao.com/yws/api/personal/file/4494B7712E0C455FA1CCEC3D1C84DB68?method=download&shareKey=327a881af8e4b1816861f7730b9a1dda" alt="image"><br>&ensp;&ensp; 与上面的数据流向不同，FileChannel 的 transferTo 方法底层基于 sendfile64（Linux 平台下）系统调用实现。<strong>sendfile64 会直接在内核空间内进行数据拷贝</strong>，免去了内核往用户空间拷贝，用户空间再往内核空间拷贝这两步操作，因此提高了效率。其示意图如下：<br><img src="https://note.youdao.com/yws/api/personal/file/2BA3AA116EB149D2BCD000F6E4C027C4?method=download&shareKey=b3ce81284b68e729865a4dc7f501fda7" alt="image"><br>&ensp;&ensp; 通过上面的讲解，大家应该知道了 transferTo 和 transferFrom 的效率会高于传统的 read 和 write 在效率上的区别。<strong>区别的原因在于免去了内核空间和用户空间的相互拷贝，虽然内存间拷贝的速度比较快，但涉及到大量的数据拷贝时，相互拷贝的带来的消耗是不应该被忽略的</strong>。  
+&ensp;&ensp; 讲完了背景知识，咱们再来看看 FileChannel 是怎样调用 sendfile64 这个函数的。相关代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">transferTo</span><span class="params">(<span class="keyword">long</span> position, <span class="keyword">long</span> count,</span></span></span><br><span class="line"><span class="function"><span class="params">                           WritableByteChannel target)</span></span></span><br><span class="line"><span class="function">        <span class="keyword">throws</span> IOException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 省略一些代码</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">int</span> icount = (<span class="keyword">int</span>)Math.min(count, Integer.MAX_VALUE);</span><br><span class="line">    <span class="keyword">if</span> ((sz - position) &lt; icount)</span><br><span class="line">        icount = (<span class="keyword">int</span>)(sz - position);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Attempt a direct transfer, if the kernel supports it</span></span><br><span class="line">    <span class="keyword">if</span> ((n = transferToDirectly(position, icount, target)) &gt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Attempt a mapped transfer, but only to trusted channel types</span></span><br><span class="line">    <span class="keyword">if</span> ((n = transferToTrustedChannel(position, icount, target)) &gt;= <span class="number">0</span>)</span><br><span class="line">        <span class="keyword">return</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Slow path for untrusted targets</span></span><br><span class="line">    <span class="keyword">return</span> transferToArbitraryChannel(position, icount, target);</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">long</span> <span class="title">transferToDirectly</span><span class="params">(<span class="keyword">long</span> position, <span class="keyword">int</span> icount,</span></span></span><br><span class="line"><span class="function"><span class="params">                                WritableByteChannel target)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> IOException</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 省略一些代码</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> n = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> ti = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        begin();</span><br><span class="line">        ti = threads.add();</span><br><span class="line">        <span class="keyword">if</span> (!isOpen())</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            n = transferTo0(thisFDVal, position, icount, targetFDVal);</span><br><span class="line">        &#125; <span class="keyword">while</span> ((n == IOStatus.INTERRUPTED) &amp;&amp; isOpen());</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// 省略一些代码</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> IOStatus.normalize(n);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        threads.remove(ti);</span><br><span class="line">        end (n &gt; -<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 从上面代码（transferToDirectly 方法可以在 openjdk/jdk/src/share/classes/sun/nio/ch/FileChannelImpl.java 中找到）中可以看得出 transferTo 的调用路径，先是调用 transferToDirectly，然后 transferToDirectly 再调用 transferTo0。transferTo0 是 native 类型的方法，我们再去看看 transferTo0 是怎样实现的，其代码在openjdk/jdk/src/solaris/native/sun/nio/ch/FileChannelImpl.c中。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">JNIEXPORT jlong JNICALL</span><br><span class="line">Java_sun_nio_ch_FileChannelImpl_transferTo0(JNIEnv *env, jobject <span class="keyword">this</span>,</span><br><span class="line">                                            jint srcFD,</span><br><span class="line">                                            jlong position, jlong count,</span><br><span class="line">                                            jint dstFD)</span><br><span class="line">&#123;</span><br><span class="line">#if defined(__linux__)</span><br><span class="line">    off64_t offset = (off64_t)position;</span><br><span class="line">    </span><br><span class="line">    jlong n = sendfile64(dstFD, srcFD, &amp;offset, (size_t)count);</span><br><span class="line">    <span class="keyword">if</span> (n &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (errno == EAGAIN)</span><br><span class="line">            <span class="keyword">return</span> IOS_UNAVAILABLE;</span><br><span class="line">        <span class="keyword">if</span> ((errno == EINVAL) &amp;&amp; ((ssize_t)count &gt;= <span class="number">0</span>))</span><br><span class="line">            <span class="keyword">return</span> IOS_UNSUPPORTED_CASE;</span><br><span class="line">        <span class="keyword">if</span> (errno == EINTR) &#123;</span><br><span class="line">            <span class="keyword">return</span> IOS_INTERRUPTED;</span><br><span class="line">        &#125;</span><br><span class="line">        JNU_ThrowIOExceptionWithLastError(env, <span class="string">"Transfer failed"</span>);</span><br><span class="line">        <span class="keyword">return</span> IOS_THROWN;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> n;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 其他平台的代码省略</span></span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 如上所示，transferTo0 最终调用了 sendfile64 函数，关于 sendfile64 这个系统调用的详细说明，请参考 man-page，这里就不展开说明了。</p>
+<h2 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h2><p>&ensp;&ensp; 内存映射这个概念源自操作系统，是<strong>指将一个文件映射到某一段虚拟内存（物理内存可能不连续）上去。我们通过对这段虚拟内存的读写即可达到对文件的读写的效果，从而可以简化对文件的操作</strong>。当然，这只是内存映射的一个优点。内存映射还有其他的一些优点，比如两个进程映射同一个文件，可以<strong>实现进程间通信</strong>。再比如，C 程序运行时需要 C 标准库支持，操作系统将 C 标准库放到了内存中，普通的 C 程序只需要将 C 标准库映射到自己的进程空间内就行了，从而可以降低内存占用。以上简单介绍了内存映射的概念及作用。<br>&ensp;&ensp; Unix/Linux 操作系统内存映射的系统调用mmap，Java 在这个系统调用的基础上，封装了 Java 的内存映射方法。这里我就不一步一步往下追踪了，大家有兴趣可以自己追踪一下 Java 封装的内存映射方法的调用栈。下面来简单的示例演示一下内存映射的用法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从标准输入获取数据</span></span><br><span class="line">Scanner sc = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">System.out.println(<span class="string">"请输入："</span>);</span><br><span class="line">String str = sc.nextLine();</span><br><span class="line"><span class="keyword">byte</span>[] bytes = str.getBytes();</span><br><span class="line"></span><br><span class="line">RandomAccessFile raf = <span class="keyword">new</span> RandomAccessFile(<span class="string">"map.txt"</span>, <span class="string">"rw"</span>);</span><br><span class="line">FileChannel channel = raf.getChannel();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取内存映射缓冲区，并向缓冲区写入数据</span></span><br><span class="line">MappedByteBuffer mappedBuffer = channel.map(MapMode.READ_WRITE, <span class="number">0</span>, bytes.length);</span><br><span class="line">mappedBuffer.put(bytes);</span><br><span class="line"></span><br><span class="line">raf.close();</span><br><span class="line">raf.close();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 再次打开刚刚的文件，读取其中的内容</span></span><br><span class="line">raf = <span class="keyword">new</span> RandomAccessFile(<span class="string">"map.txt"</span>, <span class="string">"rw"</span>);</span><br><span class="line">channel = raf.getChannel();</span><br><span class="line">System.out.println(<span class="string">"\n文件内容："</span>)</span><br><span class="line">System.out.println(readChannel(channel));</span><br><span class="line"></span><br><span class="line">raf.close();</span><br><span class="line">raf.close();</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他操作"><a href="#其他操作" class="headerlink" title="其他操作"></a>其他操作</h2><p>&ensp;&ensp; FileChannel 还有一些其他的方法，这里通过一个表格来列举这些方法，就不一一展开说明了。如下：<br><img src="https://note.youdao.com/yws/api/personal/file/C826164A18144B59A74D8A0A37DF07AF?method=download&shareKey=07d8322c963cdd4d5b48243f5ef9792c" alt="image"></p>
+<h1 id="套接字通道"><a href="#套接字通道" class="headerlink" title="套接字通道"></a>套接字通道</h1><p>&ensp;&ensp; 如果大家使用过 Unix/Linux 系统下的 socket 接口，那么对 socket 编程的过程应该有一些了解。<strong>对于 TCP 服务端，接口调用的顺序为socket() -&gt; bind() -&gt; listen() -&gt; accept() -&gt; 其他操作 -&gt; close()，客户端的顺序为socket() -&gt; connect() -&gt; 其他操作 -&gt; close()</strong>。如下图所示：<br><img src="https://note.youdao.com/yws/api/personal/file/B1713A717F274C96A0F60853AE3903FF?method=download&shareKey=3f7e1e00867267e4171c973117b8a1dc" alt="image">  </p>
+<h2 id="通道类型"><a href="#通道类型" class="headerlink" title="通道类型"></a>通道类型</h2><p>&ensp;&ensp; Java套接字通道有三种类型，分别是：<br><img src="https://note.youdao.com/yws/api/personal/file/04F59E4A0D814FB4B621CECF7434593D?method=download&shareKey=b4a0d874f616cafca15943f548c404e8" alt="image"><br>&ensp;&ensp; Java套接字通道类型主要针对两种通信协议TCP和UDP，本文介绍TCP网络套接字通道的使用。</p>
+<h2 id="打开通道"><a href="#打开通道" class="headerlink" title="打开通道"></a>打开通道</h2><p>&ensp;&ensp; SocketChannel 和 ServerSocketChannel 都是抽象类，所以不能直接通过构造方法创建通道。这两个类均是使用 open 方法创建通道，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SocketChannel socketChannel = SocketChannel.open();</span><br><span class="line">ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();</span><br></pre></td></tr></table></figure>
+
+<h2 id="关闭通道"><a href="#关闭通道" class="headerlink" title="关闭通道"></a>关闭通道</h2><p>&ensp;&ensp; SocketChannel 和 ServerSocketChannel 均提供了 close 方法，用于关闭通道。示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">SocketChannel socketChannel = SocketChannel.open();</span><br><span class="line">socketChannel.connect(<span class="keyword">new</span> InetSocketAddress(<span class="string">"www.coolblog.xyz"</span>, <span class="number">80</span>));</span><br><span class="line"><span class="comment">// do something...</span></span><br><span class="line">socketChannel.close();</span><br><span class="line"></span><br><span class="line"><span class="comment">/*******************************************************************/</span></span><br><span class="line"></span><br><span class="line">ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();</span><br><span class="line">serverSocketChannel.socket().bind(<span class="keyword">new</span> InetSocketAddress(<span class="number">8080</span>));</span><br><span class="line">SocketChannel socketChannel = serverSocketChannel.accept();</span><br><span class="line"><span class="comment">// do something...</span></span><br><span class="line">socketChannel.close();</span><br><span class="line">serverSocketChannel.close();</span><br></pre></td></tr></table></figure>
+
+<h2 id="读写操作-1"><a href="#读写操作-1" class="headerlink" title="读写操作"></a>读写操作</h2><h3 id="读操作"><a href="#读操作" class="headerlink" title="读操作"></a>读操作</h3><p>&ensp;&ensp; 通过使用 SocketChannel 的 read 方法，并配合 ByteBuffer 字节缓冲区，即可以从 SocketChannel 中读取数据。示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ByteBuffer buffer = ByteBuffer.allocate(<span class="number">32</span>);</span><br><span class="line"><span class="keyword">int</span> num = socketChannel.read(buffer);</span><br></pre></td></tr></table></figure>
+
+<h3 id="写操作"><a href="#写操作" class="headerlink" title="写操作"></a>写操作</h3><p>&ensp;&ensp; 读取数据使用的是 read 方法，那么写入自然也就是 write 方法了。<strong>NIO 通道是面向缓冲的，所以向管道中写入数据也需要和缓冲区配合才行</strong>。示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">String data = <span class="string">"Test data..."</span></span><br><span class="line"></span><br><span class="line">ByteBuffer buffer = ByteBuffer.allocate(<span class="number">32</span>);</span><br><span class="line">buffer.clear();</span><br><span class="line">buffer.put(data.getBytes());</span><br><span class="line"></span><br><span class="line">bbuffer.flip();</span><br><span class="line">channel.write(buffer);</span><br></pre></td></tr></table></figure>
+
+<h2 id="非阻塞模式"><a href="#非阻塞模式" class="headerlink" title="非阻塞模式"></a>非阻塞模式</h2><p>&ensp;&ensp; 与文件通道不同，<strong>套接字通道可以运行在非阻塞模式下。在此模式下，调用 connect()，read() 和 write() 等方法时，进程/线程会立即返回。设置非阻塞模式的方法为configureBlocking</strong>，我们来看一下该方法的使用示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">SocketChannel socketChannel = SocketChannel.open();</span><br><span class="line">socketChannel.configureBlocking(<span class="keyword">false</span>);</span><br><span class="line">socketChannel.connect(<span class="keyword">new</span> InetSocketAddress(<span class="string">"www.coolblog.xyz"</span>, <span class="number">80</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里要循环检测是否已经连接上</span></span><br><span class="line"><span class="keyword">while</span>(!socketChannel.finishConnect())&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接建立起来后，才能进行读取或写入操作</span></span><br></pre></td></tr></table></figure>
+
+<p>&ensp;&ensp; 由于在非阻塞模式下，调用 connect 方法会立即返回。如果在连接未建立起来的情况下，从管道中读取，或向管道写入数据，会触发 NotYetConnectedException 异常。所以要进行循环检测，以保证连接完成建立。如果代码按照上面那样去写，会引发另外一个问题。<strong>非阻塞模式虽然不会阻塞线程，但是在方法返回后，还要进行循环检测，线程实际上还是被阻塞</strong>。出现这个问题的原因是和 Java NIO 套接字通道的 IO 模型有关，套接字通道采用的是“同步非阻塞”式 IO 模型，用户发起一个 IO 操作后，即可去做其他事情，不用等待 IO 完成。但是 IO 是否已完成，则需要用户自己时不时的去检测，这样实际上还是会浪费 CPU 资源。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/网络IO/" rel="tag"># 网络IO</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/13/IO模型以及NIO之缓冲区与选择器/" rel="next" title="IO模型以及NIO之缓冲区与选择器">
+                <i class="fa fa-chevron-left"></i> IO模型以及NIO之缓冲区与选择器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/13/redis并发竞争key该咋办？/" rel="prev" title="redis并发竞争key该咋办？">
+                redis并发竞争key该咋办？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="https://note.youdao.com/yws/api/personal/file/F2CADC6DCFAE4CDD88E92983AC901AEB?method=download&shareKey=3b76077bf529146a3dd1155847722c2a" alt="hszzjs">
+            
+              <p class="site-author-name" itemprop="name">hszzjs</p>
+              <p class="site-description motion-element" itemprop="description">稳住，能赢。猥琐，别浪。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#base"><span class="nav-number">1.</span> <span class="nav-text">base</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件通道"><span class="nav-number">2.</span> <span class="nav-text">文件通道</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建通道"><span class="nav-number">2.1.</span> <span class="nav-text">创建通道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写操作"><span class="nav-number">2.2.</span> <span class="nav-text">读写操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据转移操作"><span class="nav-number">2.3.</span> <span class="nav-text">数据转移操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存映射"><span class="nav-number">2.4.</span> <span class="nav-text">内存映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他操作"><span class="nav-number">2.5.</span> <span class="nav-text">其他操作</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#套接字通道"><span class="nav-number">3.</span> <span class="nav-text">套接字通道</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通道类型"><span class="nav-number">3.1.</span> <span class="nav-text">通道类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#打开通道"><span class="nav-number">3.2.</span> <span class="nav-text">打开通道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭通道"><span class="nav-number">3.3.</span> <span class="nav-text">关闭通道</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写操作-1"><span class="nav-number">3.4.</span> <span class="nav-text">读写操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#读操作"><span class="nav-number">3.4.1.</span> <span class="nav-text">读操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写操作"><span class="nav-number">3.4.2.</span> <span class="nav-text">写操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非阻塞模式"><span class="nav-number">3.5.</span> <span class="nav-text">非阻塞模式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">hszzjs</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+<div class="bg_content">
+  <canvas id="canvas"></canvas>
+</div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
+<!--添加动态背景-->
+<script type="text/javascript" src="/js/src/dynamic_bg.js"></script>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/clicklove.js"></script>
